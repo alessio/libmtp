@@ -1,0 +1,3 @@
+# Homepage/Pattern Version Action
+version=2
+http://belnet.dl.sourceforge.net/sourceforge/libmtp/libmtp-(.*)\.tar\.gz debian uupdate

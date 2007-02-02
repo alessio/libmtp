@@ -1,0 +1,4 @@
+usr/lib/*.so.*
+../../libmtp.rules etc/udev
+../../libmtp.usermap etc/hotplug/usb
+../../libmtp.sh etc/hotplug/usb

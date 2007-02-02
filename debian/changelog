@@ -1,0 +1,67 @@
+libmtp (0.1.3-4) unstable; urgency=low
+
+  * debian/copyright: Clarified the copyright situation of the package
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri,  2 Feb 2007 13:46:23 +0100
+
+libmtp (0.1.3-3) unstable; urgency=low
+
+  * debian/control: Fixed typos in packages descriptions
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri,  2 Feb 2007 11:40:13 +0100
+
+libmtp (0.1.3-2) unstable; urgency=low
+
+  * debian/control: Improved the packages descriptions (thanks to
+    Dominique Dumont)
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri,  2 Feb 2007 10:33:40 +0100
+
+libmtp (0.1.3-1) unstable; urgency=low
+
+  * debian/control:
+    - Taken the package over from Jean Parpaillon.  Thanks for your
+      initial work, Jean!
+    - Use the new ${binary:Source} variable instead of ${Source-Version}
+      when specifying dependencies on libmtp5.  This needs a versioned
+      build-dependency on dpkg-dev >= 1.13.19.
+    - Put libmtp-doc package in Section: doc
+  * debian/mtp-tools.dbk: Added generic man page for the commands in the
+    mtp-tools package
+  * debian/rules: Build the man page mtp-tools.1
+  * debian/mtp-tools.links: Links for the man pages of all the commands
+    included in the mtp-tools package
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu,  1 Feb 2007 20:55:31 +0100
+
+libmtp (0.1.3-0.2) unstable; urgency=low
+
+  * Non-maintainer upload
+  * Created package mtp-tools containing the programs distributed in the
+    examples directory
+  * debian/control: Added my name to Uploaders
+  * debian/rules:
+    - Clean files libmtp.rules, libmtp.fdi, and libmtp.usermap generated
+      at build time, such that they do not appear in the diff.gz
+    - Instead of installing debian/libmtp.rules, change the libmtp.rules
+      generated at build time to follow the Debian standards (MODE="660",
+      GROUP="audio")
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu,  1 Feb 2007 12:04:54 +0100
+
+libmtp (0.1.3-0.1) unstable; urgency=low
+
+  * Non-maintainer upload
+  * New upstream release
+  * debian/control: Changed the name of the binary package to libmtp5,
+    such that the package name matches the library SONAME
+  * debian/libmtp.docs: Dropped INSTALL from file list
+
+ -- Rafael Laboissiere <rafael@debian.org>  Wed, 31 Jan 2007 16:13:17 +0100
+
+libmtp (0.0.10-1) unstable; urgency=low
+
+  * Initial release (Closes: #382195)
+
+ -- Jean Parpaillon (artefact) <artefact@altern.org>  Wed,  9 Aug 2006 14:47:52 +0200
+

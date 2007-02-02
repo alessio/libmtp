@@ -1,0 +1,61 @@
+#!/usr/bin/make -f
+
+DB2MAN=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
+XP=xsltproc -''-nonet
+
+mtp-tools.1: debian/mtp-tools.dbk
+	$(XP) $(DB2MAN) $<
+
+build: build-stamp
+build-stamp: mtp-tools.1
+	./configure --prefix=/usr --mandir=/usr/share/man
+	$(MAKE)
+	cd doc/man/man3 && \
+		rm -f _* *.[ch].3 && \
+		for i in [^n]*.3; do mv $$i mtp_$$i; done
+	chmod +x libmtp.sh
+	# Adapt upstream udev rules file to Debian standards
+	perl -pi -e 's/MODE.*/MODE="660", GROUP="audio"/ if /MODE/' \
+		libmtp.rules
+	touch $@
+
+install: build
+	dh_clean -k
+	$(MAKE) DESTDIR=$(PWD)/debian/tmp install
+
+clean:
+	rm -f build-stamp libmtp.rules libmtp.fdi libmtp.usermap \
+		mtp-tools.1 config.log
+	dh_clean
+	-$(MAKE) distclean
+
+binary-indep: build
+	dh_install -i
+	dh_installchangelogs -i ChangeLog
+	dh_installdocs -i
+	dh_installexamples -i
+	dh_installman -i
+	dh_compress -i
+	dh_gencontrol -i
+	dh_installdeb -i
+	dh_builddeb -i
+
+binary-arch: install
+	dh_install -a --sourcedir=debian/tmp
+	dh_installchangelogs -a ChangeLog
+	dh_installdocs -a
+	dh_installman -a
+	dh_link -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_strip -a
+	dh_makeshlibs -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_installdeb -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary: binary-indep binary-arch
+
+.PHONY: build install clean binary-indep binary-arch binary

@@ -1,0 +1,35 @@
+This package was debianized by Jean Parpaillon <artefact@altern.org> on
+Wed,  9 Aug 2006 14:55:02 +0100.
+
+It was downloaded from http://libmtp.sourceforge.net/
+
+Upstream authors:
+- Richard A. Low <richard@wentnet.com>
+- Linus Walleij <triad@df.lth.se>
+
+Copyright:
+
+Most of the source files do not have copyright notices and/or licensing
+conditions.  From the presence of a LGPL COPYING file in the upstream
+tarball and from the information in the ChangeLog file, we can deduce that:
+
+    Copyright (c) 2006, 2007   Richard A. Low and Linus Walleij
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted under the terms of the GNU LGPL 2.1.
+
+The following files have copyright notices (all released under the GNU LGPL):
+
+* src/ptp.h:
+     Copyright (C) 2001 Mariusz Woloszyn <emsi@ipartners.pl>
+
+* src/ptp-pack.c:
+     Copyright (c) 2003 Nikolai Kopanygin
+
+* src/ptp.c:
+     Copyright (C) 2001-2004 Mariusz Woloszyn <emsi@ipartners.pl>
+     Copyright (C) 2003-2006 Marcus Meissner <marcus@jet.franken.de>
+     Copyright (C) 2006 Linus Walleij <triad@df.lth.se>
+
+The complete text of the LGPL License can be found in
+`/usr/share/common-licenses/LGPL-2.1'.
