@@ -1,3 +1,17 @@
+libmtp (0.1.4-1) unstable; urgency=low
+
+  * New upstream release (closes: #414500)
+  * debian/rules:
+    + Switched to CBDS
+    + Save and restore file src/gphoto2-endian.h, which is changed by
+      configure
+  * debian/watch: Fixed URL pattern
+  * debian/control:
+    + Simplified Standards-Version to 3.7.2
+    + Build-depends on CDBS, bumped debhelper dependency version to >= 5
+
+ -- Rafael Laboissiere <rafael@debian.org>  Mon, 12 Mar 2007 10:38:48 +0100
+
 libmtp (0.1.3-4) unstable; urgency=low
 
   * debian/copyright: Clarified the copyright situation of the package
