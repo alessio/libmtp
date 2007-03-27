@@ -29,7 +29,7 @@ mtp-tools.1: debian/mtp-tools.dbk
 build/mtp-tools:: mtp-tools.1
 
 clean::
-	rm -f libmtp.rules libmtp.fdi libmtp.usermap mtp-tools.1
+	rm -f mtp-tools.1
 	# Restore original file
 	test ! -e src/gphoto2-endian.h-orig \
 		|| mv src/gphoto2-endian.h-orig src/gphoto2-endian.h

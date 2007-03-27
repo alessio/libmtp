@@ -1,3 +1,11 @@
+libmtp (0.1.5-1) unstable; urgency=low
+
+  * New upstream release (closes: #416323)
+  * debian/rules: The upstream Makefile.am clean now the generated files
+    in the top-level dir.  Removed that from the clean target.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Tue, 27 Mar 2007 01:03:12 +0200
+
 libmtp (0.1.4-1) unstable; urgency=low
 
   * New upstream release (closes: #414500)
