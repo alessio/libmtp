@@ -5,6 +5,8 @@ Maintainer: Rafael Laboissiere <rafael@debian.org>
 Build-Depends: libusb-dev, doxygen, debhelper (>= 5), cdbs,
  dpkg-dev (>= 1.13.19), xsltproc, docbook-xsl
 Standards-Version: 3.7.2
+XS-Vcs-Svn: svn://svn.debian.org/svn/private/rafael/deb-pkg/libmtp/
+XS-Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp/
 
 Package: libmtp5
 Section: libs

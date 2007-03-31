@@ -1,3 +1,9 @@
+libmtp (0.1.5-2) unstable; urgency=low
+
+  * debian/control: Added XS-Vcs-Svn and XS-Vcs-Browser keywords
+
+ --
+
 libmtp (0.1.5-1) unstable; urgency=low
 
   * New upstream release (closes: #416323)
