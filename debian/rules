@@ -28,6 +28,17 @@ mtp-tools.1: debian/mtp-tools.dbk
 
 build/mtp-tools:: mtp-tools.1
 
+debdir = $(CURDIR)/debian
+deblin = $(debdir)/mtp-tools/usr/share/lintian/overrides
+debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
+		debian/changelog)
+
+install/mtp-tools::
+	mkdir -p $(deblin)
+	sed "s/@DEBVERSION@/$(debver)/"		\
+		< $(debdir)/mtp-tools.lintian	\
+		> $(deblin)/mtp-tools
+
 clean::
 	rm -f mtp-tools.1
 	# Restore original file

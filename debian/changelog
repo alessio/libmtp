@@ -1,8 +1,10 @@
 libmtp (0.1.5-2) unstable; urgency=low
 
-  * debian/control: Added XS-Vcs-Svn and XS-Vcs-Browser keywords
+  * debian/control: Added XS-Vcs-Svn and XS-Vcs-Browser fields
+  * debian/mtp-tools.lintian: Added Lintian override file
+  * debian/rules: Install Lintian override for the mtp-tools package
 
- --
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 22 Apr 2007 10:59:31 +0200
 
 libmtp (0.1.5-1) unstable; urgency=low
 
