@@ -13,6 +13,7 @@ usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-hotplug.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-newfolder.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-newplaylist.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-playlists.1
+usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-reset.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-sendfile.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-sendtr.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-thumb.1
