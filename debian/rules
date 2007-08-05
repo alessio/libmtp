@@ -11,7 +11,7 @@ SUBSTFILES = debian/control debian/mtp-tools.lintian
 
 %: %.in
 	# Replace SOVERSION string in debian/ files
-	sed "s/@SOVERSION@/$(SOVERSION)/" < $< > $@
+	sed "s/@SOVERSION@/$(SOVERSION)/g" < $< > $@
 
 makebuilddir/libmtp$(SOVERSION):: $(SUBSTFILES)
 	# Save file modified by configure
