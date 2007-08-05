@@ -1,6 +1,11 @@
-libmtp (0.2.0-1) UNRELEASED; urgency=low
+libmtp (0.2.0-1) experimental; urgency=low
 
   * New upstream release (closes: #436060)
+  * debian/rules, debian/control.in, debian/mtp-tools.lintian.in:
+    Define variable SOVERSION in rules and use it to create files in the
+    debian/ directory
+  * debian/mtp-tools.links: Added link for mtp-reset man page
+  * debian/libmtp6.*: Renamed files from debian/libmtp5.*
 
  -- Rafael Laboissiere <rafael@debian.org>  Sun,  5 Aug 2007 10:38:03 +0200
 
