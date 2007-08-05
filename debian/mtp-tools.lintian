@@ -1,1 +1,0 @@
-mtp-tools: package-has-a-duplicate-relation depends: libmtp5 (= @DEBVERSION@), libmtp5

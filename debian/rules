@@ -4,15 +4,21 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
-DB2MAN=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
-XP=xsltproc -''-nonet
+DB2MAN = /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
+XP = xsltproc -''-nonet
+SOVERSION = 6
+SUBSTFILES = debian/control debian/mtp-tools.lintian
 
-makebuilddir/libmtp5::
+%: %.in
+	# Replace SOVERSION string in debian/ files
+	sed "s/@SOVERSION@/$(SOVERSION)/" < $< > $@
+
+makebuilddir/libmtp$(SOVERSION):: $(SUBSTFILES)
 	# Save file modified by configure
 	test -e src/gphoto2-endian.h-orig \
 		|| cp src/gphoto2-endian.h src/gphoto2-endian.h-orig
 
-build/libmtp5::
+build/libmtp$(SOVERSION)::
 	# Rename some man files and remove others
 	cd doc/man/man3 && \
 		rm -f _* *.[ch].3 && \
@@ -40,7 +46,7 @@ install/mtp-tools::
 		> $(deblin)/mtp-tools
 
 clean::
-	rm -f mtp-tools.1
+	rm -f mtp-tools.1 debian/mtp-tools.lintian
 	# Restore original file
 	test ! -e src/gphoto2-endian.h-orig \
 		|| mv src/gphoto2-endian.h-orig src/gphoto2-endian.h

@@ -1,0 +1,1 @@
+mtp-tools: package-has-a-duplicate-relation depends: libmtp@SOVERSION@ (= @DEBVERSION@), libmtp@SOVERSION@

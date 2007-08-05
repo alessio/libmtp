@@ -8,7 +8,7 @@ Standards-Version: 3.7.2
 XS-Vcs-Svn: svn://svn.debian.org/svn/private/rafael/deb-pkg/libmtp/
 XS-Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp/
 
-Package: libmtp6
+Package: libmtp@SOVERSION@
 Section: libs
 Architecture: any
 Depends: udev | hotplug, ${shlibs:Depends}
@@ -26,7 +26,7 @@ Description: Media Transfer Protocol (MTP) library
 Package: libmtp-dev
 Section: libdevel
 Architecture: any
-Depends: libmtp6 (= ${binary:Version}), libusb-dev (>> 0.1.7)
+Depends: libmtp@SOVERSION@ (= ${binary:Version}), libusb-dev (>> 0.1.7)
 Description: Media Transfer Protocol (MTP) development files
  A library for communicating with MTP aware devices.  MTP (Media
  Transfer Protocol) is necessary to communicate with some USB portable
@@ -59,7 +59,7 @@ Description: Media Transfer Protocol (MTP) library documentation
 Package: mtp-tools
 Section: utils
 Architecture: any
-Depends: libmtp6 (= ${binary:Version}), ${shlibs:Depends}
+Depends: libmtp@SOVERSION@ (= ${binary:Version}), ${shlibs:Depends}
 Description: Media Transfer Protocol (MTP) library tools
  A library for communicating with MTP aware devices.  MTP (Media
  Transfer Protocol) is necessary to communicate with some USB portable
