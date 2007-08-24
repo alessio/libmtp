@@ -1,3 +1,11 @@
+libmtp (0.2.1-1) unstable; urgency=low
+
+  * New upstream release, uploaded to unstable (closes: #436461)
+  * The IDs for the Samsung YP-U3 players have been already included in
+    the src/libusb-glue.c upstream source (closes: #437829)
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 24 Aug 2007 11:50:56 +0200
+
 libmtp (0.2.0-1) experimental; urgency=low
 
   * New upstream release (closes: #436060)
