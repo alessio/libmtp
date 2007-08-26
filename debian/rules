@@ -8,6 +8,9 @@ DB2MAN = /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
 XP = xsltproc -''-nonet
 SOVERSION = 6
 SUBSTFILES = debian/control debian/mtp-tools.lintian
+UDEVFILES = libmtp$(SOVERSION).rules	\
+	    libmtp$(SOVERSION).usermap	\
+	    libmtp$(SOVERSION).sh
 
 %: %.in
 	# Replace SOVERSION string in debian/ files
@@ -27,6 +30,10 @@ build/libmtp$(SOVERSION)::
 	# Adapt upstream udev rules file to Debian standards
 	perl -pi -e 's/MODE.*/MODE="660", GROUP="audio"/ if /MODE/' \
 		libmtp.rules
+	# Rename udev and hotplug files
+	for f in $(UDEVFILES) ; do				\
+		cp $${f/libmtp$(SOVERSION)/libmtp} $$f ;	\
+	done
 
 mtp-tools.1: debian/mtp-tools.dbk
 	# Build and install the man page for mtp-tools
@@ -46,7 +53,7 @@ install/mtp-tools::
 		> $(deblin)/mtp-tools
 
 clean::
-	rm -f mtp-tools.1 debian/mtp-tools.lintian
+	rm -f mtp-tools.1 debian/mtp-tools.lintian $(UDEVFILES)
 	# Restore original file
 	test ! -e src/gphoto2-endian.h-orig \
 		|| mv src/gphoto2-endian.h-orig src/gphoto2-endian.h

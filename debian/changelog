@@ -1,3 +1,11 @@
+libmtp (0.2.1-2) unstable; urgency=low
+
+  * debian/rules, debian/libmtp6.install, debian/libmtp6.links: Install
+    all udev and hotplug files with names libmtp6.*, such that the clashes
+    with libmtp5 are avoided (closes: #439550)
+
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 26 Aug 2007 12:24:02 +0200
+
 libmtp (0.2.1-1) unstable; urgency=low
 
   * New upstream release, uploaded to unstable (closes: #436461)
