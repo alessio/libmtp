@@ -1,3 +1,10 @@
+libmtp (0.2.1-3) unstable; urgency=low
+
+  * debian/rules: Fix rules for libmtp-doc to avoid extraneous manpages to
+    be included in the package
+
+ -- Rafael Laboissiere <rafael@debian.org>  Wed, 19 Sep 2007 11:43:07 +0200
+
 libmtp (0.2.1-2) unstable; urgency=low
 
   * debian/rules, debian/libmtp6.install, debian/libmtp6.links: Install

@@ -12,6 +12,11 @@ UDEVFILES = libmtp$(SOVERSION).rules	\
 	    libmtp$(SOVERSION).usermap	\
 	    libmtp$(SOVERSION).sh
 
+debdir = $(CURDIR)/debian
+deblin = $(debdir)/mtp-tools/usr/share/lintian/overrides
+debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
+		debian/changelog)
+
 %: %.in
 	# Replace SOVERSION string in debian/ files
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $< > $@
@@ -21,11 +26,14 @@ makebuilddir/libmtp$(SOVERSION):: $(SUBSTFILES)
 	test -e src/gphoto2-endian.h-orig \
 		|| cp src/gphoto2-endian.h src/gphoto2-endian.h-orig
 
-build/libmtp$(SOVERSION)::
+install/libmtp-doc::
 	# Rename some man files and remove others
-	cd doc/man/man3 && \
-		rm -f _* *.[ch].3 && \
-		for i in [^n]*.3; do mv $$i mtp_$$i; done
+	cd doc/man/man3 &&	\
+		rm -f _* *.[ch].3 &&			\
+		for i in *.3 ; do mv $$i mtp_$$i; done
+
+build/libmtp$(SOVERSION)::
+	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
 	# Adapt upstream udev rules file to Debian standards
 	perl -pi -e 's/MODE.*/MODE="660", GROUP="audio"/ if /MODE/' \
@@ -40,11 +48,6 @@ mtp-tools.1: debian/mtp-tools.dbk
 	$(XP) $(DB2MAN) $<
 
 build/mtp-tools:: mtp-tools.1
-
-debdir = $(CURDIR)/debian
-deblin = $(debdir)/mtp-tools/usr/share/lintian/overrides
-debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
-		debian/changelog)
 
 install/mtp-tools::
 	mkdir -p $(deblin)
