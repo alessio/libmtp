@@ -28,9 +28,12 @@ makebuilddir/libmtp$(SOVERSION):: $(SUBSTFILES)
 
 install/libmtp-doc::
 	# Rename some man files and remove others
-	cd doc/man/man3 &&	\
-		rm -f _* *.[ch].3 &&			\
-		for i in *.3 ; do mv $$i mtp_$$i; done
+	chmod +x debian/sanitize-manpage.pl
+	( cd doc/man/man3/ ;						\
+	  rm -f _* ;							\
+	  for i in $$(ls *.3 | grep -v ^mtp_) ; do			\
+		../../../debian/sanitize-manpage.pl < $$i > mtp_$$i ;	\
+	  done )
 
 build/libmtp$(SOVERSION)::
 	# Fix mode of udev lifting script
