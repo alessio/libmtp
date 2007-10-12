@@ -1,3 +1,9 @@
+libmtp (0.2.2-2) unstable; urgency=low
+
+  * Released to unstable
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 12 Oct 2007 14:05:54 +0200
+
 libmtp (0.2.2-1) experimental; urgency=low
 
   * New upstream release.  Uploading to experimental to avoid delaying the
