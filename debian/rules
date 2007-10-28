@@ -6,8 +6,11 @@ include /usr/share/cdbs/1/class/autotools.mk
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
 DB2MAN = /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
 XP = xsltproc -''-nonet
-SOVERSION = 6
-SUBSTFILES = debian/control debian/mtp-tools.lintian
+SOVERSION = 7
+SUBSTFILES = debian/mtp-tools.lintian		\
+	debian/libmtp$(SOVERSION).docs		\
+	debian/libmtp$(SOVERSION).install	\
+	debian/libmtp$(SOVERSION).links
 UDEVFILES = libmtp$(SOVERSION).rules	\
 	    libmtp$(SOVERSION).usermap	\
 	    libmtp$(SOVERSION).sh
@@ -17,9 +20,11 @@ deblin = $(debdir)/mtp-tools/usr/share/lintian/overrides
 debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
 		debian/changelog)
 
+# Replace SOVERSION string in debian/ files
+libmtp$(SOVERSION).%: libmtp.%.in
+	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
 %: %.in
-	# Replace SOVERSION string in debian/ files
-	sed "s/@SOVERSION@/$(SOVERSION)/g" < $< > $@
+	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
 
 makebuilddir/libmtp$(SOVERSION):: $(SUBSTFILES)
 	# Save file modified by configure
@@ -59,7 +64,7 @@ install/mtp-tools::
 		> $(deblin)/mtp-tools
 
 clean::
-	rm -f mtp-tools.1 debian/mtp-tools.lintian $(UDEVFILES)
+	rm -f mtp-tools.1 $(SUBSTFILES) $(UDEVFILES)
 	# Restore original file
 	test ! -e src/gphoto2-endian.h-orig \
 		|| mv src/gphoto2-endian.h-orig src/gphoto2-endian.h

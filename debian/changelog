@@ -1,3 +1,12 @@
+libmtp (0.2.3-1) experimental; urgency=low
+
+  * New upstream release, new soversion (libmtp7).  Uploaded to
+    experimental, since 0.2.2-2 (libmtp6) must enter testing first.
+  * debian/rules: All debian/* files are now independent of the SOVERSION
+    and are automatically generated
+
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 28 Oct 2007 13:49:31 +0100
+
 libmtp (0.2.2-2) unstable; urgency=low
 
   * Released to unstable
