@@ -1,3 +1,10 @@
+libmtp (0.2.3-2) UNRELEASED; urgency=low
+
+  * debian/control: Use the now official Vcs-* fields instead of the
+    obsolete XS-Vcs-*
+
+ -- Rafael Laboissiere <rafael@debian.org>  Mon, 29 Oct 2007 23:16:08 +0100
+
 libmtp (0.2.3-1) experimental; urgency=low
 
   * New upstream release, new soversion (libmtp7).  Uploaded to
