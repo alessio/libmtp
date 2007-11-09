@@ -1,5 +1,11 @@
 libmtp (0.2.3-2) UNRELEASED; urgency=low
 
+  * debian/patches/01_strtoul-mtp-command.patch: Added patch for using
+    strtoul instead of atoi when parsing the command-line arguments of
+    mtp-tools commands.  This avoids crashes when file ids on the mtp
+    device are greater than INT_MAX.  (Closes: #450651, thanks to Chris
+    Waters.)
+
   * debian/control: Use the now official Vcs-* fields instead of the
     obsolete XS-Vcs-*
 
