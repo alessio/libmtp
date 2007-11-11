@@ -1,4 +1,4 @@
-libmtp (0.2.3-2) UNRELEASED; urgency=low
+libmtp (0.2.3-2) experimental; urgency=low
 
   * debian/patches/01_strtoul-mtp-command.patch: Added patch for using
     strtoul instead of atoi when parsing the command-line arguments of
