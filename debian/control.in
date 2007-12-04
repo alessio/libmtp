@@ -12,7 +12,7 @@ XS-Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp/
 Package: libmtp@SOVERSION@
 Section: libs
 Architecture: any
-Depends: udev | hotplug, ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${udev}
 Description: Media Transfer Protocol (MTP) library
  A library for communicating with MTP aware devices.  MTP (Media
  Transfer Protocol) is necessary to communicate with some USB portable

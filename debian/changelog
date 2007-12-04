@@ -1,3 +1,11 @@
+libmtp (0.2.4-2) unstable; urgency=low
+
+  * debian/control, debian/rules: Make the libmtp<n> package depend on
+    udev and hotplug only for Linux systems (closes: #454256, thanks to
+    Aurelien Jarno for the patch)
+
+ -- Rafael Laboissiere <rafael@debian.org>  Tue, 04 Dec 2007 16:50:35 +0100
+
 libmtp (0.2.4-1) unstable; urgency=low
 
   * New upstream version, released to unstable

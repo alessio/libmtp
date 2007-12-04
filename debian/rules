@@ -51,6 +51,11 @@ build/libmtp$(SOVERSION)::
 		cp $${f/libmtp$(SOVERSION)/libmtp} $$f ;	\
 	done
 
+binary-predeb/libmtp$(SOVERSION)::
+ifeq (linux,$(DEB_HOST_ARCH_OS))
+	echo "udev=udev | hotplug" >> debian/libmtp$(SOVERSION).substvars
+endif
+
 mtp-tools.1: debian/mtp-tools.dbk
 	# Build and install the man page for mtp-tools
 	$(XP) $(DB2MAN) $<
