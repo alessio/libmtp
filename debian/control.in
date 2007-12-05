@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Rafael Laboissiere <rafael@debian.org>
 Build-Depends: libusb-dev, doxygen, debhelper (>= 5), cdbs,
  dpkg-dev (>= 1.13.19), xsltproc, docbook-xsl
-Standards-Version: 3.7.2
+Standards-Version: 3.7.3
 Homepage: http://libmtp.sourceforge.net/
 XS-Vcs-Svn: svn://svn.debian.org/svn/private/rafael/deb-pkg/libmtp/
 XS-Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp/
@@ -21,8 +21,6 @@ Description: Media Transfer Protocol (MTP) library
  While some portable device will use USB mass storage protocol or PTP
  (picture transfer protocol), some device can only communicate through
  MTP [ see http://en.wikipedia.org/wiki/Media_Transfer_Protocol ]
- .
-  Homepage: http://libmtp.sourceforge.net/
 
 Package: libmtp-dev
 Section: libdevel
@@ -38,8 +36,6 @@ Description: Media Transfer Protocol (MTP) development files
  MTP [ see http://en.wikipedia.org/wiki/Media_Transfer_Protocol ]
  .
  This package contains the headers and development libraries.
- .
-  Homepage: http://libmtp.sourceforge.net/
 
 Package: libmtp-doc
 Section: doc
@@ -54,8 +50,6 @@ Description: Media Transfer Protocol (MTP) library documentation
  MTP [ see http://en.wikipedia.org/wiki/Media_Transfer_Protocol ]
  .
  This package contains the development documentation.
- .
-  Homepage: http://libmtp.sourceforge.net/
 
 Package: mtp-tools
 Section: utils
@@ -71,5 +65,3 @@ Description: Media Transfer Protocol (MTP) library tools
  MTP [ see http://en.wikipedia.org/wiki/Media_Transfer_Protocol ]
  .
  This package contains tools for communicating with MTP devices.
- .
-  Homepage: http://libmtp.sourceforge.net/
