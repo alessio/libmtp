@@ -1,10 +1,10 @@
-libmtp (0.2.4-3) UNRELEASED; urgency=low
+libmtp (0.2.4-3) unstable; urgency=low
 
   * debian/control.in:
     + Dropped the Homepage pseudo-header from the extended descriptions
     + Bumped Standards-Version to 3.7.3
 
- -- Rafael Laboissiere <rafael@debian.org>  Wed, 05 Dec 2007 13:36:36 +0100
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 23 Dec 2007 09:06:13 +0100
 
 libmtp (0.2.4-2) unstable; urgency=low
 
