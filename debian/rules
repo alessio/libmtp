@@ -48,13 +48,15 @@ build/libmtp$(SOVERSION)::
 		libmtp.rules
 	# Rename udev and hotplug files
 	for f in $(UDEVFILES) ; do				\
-		cp $${f/libmtp$(SOVERSION)/libmtp} $$f ;	\
+		cp libmtp.$${f#*.} $$f ;			\
 	done
 
 binary-predeb/libmtp$(SOVERSION)::
 ifeq (linux,$(DEB_HOST_ARCH_OS))
 	echo "udev=udev | hotplug" >> debian/libmtp$(SOVERSION).substvars
 endif
+	# Remove rpath from the library
+	chrpath --delete $(debdir)/libmtp$(SOVERSION)/usr/lib/libmtp.so.*.*
 
 mtp-tools.1: debian/mtp-tools.dbk
 	# Build and install the man page for mtp-tools
@@ -63,10 +65,15 @@ mtp-tools.1: debian/mtp-tools.dbk
 build/mtp-tools:: mtp-tools.1
 
 install/mtp-tools::
+	# Install Lintian overrides
 	mkdir -p $(deblin)
 	sed "s/@DEBVERSION@/$(debver)/"		\
 		< $(debdir)/mtp-tools.lintian	\
 		> $(deblin)/mtp-tools
+
+binary-predeb/mtp-tools::
+	# Remove rpath from programs
+	chrpath --delete $(debdir)/mtp-tools/usr/bin/*
 
 clean::
 	rm -f mtp-tools.1 $(SUBSTFILES) $(UDEVFILES)
