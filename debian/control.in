@@ -6,8 +6,8 @@ Build-Depends: libusb-dev, doxygen, debhelper (>= 5), cdbs,
  dpkg-dev (>= 1.13.19), xsltproc, docbook-xsl, chrpath
 Standards-Version: 3.7.3
 Homepage: http://libmtp.sourceforge.net/
-XS-Vcs-Svn: svn://svn.debian.org/svn/private/rafael/deb-pkg/libmtp/
-XS-Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp/
+Vcs-Svn: svn://svn.debian.org/svn/private/rafael/deb-pkg/libmtp/
+Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp/
 
 Package: libmtp@SOVERSION@
 Section: libs
