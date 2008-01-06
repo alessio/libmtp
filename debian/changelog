@@ -3,8 +3,10 @@ libmtp (0.2.4-5) UNRELEASED; urgency=low
   * debian/control.in: Use the now official Vcs-* fields instead of the
     obsolete XS-Vcs-* (this change was done already in version 0.2.3-2 of
     the package, but in the wrong file debian/control)
+  * debian/rules: Insures that debian/control will be generated, if
+    debian/control.in is newer than it
 
- -- Rafael Laboissiere <rafael@debian.org>  Sun,  6 Jan 2008 10:34:30 +0100
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 06 Jan 2008 11:18:11 +0100
 
 libmtp (0.2.4-4) unstable; urgency=low
 
