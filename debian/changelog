@@ -1,4 +1,4 @@
-libmtp (0.2.4-5) UNRELEASED; urgency=low
+libmtp (0.2.4-5) unstable; urgency=low
 
   * debian/control.in: Use the now official Vcs-* fields instead of the
     obsolete XS-Vcs-* (this change was done already in version 0.2.3-2 of
