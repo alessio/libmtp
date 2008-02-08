@@ -1,4 +1,2 @@
 usr/lib/*.so.*
 ../../libmtp@SOVERSION@.rules etc/udev
-../../libmtp@SOVERSION@.usermap etc/hotplug/usb
-../../libmtp@SOVERSION@.sh etc/hotplug/usb

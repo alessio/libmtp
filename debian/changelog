@@ -1,3 +1,16 @@
+libmtp (0.2.5-2) unstable; urgency=low
+
+  * Removed hotplug related stuff since the hotplug has been removed from
+    sid.  Thanks to Michael Biebl for the heads up (closes: #461396).
+    + debian/rules:
+      - Do not process hotplug initialization files
+      - Do not put hotplug as an alternate dependency to udev
+    + debian/libmtp.install.in: Do not install hotplug configuration files
+    + debian/libmtp.preinst.in: New file containing code for properly
+    handling the removal of the hotplug conffiles
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 08 Feb 2008 15:28:26 +0100
+
 libmtp (0.2.5-1) unstable; urgency=low
 
   * New upstream release

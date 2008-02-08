@@ -10,10 +10,9 @@ SOVERSION = 7
 SUBSTFILES = debian/mtp-tools.lintian		\
 	debian/libmtp$(SOVERSION).docs		\
 	debian/libmtp$(SOVERSION).install	\
-	debian/libmtp$(SOVERSION).links
-UDEVFILES = libmtp$(SOVERSION).rules	\
-	    libmtp$(SOVERSION).usermap	\
-	    libmtp$(SOVERSION).sh
+	debian/libmtp$(SOVERSION).links		\
+	debian/libmtp$(SOVERSION).preinst
+UDEVFILES = libmtp$(SOVERSION).rules
 
 debdir = $(CURDIR)/debian
 deblin = $(debdir)/mtp-tools/usr/share/lintian/overrides
@@ -46,14 +45,14 @@ build/libmtp$(SOVERSION)::
 	# Adapt upstream udev rules file to Debian standards
 	perl -pi -e 's/MODE.*/MODE="660", GROUP="audio"/ if /MODE/' \
 		libmtp.rules
-	# Rename udev and hotplug files
+	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
 	done
 
 binary-predeb/libmtp$(SOVERSION)::
 ifeq (linux,$(DEB_HOST_ARCH_OS))
-	echo "udev=udev | hotplug" >> debian/libmtp$(SOVERSION).substvars
+	echo "udev=udev" >> debian/libmtp$(SOVERSION).substvars
 endif
 	# Remove rpath from the library
 	chrpath --delete $(debdir)/libmtp$(SOVERSION)/usr/lib/libmtp.so.*.*
