@@ -1,3 +1,9 @@
+libmtp (0.2.6-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu, 06 Mar 2008 15:07:44 +0100
+
 libmtp (0.2.5-2) unstable; urgency=low
 
   * Removed hotplug related stuff since the hotplug has been removed from
