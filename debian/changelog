@@ -1,4 +1,4 @@
-libmtp (0.2.6.1-1) UNRELEASED; urgency=low
+libmtp (0.2.6.1-1) unstable; urgency=low
 
   * New upstream release
   * debian/rules: Do not install the Lintian override, which is not needed
