@@ -4,8 +4,10 @@ libmtp (0.2.6.1-1) UNRELEASED; urgency=low
   * debian/rules: Do not install the Lintian override, which is not needed
     anymore
   * debian/mtp-tools.lintian.in: Drop Lintian override file
+  * debian/sanitize-manpage.pl: Escape "-" signs that mean the "minus"
+    characters
 
- -- Rafael Laboissiere <rafael@debian.org>  Sun, 16 Mar 2008 21:53:45 +0100
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 16 Mar 2008 22:41:43 +0100
 
 libmtp (0.2.6-1) unstable; urgency=low
 
