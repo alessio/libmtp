@@ -1,3 +1,12 @@
+libmtp (0.2.6.1-1) UNRELEASED; urgency=low
+
+  * New upstream release
+  * debian/rules: Do not install the Lintian override, which is not needed
+    anymore
+  * debian/mtp-tools.lintian.in: Drop Lintian override file
+
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 16 Mar 2008 21:53:45 +0100
+
 libmtp (0.2.6-1) unstable; urgency=low
 
   * New upstream release
