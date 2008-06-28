@@ -1,4 +1,4 @@
-libmtp (0.2.6.1-3) UNRELEASED; urgency=low
+libmtp (0.2.6.1-3) unstable; urgency=low
 
   * debian/libmtp.install.in, debian/rules: Install hal fdi information.
     This change was taken from the Ubuntu package, thanks to Flávio Martin
