@@ -1,3 +1,10 @@
+libmtp (0.3.0-1) experimental; urgency=low
+
+  * New upstream release.  Upstream has bumped the SONAME version to 8.
+    Uploading to experimental for now.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Mon, 30 Jun 2008 21:48:31 +0200
+
 libmtp (0.2.6.1-3) unstable; urgency=low
 
   * debian/libmtp.install.in, debian/rules: Install hal fdi information.
