@@ -1,3 +1,10 @@
+libmtp (0.3.1-1) UNRELEASED; urgency=low
+
+  * New upstream release
+  * debian/watch: Fix URL of upstream tarball
+
+ -- Rafael Laboissiere <rafael@debian.org>  Tue, 26 Aug 2008 09:34:20 +0200
+
 libmtp (0.3.0-1) experimental; urgency=low
 
   * New upstream release.  Upstream has bumped the SONAME version to 8.

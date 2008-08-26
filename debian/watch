@@ -1,3 +1,3 @@
 version=3
-http://sourceforge.net/project/showfiles.php?group_id=158745 \
-	http://.*/libmtp-(.*).tar.gz?.*
+http://libmtp.sourceforge.net/download.php \
+	http://downloads.sourceforge.net/libmtp/libmtp-(.*).tar.gz?.*
