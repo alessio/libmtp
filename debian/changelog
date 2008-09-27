@@ -1,4 +1,16 @@
-libmtp (0.3.1-1) UNRELEASED; urgency=low
+libmtp (0.3.3-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+  * debian/libmtp8.symbols:
+    + Add new symbols introduced in this release (SOVERSION bumped to
+      8.1.0)
+    + Removed all the symbols that do not start with `LIBMTP_'.  Upstream
+      is now doing the Right Thing(TM) and exporting only the symbols that
+      are actually part of the public API.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Sat, 27 Sep 2008 12:55:49 +0200
+
+libmtp (0.3.1-1) experimental; urgency=low
 
   * New upstream release.
   * debian/symbols: Add shared library symbols file
