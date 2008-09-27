@@ -1,4 +1,4 @@
-libmtp (0.3.3-1) UNRELEASED; urgency=low
+libmtp (0.3.3-1) experimental; urgency=low
 
   * New upstream release.
   * debian/libmtp8.symbols:
