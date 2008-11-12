@@ -1,3 +1,9 @@
+libmtp (0.3.4-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Rafael Laboissiere <rafael@debian.org>  Wed, 12 Nov 2008 18:52:46 +0100
+
 libmtp (0.3.3-1) experimental; urgency=low
 
   * New upstream release.
