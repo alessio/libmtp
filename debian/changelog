@@ -1,3 +1,9 @@
+libmtp (0.3.4-2) UNRELEASED; urgency=low
+
+  * debian/watch: Fix upstream URL
+
+ -- Rafael Laboissiere <rafael@debian.org>  Wed, 17 Dec 2008 22:02:47 +0100
+
 libmtp (0.3.4-1) experimental; urgency=low
 
   * New upstream release
