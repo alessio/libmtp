@@ -1,6 +1,8 @@
 libmtp (0.3.4-2) UNRELEASED; urgency=low
 
   * debian/watch: Fix upstream URL
+  * debian/control: Add ${misc:Depends} to the Depends fileds of all
+    binary pacakges (Lintian warning)
 
  -- Rafael Laboissiere <rafael@debian.org>  Wed, 17 Dec 2008 22:02:47 +0100
 
