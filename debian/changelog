@@ -1,4 +1,4 @@
-libmtp (0.3.4-2) UNRELEASED; urgency=low
+libmtp (0.3.4-2) experimental; urgency=low
 
   * debian/watch: Fix upstream URL
   * debian/control: Add ${misc:Depends} to the Depends fileds of all
