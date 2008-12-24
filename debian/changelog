@@ -1,4 +1,4 @@
-libmtp (0.3.5-1) UNRELEASED; urgency=low
+libmtp (0.3.5-1) experimental; urgency=low
 
   * New upstream release
   * debian/rules: Clean src/_stdint.h file, which is created by configure
