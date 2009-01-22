@@ -10,7 +10,6 @@ Vcs-Svn: svn://svn.debian.org/svn/private/rafael/deb-pkg/libmtp/trunk
 Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp
 
 Package: libmtp@SOVERSION@
-Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: ${udev}
