@@ -1,9 +1,9 @@
-libmtp (0.3.6-1) UNRELEASED; urgency=low
+libmtp (0.3.6-1) experimental; urgency=low
 
   * New upstream release
   * debian/watch: Use the qa.debian.org SF redirector URL
 
- -- Rafael Laboissiere <rafael@debian.org>  Thu, 22 Jan 2009 21:15:24 +0100
+ -- Rafael Laboissiere <rafael@debian.org>  Thu, 22 Jan 2009 22:44:49 +0100
 
 libmtp (0.3.5-1) experimental; urgency=low
 
