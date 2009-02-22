@@ -7,7 +7,7 @@ Build-Depends: libusb-dev, doxygen, debhelper (>= 5), cdbs,
 Standards-Version: 3.8.0
 Homepage: http://libmtp.sourceforge.net/
 Vcs-Svn: svn://svn.debian.org/svn/private/rafael/deb-pkg/libmtp/trunk
-Vcs-Browser: http://svn.debian.org/wsvn/private/rafael/deb-pkg/libmtp
+Vcs-Browser: http://svn.debian.org/viewsvn/rafael/deb-pkg/libmtp
 
 Package: libmtp@SOVERSION@
 Architecture: any
