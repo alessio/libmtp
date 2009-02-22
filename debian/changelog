@@ -1,4 +1,4 @@
-libmtp (0.3.6-2) UNRELEASED; urgency=low
+libmtp (0.3.6-2) unstable; urgency=low
 
   * Upload to unstable, with the authorization of the debian-release team
   * debian/control.in: Switch Vcs-Browser URL from wsvn to viewsvn
