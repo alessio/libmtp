@@ -4,7 +4,10 @@ libmtp (0.3.6-3) UNRELEASED; urgency=low
     library find all tracks in Zen Xtra (closes: #519980). Thanks to
     Leandro Lucarella and Margarita for tracking down the patch from
     upstream CVS.
-  * debian/control: Bump Standards-Version to 3.8.1 (no changes needed)
+  * debian/rules: Include quilt/CDBS makefile fragment
+  * debian/control:
+    + Build-depend on quilt
+    + Bump Standards-Version to 3.8.1 (no changes needed)
 
  -- Rafael Laboissiere <rafael@debian.org>  Mon, 16 Mar 2009 22:21:13 +0100
 
