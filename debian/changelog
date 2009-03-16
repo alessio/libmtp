@@ -1,3 +1,12 @@
+libmtp (0.3.6-3) UNRELEASED; urgency=low
+
+  * debian/patches/find-all-tracks-on-zen-xtra.diff: Patch for making the
+    library find all tracks in Zen Xtra (closes: #519980). Thanks to
+    Leandro Lucarella and Margarita for tracking down the patch from
+    upstream CVS.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Mon, 16 Mar 2009 22:21:13 +0100
+
 libmtp (0.3.6-2) unstable; urgency=low
 
   * Upload to unstable, with the authorization of the debian-release team
