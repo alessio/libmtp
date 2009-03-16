@@ -6,8 +6,9 @@ Taken form:
 http://libmtp.cvs.sourceforge.net/viewvc/libmtp/libmtp/src/music-players.h?r1=1.120&r2=1.121&view=patch
 
  -- Rafael Laboissiere <rafael@debian.org>  Mon, 16 Mar 2009 22:21:13 +0100
---- music-players.h	2009/02/02 21:05:14	1.120
-+++ music-players.h	2009/02/06 21:23:12	1.121
+
+--- a/src/music-players.h	2009/02/02 21:05:14	1.120
++++ b/src/music-players.h	2009/02/06 21:23:12	1.121
 @@ -43,30 +43,31 @@
     * some of the folders will start to disappear when getting all objects
     * and properties.
