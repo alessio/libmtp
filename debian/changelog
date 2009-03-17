@@ -1,13 +1,9 @@
-libmtp (0.3.6-3) UNRELEASED; urgency=low
+libmtp (0.3.7-1) UNRELEASED; urgency=low
 
-  * debian/patches/find-all-tracks-on-zen-xtra.diff: Patch for making the
-    library find all tracks in Zen Xtra (closes: #519980). Thanks to
-    Leandro Lucarella and Margarita for tracking down the patch from
-    upstream CVS.
-  * debian/rules: Include quilt/CDBS makefile fragment
-  * debian/control:
-    + Build-depend on quilt
-    + Bump Standards-Version to 3.8.1 (no changes needed)
+  * New upstream release.  This version contains the necessary changes to
+    src/music-players.h to make the library find all tracks in Zen Xtra
+    (closes: #519980).
+  * debian/control: Bump Standards-Version to 3.8.1 (no changes needed)
 
  -- Rafael Laboissiere <rafael@debian.org>  Mon, 16 Mar 2009 22:21:13 +0100
 
