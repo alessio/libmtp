@@ -1,3 +1,10 @@
+libmtp (0.3.7-2) UNRELEASED; urgency=low
+
+  * debian/libmtp.docs.in: Drop ChangeLog from the list of doc files,
+    since dh_installchangelogs takes care of it
+
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 29 Mar 2009 23:50:16 +0200
+
 libmtp (0.3.7-1) experimental; urgency=low
 
   * New upstream release.  This version contains the necessary changes to
