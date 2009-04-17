@@ -1,5 +1,7 @@
-libmtp (0.3.7-2) UNRELEASED; urgency=low
+libmtp (0.3.7-2) unstable; urgency=low
 
+  * Upload to unstable, now that the libmtp7 -> libmtp8 transition is
+    completed
   * debian/libmtp.docs.in: Drop ChangeLog from the list of doc files,
     since dh_installchangelogs takes care of it
 
