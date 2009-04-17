@@ -1,3 +1,11 @@
+libmtp (0.3.7-3) UNRELEASED; urgency=low
+
+  * debian/control: The package is now maintained with Git at
+    alioth.debian.org.  Add Vcs-Git field and change Vcs-Browser
+    accordingly.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 17 Apr 2009 17:18:29 +0200
+
 libmtp (0.3.7-2) unstable; urgency=low
 
   * Upload to unstable, now that the libmtp7 -> libmtp8 transition is
