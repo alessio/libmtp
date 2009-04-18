@@ -1,4 +1,4 @@
-libmtp (0.3.7-3) UNRELEASED; urgency=low
+libmtp (0.3.7-3) unstable; urgency=low
 
   * debian/control.in:
     + Reword the long description of the packages.  Thanks to Gerfried
