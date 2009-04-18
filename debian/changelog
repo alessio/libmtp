@@ -1,8 +1,10 @@
 libmtp (0.3.7-3) UNRELEASED; urgency=low
 
-  * debian/control: The package is now maintained with Git at
-    alioth.debian.org.  Add Vcs-Git field and change Vcs-Browser
-    accordingly.
+  * debian/control.in:
+    + Reword the long description of the packages.  Thanks to Gerfried
+      Fuchs for the feedback (closes: #524041)
+    + The package is now maintained with Git at alioth.debian.org.  Add
+      Vcs-Git field and change Vcs-Browser accordingly.
 
  -- Rafael Laboissiere <rafael@debian.org>  Fri, 17 Apr 2009 17:18:29 +0200
 
