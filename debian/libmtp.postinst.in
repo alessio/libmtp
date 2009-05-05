@@ -1,0 +1,60 @@
+#!/bin/sh
+# preinst script for libmtp
+
+set -e
+
+PACKAGE=libmtp@SOVERSION@
+
+# Move a conffile without triggering a dpkg question
+mv_conffile() {
+    OLDCONFFILE="$1"
+    NEWCONFFILE="$2"
+    if [ -e "$OLDCONFFILE" ]; then
+        echo "Preserving user changes to $NEWCONFFILE ..."
+        mv -f "$NEWCONFFILE" "$NEWCONFFILE".dpkg-new
+        mv -f "$OLDCONFFILE" "$NEWCONFFILE"
+    fi
+}
+
+case "$1" in
+configure)
+    if dpkg --compare-versions "$2" lt-nl 0.3.7-3 ; then
+        mv_conffile /etc/udev/libmtp@SOVERSION@.rules \
+		    /etc/udev/rules.d/45-libmtp@SOVERSION@.rules
+    fi
+
+esac
+
+#DEBHELPER#
+
+exit 0
+#!/bin/sh
+# preinst script for libmtp
+
+set -e
+
+PACKAGE=libmtp@SOVERSION@
+
+# Move a conffile without triggering a dpkg question
+mv_conffile() {
+    OLDCONFFILE="$1"
+    NEWCONFFILE="$2"
+    if [ -e "$OLDCONFFILE" ]; then
+        echo "Preserving user changes to $NEWCONFFILE ..."
+        mv -f "$NEWCONFFILE" "$NEWCONFFILE".dpkg-new
+        mv -f "$OLDCONFFILE" "$NEWCONFFILE"
+    fi
+}
+
+case "$1" in
+configure)
+    if dpkg --compare-versions "$2" lt-nl 0.3.7-3 ; then
+        mv_conffile /etc/udev/$PACKAGE.rules \
+		    /etc/udev/rules.d/45-$PACKAGE.rules
+    fi
+
+esac
+
+#DEBHELPER#
+
+exit 0

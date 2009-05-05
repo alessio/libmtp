@@ -1,3 +1,17 @@
+libmtp (0.3.7-3.1) unstable; urgency=low
+
+  * Non-maintainer upload. Changes are taken from Ubuntu and based on patches 
+    by Flávio Martins, Martin Pitt and Scott James Remnant.
+  * debian/control: Add Breaks to ensure the right udev version gets used.
+  * debian/libmtp.install.in, debian/libmtp.preinst.in, 
+    debian/libmtp.postinst.in: Clean up the mess where files were still going 
+    into the wrong directory.
+  * debian/rules: Append proper prefix 45- to libmtp rules in UDEV variable
+  * debian/libmtp.install.in: ../../45-libmtp@SOVERSION@.rules lib/udev/rules.d
+  * Removed libmtp.links.in - Install rules directly instead of a link.
+
+ -- Savvas Radevic <vicedar@gmail.com>  Sat, 18 Apr 2009 19:58:14 +0100
+
 libmtp (0.3.7-3) unstable; urgency=low
 
   * debian/control.in:

@@ -9,9 +9,9 @@ XP = xsltproc -''-nonet
 SOVERSION = 8
 SUBSTFILES = debian/libmtp$(SOVERSION).docs	\
 	debian/libmtp$(SOVERSION).install	\
-	debian/libmtp$(SOVERSION).links		\
-	debian/libmtp$(SOVERSION).preinst
-UDEVFILES = libmtp$(SOVERSION).rules 20-libmtp$(SOVERSION).fdi
+	debian/libmtp$(SOVERSION).preinst	\
+	debian/libmtp$(SOVERSION).postinst
+UDEVFILES = 45-libmtp$(SOVERSION).rules 20-libmtp$(SOVERSION).fdi
 
 debdir = $(CURDIR)/debian
 debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \

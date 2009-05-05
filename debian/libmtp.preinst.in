@@ -25,12 +25,39 @@ rm_conffile() {
     fi
 }
 
+# Prepare to move a conffile without triggering a dpkg question
+prep_mv_conffile() {
+    PKGNAME="$1"
+    CONFFILE="$2"
+    if [ -e "$CONFFILE" ]; then
+        md5sum="`md5sum \"$CONFFILE\" | sed -e \"s/ .*//\"`"
+        old_md5sum="`dpkg-query -W -f='${Conffiles}' $PKGNAME | sed -n -e \"\\\\' $CONFFILE '{s/ obsolete$//;s/.* //p}\"`"
+        if [ "$md5sum" = "$old_md5sum" ]; then
+            rm -f "$CONFFILE"
+        fi
+    fi
+}
+
 case "$1" in
 install|upgrade)
     if dpkg --compare-versions "$2" le 0.2.5-1 ; then
         rm_conffile $PACKAGE /etc/hotplug/usb/$PACKAGE.usermap
         rm_conffile $PACKAGE /etc/hotplug/usb/$PACKAGE.sh
     fi
+    if dpkg --compare-versions "$2" le 0.3.7-3 ; then
+	rm -f /etc/udev/rules.d/libmtp@SOVERSION@.rules
+	prep_mv_conffile $PACKAGE /etc/udev/libmtp@SOVERSION@.rules
+    if [ -e "/etc/udev/rules.d/45-libmtp8.rules" ]; then
+		if [ "`md5sum \"/etc/udev/rules.d/45-libmtp8.rules\" | sed -e \"s/ .*//\"`" = \
+		     "`dpkg-query -W -f='${Conffiles}' $PACKAGE | sed -n -e \"\\\\' /etc/udev/rules.d/45-libmtp8.rules's/.* //p\"`" ]
+		then
+			rm -f "/etc/udev/rules.d/45-libmtp8.rules"
+		fi
+	fi
+        rm -f /etc/udev/libmtp.rules
+        rm -f /etc/udev/libmtp@SOVERSION@.rules
+    fi
+
 esac
 
 #DEBHELPER#
