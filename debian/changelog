@@ -1,4 +1,4 @@
-libmtp (0.3.7-4) UNRELEASED; urgency=low
+libmtp (0.3.7-4) unstable; urgency=low
 
   [ Savvas Radevic ]
   * Use proper udev rules folder and not a link (closes: Bug#527108).
