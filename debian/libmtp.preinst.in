@@ -40,10 +40,6 @@ prep_mv_conffile() {
 
 case "$1" in
 install|upgrade)
-    if dpkg --compare-versions "$2" le 0.2.5-1 ; then
-        rm_conffile $PACKAGE /etc/hotplug/usb/$PACKAGE.usermap
-        rm_conffile $PACKAGE /etc/hotplug/usb/$PACKAGE.sh
-    fi
     if dpkg --compare-versions "$2" le 0.3.7-3 ; then
 	rm -f /etc/udev/rules.d/$PACKAGE.rules
 	prep_mv_conffile $PACKAGE /etc/udev/$PACKAGE.rules
