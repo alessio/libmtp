@@ -45,8 +45,8 @@ install|upgrade)
         rm_conffile $PACKAGE /etc/hotplug/usb/$PACKAGE.sh
     fi
     if dpkg --compare-versions "$2" le 0.3.7-3 ; then
-	rm -f /etc/udev/rules.d/libmtp@SOVERSION@.rules
-	prep_mv_conffile $PACKAGE /etc/udev/libmtp@SOVERSION@.rules
+	rm -f /etc/udev/rules.d/$PACKAGE.rules
+	prep_mv_conffile $PACKAGE /etc/udev/$PACKAGE.rules
     if [ -e "/etc/udev/rules.d/45-libmtp8.rules" ]; then
 		if [ "`md5sum \"/etc/udev/rules.d/45-libmtp8.rules\" | sed -e \"s/ .*//\"`" = \
 		     "`dpkg-query -W -f='${Conffiles}' $PACKAGE | sed -n -e \"\\\\' /etc/udev/rules.d/45-libmtp8.rules's/.* //p\"`" ]
@@ -55,7 +55,7 @@ install|upgrade)
 		fi
 	fi
         rm -f /etc/udev/libmtp.rules
-        rm -f /etc/udev/libmtp@SOVERSION@.rules
+        rm -f /etc/udev/$PACKAGE.rules
     fi
 
 esac
