@@ -1,3 +1,11 @@
+libmtp (0.3.7-5) UNRELEASED; urgency=low
+
+  * debian/libmtp.postinst.in: Remove broken link in /etc/udev/rules.d
+    introduced in the previous version of the package, thanks to Savvas
+    Radevic (closes: #527206)
+
+ -- Rafael Laboissiere <rafael@debian.org>  Wed, 06 May 2009 15:32:34 +0200
+
 libmtp (0.3.7-4) unstable; urgency=low
 
   [ Savvas Radevic ]

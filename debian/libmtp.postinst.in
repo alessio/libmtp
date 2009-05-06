@@ -18,11 +18,12 @@ mv_conffile() {
 
 case "$1" in
 configure)
+    # Remove broken link (0.3.7-3 upgrade, bug #527206)
+    rm -f /etc/udev/rules.d/libmtp8.rules
     if dpkg --compare-versions "$2" lt-nl 0.3.7-3 ; then
         mv_conffile /etc/udev/$PACKAGE.rules \
 		    /etc/udev/rules.d/45-$PACKAGE.rules
     fi
-
 esac
 
 #DEBHELPER#
