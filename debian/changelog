@@ -6,6 +6,11 @@ libmtp (0.3.7-6) UNRELEASED; urgency=low
     + (Vcs-Git, Vcs-Browser) Adjust to collab-maint
     + (Uploaders) Add myself and Savvas Radevic
 
+  * debian/libmtp.postinst.in: Do safeguard tests to avoid the removal of
+    file /etc/udev/rules.d/libmtp8.rules that could have been changed by
+    the user.  Thanks to Michael Biebl for the suggestion and the
+    discussion.
+
  -- Rafael Laboissiere <rafael@debian.org>  Thu, 07 May 2009 16:39:34 +0200
 
 libmtp (0.3.7-5) unstable; urgency=low
