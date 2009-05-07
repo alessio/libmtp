@@ -1,7 +1,9 @@
 Source: libmtp
 Section: libs
 Priority: optional
-Maintainer: Rafael Laboissiere <rafael@debian.org>
+Maintainer: libmtp Debian package development <rafael-libmtp@debian.org>
+Uploaders: Rafael Laboissiere <rafael@debian.org>,
+ Savvas Radevic <vicedar@gmail.com>
 Build-Depends: libusb-dev, doxygen, debhelper (>= 5), cdbs,
  dpkg-dev (>= 1.13.19), xsltproc, docbook-xsl, chrpath
 Standards-Version: 3.8.1

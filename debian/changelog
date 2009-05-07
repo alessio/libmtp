@@ -2,7 +2,9 @@ libmtp (0.3.7-6) UNRELEASED; urgency=low
 
   * The package is now maintained through the collab-maint group at Alioth
   * debian/control:
+    + (Maintainer) Set to the rafael-libmtp mailing list
     + (Vcs-Git, Vcs-Browser) Adjust to collab-maint
+    + (Uploaders) Add myself and Savvas Radevic
 
  -- Rafael Laboissiere <rafael@debian.org>  Thu, 07 May 2009 16:39:34 +0200
 
