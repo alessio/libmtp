@@ -1,4 +1,4 @@
-libmtp (0.3.7-6) UNRELEASED; urgency=low
+libmtp (0.3.7-6) unstable; urgency=low
 
   * The package is now maintained through the collab-maint group at Alioth
   * debian/control:
