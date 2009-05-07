@@ -1,3 +1,11 @@
+libmtp (0.3.7-6) UNRELEASED; urgency=low
+
+  * The package is now maintained through the collab-maint group at Alioth
+  * debian/control:
+    + (Vcs-Git, Vcs-Browser) Adjust to collab-maint
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu, 07 May 2009 16:39:34 +0200
+
 libmtp (0.3.7-5) unstable; urgency=low
 
   * debian/libmtp.postinst.in: Remove broken link in /etc/udev/rules.d
