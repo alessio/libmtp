@@ -20,7 +20,7 @@ case "$1" in
 configure)
     # Remove broken link (0.3.7-3 upgrade, bug #527206)
     oldlink=/etc/udev/rules.d/libmtp8.rules
-    if [ -L $oldlink && ! -f $oldlink ] ; then
+    if [ -L $oldlink -a ! -f $oldlink ] ; then
         rm -f $oldlink
     fi
 
