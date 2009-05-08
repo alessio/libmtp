@@ -1,4 +1,4 @@
-libmtp (0.3.7-7) UNRELEASED; urgency=low
+libmtp (0.3.7-7) unstable; urgency=low
 
   * debian/libmtp.postinst.in: Fix syntax error in logical expression
     (closes: #527550)
