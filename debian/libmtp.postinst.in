@@ -24,6 +24,14 @@ configure)
         rm -f $oldlink
     fi
 
+    # Remove broken link, libmtp5 leftover (bug #531538)
+    oldlink2=/etc/udev/rules.d/libmtp.rules
+    if [ -L $oldlink2 -a ! -f $oldlink2 ] ; then
+        rm -f $oldlink2
+    fi
+
+    # If rules file is in /etc/udev/, move it to correct path /etc/udev/rules.d/ 
+    # with 45- prefix
     if dpkg --compare-versions "$2" lt-nl 0.3.7-3 ; then
         mv_conffile /etc/udev/$PACKAGE.rules \
 		    /etc/udev/rules.d/45-$PACKAGE.rules
