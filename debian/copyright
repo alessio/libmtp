@@ -1,35 +1,148 @@
-This package was debianized by Jean Parpaillon <artefact@altern.org> on
-Wed,  9 Aug 2006 14:55:02 +0100.
+Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=59
+Name: libmtp
+Maintainer:
+ Richard A. Low <richard@wentnet.com>
+ Linus Walleij <triad@df.lth.se>
+Source: http://libmtp.sourceforge.net/download.php
 
-It was downloaded from http://libmtp.sourceforge.net/
+Files: *
+Copyright: 2005-2008, Richard A. Low and Linus Walleij
+License: LGPL-2+
 
-Upstream authors:
-- Richard A. Low <richard@wentnet.com>
-- Linus Walleij <triad@df.lth.se>
+Files: src/ptp.h:
+Copyright: 2001, Mariusz Woloszyn <emsi@ipartners.pl>
+License: LGPL-2+
 
+Files src/ptp-pack.c:
+Copyright: 2003, Nikolai Kopanygin
+License: LGPL-2+
+
+Files: src/device-flags.h, src/libusb-glue.*
 Copyright:
+ 2008, Chris Bagwell <chris@cnpbagwell.com>
+ 2007, Ted Bullock
+ 2006-2007, Marcus Meissner
+ 2005-2007, Richard A. Low <richard@wentnet.com>
+ 2005-2007, Linus Walleij <triad@df.lth.se>
+License: LGPL-2+
 
-Most of the source files do not have copyright notices and/or licensing
-conditions.  From the presence of a LGPL COPYING file in the upstream
-tarball and from the information in the ChangeLog file, we can deduce that:
+Files: src/music-players.h
+Copyright: 
+ 2007, Ted Bullock
+ 2005-2009, Linus Walleij <triad@df.lth.se>
+ 2006-2007, Marcus Meissner
+ 2005-2007, Richard A. Low <richard@wentnet.com>]
+License: LGPL-2+
 
-    Copyright (c) 2006, 2007   Richard A. Low and Linus Walleij
+Files: src/playlist-spl.c
+Copyright: 2008, Alistair Boyle <alistair.js.boyle@gmail.com>
+License: LGPL-2+
 
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted under the terms of the GNU LGPL 2.1.
+Files: src/ptp.c:
+Copyright:
+ 2007, Tero Saarni <tero.saarni@gmail.com>
+ 2006, Linus Walleij <triad@df.lth.se>
+ 2003-2006, Marcus Meissner <marcus@jet.franken.de>
+ 2001-2004, Mariusz Woloszyn <emsi@ipartners.pl>
+License: LGPL-2+
 
-The following files have copyright notices (all released under the GNU LGPL):
+Files: src/libmtp.h:
+Copyright:
+ 2005-2008, Linus Walleij <triad@df.lth.se>
+ 2005-2008, Richard A. Low <richard@wentnet.com>
+ 2007, Ted Bullock <tbullock@canada.com>
+ 2008, Florent Mertens <flomertens@gmail.com>
+License: LGPL-2+
 
-* src/ptp.h:
-     Copyright (C) 2001 Mariusz Woloszyn <emsi@ipartners.pl>
+Files:
+ examples/delfile.c, examples/pathutils.c, examples/connect.c,
+ examples/newfolder.c, examples/getfile.c
+Copyright:
+ 2005-2009, Linus Walleij <triad@df.lth.se>
+ 2006, Chris A. Debenham <chris@adebenham.com>
+License: LGPL-2+
 
-* src/ptp-pack.c:
-     Copyright (c) 2003 Nikolai Kopanygin
+Files: examples/albums.c
+Copyright:
+ 2006, Chris A. Debenham <chris@adebenham.com>
+ 2007, Ted Bullock <tbullock@canada.com>
+License: LGPL-2+
 
-* src/ptp.c:
-     Copyright (C) 2001-2004 Mariusz Woloszyn <emsi@ipartners.pl>
-     Copyright (C) 2003-2006 Marcus Meissner <marcus@jet.franken.de>
-     Copyright (C) 2006 Linus Walleij <triad@df.lth.se>
+Files: examples/tracks.c, examples/files.c, examples/folders.c
+Copyright:
+ 2007, Ted Bullock <tbullock@canada.com>
+ 2005-2007, Linus Walleij <triad@df.lth.se>
+License: LGPL-2+
 
-The complete text of the LGPL License can be found in
-`/usr/share/common-licenses/LGPL-2.1'.
+Files: examples/newplaylist.c, examples/thumb.c
+Copyright: 2006, Robert Reardon <rreardon@monkshatch.vispa.com>
+License: LGPL-2+
+
+Files: examples/albumart.c, examples/emptyfolders.c
+Copyright: 2006, Andy Kelk <andy@mopoke.co.uk>
+License: LGPL-2+
+
+Files: examples/hotplug.c
+Copyright:
+ 2006-2008, Marcus Meissner <marcus@jet.franken.de>
+ 2005-2007, Linus Walleij <triad@df.lth.se>
+License: LGPL-2+
+
+Files: examples/pathutils.h
+Copyright: 2006, Chris A. Debenham <chris@adebenham.com>
+License: LGPL-2+
+
+Files: examples/sendtr.c
+Copyright:
+ 2003-2005, Shaun Jackman
+ 2006, Chris A. Debenham <chris@adebenham.com>
+ 2003-2005, Enrique Jorrete Ledesma
+ 2003-2009, Linus Walleij <triad@df.lth.se>
+ 2008, Nicolas Pennequin <nicolas.pennequin@free.fr>
+ 2008, Joseph Nahmias <joe@nahmias.net>]
+License: LGPL-2+
+
+Files: examples/trexist.c
+Copyright: 2006, The libmtp development team
+License: LGPL-2+
+
+Files: debian/*
+Copyright:
+ 2010, Alessio Treglia <quadrispro@ubuntu.com>
+ 2007-2009, Rafael Laboissiere <rafael@debian.org>
+ 2006, Jean Parpaillon <artefact@altern.org>
+License: LGPL-2.1+
+
+License: LGPL-2
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+ .
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
+X-Comment: On Debian systems the full text of the GNU Lesser General Public
+ License can be found in the `/usr/share/common-licenses/LGPL-2' file.
+
+License: LGPL-2.1
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+X-Comment: On Debian systems the full text of the GNU Lesser General Public
+ License can be found in the `/usr/share/common-licenses/LGPL-2.1' file.

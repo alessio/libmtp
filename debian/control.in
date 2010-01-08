@@ -1,17 +1,21 @@
 Source: libmtp
 Section: libs
 Priority: optional
-Maintainer: libmtp Debian package development <rafael-libmtp@debian.org>
-Uploaders: Rafael Laboissiere <rafael@debian.org>,
- Savvas Radevic <vicedar@gmail.com>
-Build-Depends: libusb-dev, doxygen, debhelper (>= 5), cdbs,
- dpkg-dev (>= 1.13.19), xsltproc, docbook-xsl, chrpath
-Standards-Version: 3.8.1
+Maintainer: Alessio Treglia <quadrispro@ubuntu.com>
+Build-Depends: libusb-dev,
+ doxygen,
+ debhelper (>= 5),
+ cdbs,
+ dpkg-dev (>= 1.13.19),
+ xsltproc,
+ docbook-xsl,
+ chrpath
+Standards-Version: 3.8.3
 Homepage: http://libmtp.sourceforge.net/
 Vcs-Git: git://git.debian.org/git/collab-maint/libmtp.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
 
-Package: libmtp@SOVERSION@
+Package: libmtp8
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: ${udev}
@@ -28,7 +32,7 @@ Description: Media Transfer Protocol (MTP) library
 Package: libmtp-dev
 Section: libdevel
 Architecture: any
-Depends: libmtp@SOVERSION@ (= ${binary:Version}), libusb-dev (>> 0.1.7),
+Depends: libmtp8 (= ${binary:Version}), libusb-dev (>> 0.1.7),
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) development files
  libmtp is a library for communicating with MTP aware devices in POSIX
@@ -59,7 +63,7 @@ Description: Media Transfer Protocol (MTP) library documentation
 Package: mtp-tools
 Section: utils
 Architecture: any
-Depends: libmtp@SOVERSION@ (= ${binary:Version}), ${shlibs:Depends},
+Depends: libmtp8 (= ${binary:Version}), ${shlibs:Depends},
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) library tools
  libmtp is a library for communicating with MTP aware devices in POSIX

@@ -1,6 +1,6 @@
-libmtp (0.3.7-8) unstable; urgency=low
+libmtp (1.0.1-1) unstable; urgency=low
 
-  * Non-maintainer upload
+  [ Savvas Radevic ]
   * debian/libmtp.postinst.in: Remove broken symlink 
     /etc/udev/rules.d/libmtp.rules (Closes: #531538)
   * debian/libmtp.preinst.in: Remove /etc/udev/libmtp.rules file only when 
@@ -8,7 +8,14 @@ libmtp (0.3.7-8) unstable; urgency=low
   * debian/libmtp.{pre,post}inst.in: Replaced tabs with 4 spaces.
   * Added debian/README.Source to make things a bit more sane.
 
- -- Savvas Radevic <vicedar@gmail.com>  Fri, 08 May 2009 07:22:24 +0200
+  [ Alessio Treglia ]
+  * Adopting this (Closes: #560098).
+  * New upstream release (Closes: #543533).
+  * Bump Standards-Version to 3.8.3.
+  * Register the developer reference with doc-base.
+  * Update debian/copyright (also according to Debian DEP-5 proposal).
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Fri, 08 Jan 2010 10:24:21 +0100
 
 libmtp (0.3.7-7) unstable; urgency=low
 
