@@ -1,4 +1,4 @@
-libmtp (1.0.1-1) UNRELEASED; urgency=low
+libmtp (1.0.1-1) unstable; urgency=low
 
   [ Savvas Radevic ]
   * debian/libmtp.postinst.in: Remove broken symlink 
