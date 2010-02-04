@@ -1,3 +1,9 @@
+libmtp (1.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Thu, 04 Feb 2010 16:34:58 +0100
+
 libmtp (1.0.1-2) unstable; urgency=low
 
   * Correct mtp-tools links (Closes: #564839).
