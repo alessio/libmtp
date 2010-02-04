@@ -2,6 +2,7 @@ libmtp (1.0.2-1) unstable; urgency=low
 
   * New upstream release.
   * Update symbols file.
+  * Set DMUA to yes.
 
  -- Alessio Treglia <quadrispro@ubuntu.com>  Thu, 04 Feb 2010 16:34:58 +0100
 
