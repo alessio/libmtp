@@ -11,6 +11,7 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Format_Storage@Base 0.3.1
  LIBMTP_Get_Album@Base 0.3.1
  LIBMTP_Get_Album_List@Base 0.3.1
+ LIBMTP_Get_Album_List_For_Storage@Base 1.0.2
  LIBMTP_Get_Batterylevel@Base 0.3.1
  LIBMTP_Get_Connected_Devices@Base 0.3.1
  LIBMTP_Get_Device_Certificate@Base 0.3.1
@@ -41,6 +42,7 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Get_Track_To_File_Descriptor@Base 0.3.1
  LIBMTP_Get_Tracklisting@Base 0.3.1
  LIBMTP_Get_Tracklisting_With_Callback@Base 0.3.1
+ LIBMTP_Get_Tracklisting_With_Callback_For_Storage@Base 1.0.2
  LIBMTP_Get_Trackmetadata@Base 0.3.1
  LIBMTP_Init@Base 0.3.1
  LIBMTP_Number_Devices_In_List@Base 0.3.1
@@ -54,6 +56,7 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Send_Track_From_File@Base 0.3.1
  LIBMTP_Send_Track_From_File_Descriptor@Base 0.3.1
  LIBMTP_Set_Album_Name@Base 0.3.3
+ LIBMTP_Set_Debug@Base 1.0.2
  LIBMTP_Set_File_Name@Base 0.3.3
  LIBMTP_Set_Folder_Name@Base 0.3.3
  LIBMTP_Set_Friendlyname@Base 0.3.1
