@@ -34,7 +34,7 @@
 #endif
 
 static void usage(void) {
-  printf("Usage: albumart -i <fileid/trackid> -n <albumname> <imagefile>\n");
+  printf("Usage: albumart -d -i <fileid/trackid> -n <albumname> -s <storage_id> -p <parent_id> <imagefile>\n");
   exit(0);
 }
 
@@ -53,13 +53,18 @@ int main (int argc, char **argv) {
   char *path = NULL;
   char *rest;
   struct stat statbuff;
+  uint32_t storageid = 0;
+  uint32_t parentid = 0;
 
   fprintf(stdout, "libmtp version: " LIBMTP_VERSION_STRING "\n\n");
 
-  while ( (opt = getopt(argc, argv, "hn:i:")) != -1 ) {
+  while ( (opt = getopt(argc, argv, "dhn:i:s:p:")) != -1 ) {
     switch (opt) {
     case 'h':
       usage();
+    case 'd':
+      LIBMTP_Set_Debug(9);
+      break;
     case 'i':
       idcount++;
       if ((tmp = realloc(ids, sizeof(uint32_t) * (idcount))) == NULL) {
@@ -72,6 +77,12 @@ int main (int argc, char **argv) {
     case 'n':
       albumname = strdup(optarg);
       break;
+    case 's':
+      storageid = (uint32_t) strtoul(optarg, NULL, 0);
+	  break;
+    case 'p':
+      parentid = (uint32_t) strtoul(optarg, NULL, 0);
+	  break;
     default:
       usage();
     }
@@ -133,8 +144,8 @@ int main (int argc, char **argv) {
   album->name = albumname;
   album->no_tracks = idcount;
   album->tracks = ids;
-  album->parent_id = 0;
-  album->storage_id = 0;
+  album->parent_id = parentid;
+  album->storage_id = storageid;
   int ret = LIBMTP_Create_New_Album(device,album);
   if (ret == 0) {
     ret = LIBMTP_Send_Representative_Sample(device,album->album_id, albumart);

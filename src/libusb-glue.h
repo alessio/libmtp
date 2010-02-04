@@ -40,6 +40,22 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/**
+ * Debug macro
+ */
+#define LIBMTP_USB_DEBUG(format, args...) \
+  do { \
+    if ((LIBMTP_debug & LIBMTP_DEBUG_USB) != 0) \
+      fprintf(stdout, "LIBMTP %s[%d]: " format, __FUNCTION__, __LINE__, ##args); \
+  } while (0)
+
+#define LIBMTP_USB_DATA(buffer, length, base) \
+  do { \
+    if ((LIBMTP_debug & LIBMTP_DEBUG_DATA) != 0) \
+      data_dump_ascii (stdout, buffer, length, base); \
+  } while (0)
+
+
 #define USB_BULK_READ usb_bulk_read
 #define USB_BULK_WRITE usb_bulk_write
 
@@ -116,6 +132,10 @@ void get_usb_device_timeout(PTP_USB *ptp_usb, int *timeout);
   ((a)->rawdevice.device_entry.device_flags & DEVICE_FLAG_BROKEN_BATTERY_LEVEL)
 #define FLAG_FLAC_IS_UNKNOWN(a) \
   ((a)->rawdevice.device_entry.device_flags & DEVICE_FLAG_FLAC_IS_UNKNOWN)
+#define FLAG_UNIQUE_FILENAMES(a) \
+  ((a)->rawdevice.device_entry.device_flags & DEVICE_FLAG_UNIQUE_FILENAMES)
+#define FLAG_SWITCH_MODE_BLACKBERRY(a) \
+  ((a)->rawdevice.device_entry.device_flags & DEVICE_FLAG_SWITCH_MODE_BLACKBERRY)
 
 /* connect_first_device return codes */
 #define PTP_CD_RC_CONNECTED	0

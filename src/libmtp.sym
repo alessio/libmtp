@@ -1,3 +1,4 @@
+LIBMTP_Set_Debug
 LIBMTP_Init
 LIBMTP_Get_Supported_Devices_List
 LIBMTP_Detect_Raw_Devices
@@ -45,6 +46,7 @@ LIBMTP_new_track_t
 LIBMTP_destroy_track_t
 LIBMTP_Get_Tracklisting
 LIBMTP_Get_Tracklisting_With_Callback
+LIBMTP_Get_Tracklisting_With_Callback_For_Storage
 LIBMTP_Get_Trackmetadata
 LIBMTP_Get_Track_To_File
 LIBMTP_Get_Track_To_File_Descriptor
@@ -66,6 +68,7 @@ LIBMTP_Update_Playlist
 LIBMTP_new_album_t
 LIBMTP_destroy_album_t
 LIBMTP_Get_Album_List
+LIBMTP_Get_Album_List_For_Storage
 LIBMTP_Get_Album
 LIBMTP_Create_New_Album
 LIBMTP_Update_Album
