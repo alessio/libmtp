@@ -1,3 +1,12 @@
+libmtp (1.0.2-2) unstable; urgency=medium
+
+  * Bump Standards.
+  * Sync controls files.
+  * debian/libmtp.preinst.in: Replace '\s' with '\ ' when retrieving
+    libmtp* package list (Closes: #568189).
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Sat, 20 Feb 2010 20:45:08 +0100
+
 libmtp (1.0.2-1) unstable; urgency=low
 
   * New upstream release.
