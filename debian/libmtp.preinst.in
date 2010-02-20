@@ -64,7 +64,7 @@ install|upgrade)
         # Default: Remove /etc/udev/libmtp.rules
         removeit="1"
         # Get libmtp* package list in the format '${Package} ${Version}'
-        listpkgs="`dpkg-query -W -f '${Package} ${Version}\n' 'libmtp*' | grep '^libmtp[0-9]\+\s'`"
+        listpkgs="`dpkg-query -W -f '${Package} ${Version}\n' 'libmtp*' | grep '^libmtp[0-9]\+\ '`"
         # Separate by new line
         IFS=$(printf "\n")
         for ipkg in $listpkgs; do
