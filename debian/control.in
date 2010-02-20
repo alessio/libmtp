@@ -10,7 +10,8 @@ Build-Depends: libusb-dev,
  xsltproc,
  docbook-xsl,
  chrpath
-Standards-Version: 3.8.3
+Standards-Version: 3.8.4
+DM-Upload-Allowed: yes
 Homepage: http://libmtp.sourceforge.net/
 Vcs-Git: git://git.debian.org/git/collab-maint/libmtp.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
