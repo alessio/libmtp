@@ -37,6 +37,9 @@ install/libmtp-doc::
 		../../../debian/sanitize-manpage.pl < $$i > mtp_$$i ;	\
 	  done )
 
+binary-install/libmtp-dev::
+	rm -f debian/libmtp-dev/usr/lib/libmtp.la
+
 build/libmtp$(SOVERSION)::
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
