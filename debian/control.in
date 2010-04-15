@@ -5,7 +5,7 @@ Maintainer: Alessio Treglia <quadrispro@ubuntu.com>
 Build-Depends: libusb-dev,
  doxygen,
  debhelper (>= 5),
- cdbs,
+ cdbs (>= 0.4.37),
  dpkg-dev (>= 1.13.19),
  xsltproc,
  docbook-xsl,
@@ -45,6 +45,24 @@ Description: Media Transfer Protocol (MTP) development files
  USB digital audio players and movie files on USB portable media players.
  .
  This package contains the headers and development libraries.
+
+Package: libmtp-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: libmtp@SOVERSION@ (= ${binary:Version}),
+ mtp-tools (= ${binary:Version}),
+ ${misc:Depends}
+Description: Media Transfer Protocol (MTP) debugging symbols
+ libmtp is a library for communicating with MTP aware devices in POSIX
+ compliant operating systems.  It implements MTP Basic, the subset
+ proposed for standardization.
+ .
+ The Media Transfer Protocol (commonly referred to as MTP) is a devised
+ set of custom extensions to support the transfer of music files on
+ USB digital audio players and movie files on USB portable media players.
+ .
+ This package contains the debugging symbols.
 
 Package: libmtp-doc
 Section: doc
