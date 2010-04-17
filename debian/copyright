@@ -1,23 +1,30 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=59
+Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
 Name: libmtp
 Maintainer:
  Richard A. Low <richard@wentnet.com>
  Linus Walleij <triad@df.lth.se>
 Source: http://libmtp.sourceforge.net/download.php
 
-Files: *
-Copyright: 2005-2008, Richard A. Low and Linus Walleij
+Copyright: 2005-2009, Richard A. Low and Linus Walleij
 License: LGPL-2+
 
-Files: src/ptp.h:
+Files: ./src/ptp.h
 Copyright: 2001, Mariusz Woloszyn <emsi@ipartners.pl>
 License: LGPL-2+
 
-Files src/ptp-pack.c:
+Files: ./src/ptp-pack.c
 Copyright: 2003, Nikolai Kopanygin
 License: LGPL-2+
 
-Files: src/device-flags.h, src/libusb-glue.*
+Files: ./src/device-flags.h
+Copyright:
+ 2007, Ted Bullock
+ 2006-2007, Marcus Meissner
+ 2005-2007, Richard A. Low <richard@wentnet.com>
+ 2005-2007, Linus Walleij <triad@df.lth.se>
+License: LGPL-2+
+
+Files: ./src/libusb-glue.*
 Copyright:
  2008, Chris Bagwell <chris@cnpbagwell.com>
  2007, Ted Bullock
@@ -26,7 +33,7 @@ Copyright:
  2005-2007, Linus Walleij <triad@df.lth.se>
 License: LGPL-2+
 
-Files: src/music-players.h
+Files: ./src/music-players.h
 Copyright: 
  2007, Ted Bullock
  2005-2009, Linus Walleij <triad@df.lth.se>
@@ -34,11 +41,11 @@ Copyright:
  2005-2007, Richard A. Low <richard@wentnet.com>]
 License: LGPL-2+
 
-Files: src/playlist-spl.c
+Files: ./src/playlist-spl.c
 Copyright: 2008, Alistair Boyle <alistair.js.boyle@gmail.com>
 License: LGPL-2+
 
-Files: src/ptp.c:
+Files: ./src/ptp.c
 Copyright:
  2007, Tero Saarni <tero.saarni@gmail.com>
  2006, Linus Walleij <triad@df.lth.se>
@@ -46,53 +53,53 @@ Copyright:
  2001-2004, Mariusz Woloszyn <emsi@ipartners.pl>
 License: LGPL-2+
 
-Files: src/libmtp.h:
+Files: ./src/libmtp.*
 Copyright:
- 2005-2008, Linus Walleij <triad@df.lth.se>
+ 2005-2009, Linus Walleij <triad@df.lth.se>
  2005-2008, Richard A. Low <richard@wentnet.com>
  2007, Ted Bullock <tbullock@canada.com>
  2008, Florent Mertens <flomertens@gmail.com>
 License: LGPL-2+
 
 Files:
- examples/delfile.c, examples/pathutils.c, examples/connect.c,
- examples/newfolder.c, examples/getfile.c
+ ./examples/delfile.c, ./examples/pathutils.c, ./examples/connect.c,
+ ./examples/newfolder.c, ./examples/getfile.c
 Copyright:
  2005-2009, Linus Walleij <triad@df.lth.se>
  2006, Chris A. Debenham <chris@adebenham.com>
 License: LGPL-2+
 
-Files: examples/albums.c
+Files: ./examples/albums.c
 Copyright:
  2006, Chris A. Debenham <chris@adebenham.com>
  2007, Ted Bullock <tbullock@canada.com>
 License: LGPL-2+
 
-Files: examples/tracks.c, examples/files.c, examples/folders.c
+Files: ./examples/tracks.c, ./examples/files.c, ./examples/folders.c
 Copyright:
  2007, Ted Bullock <tbullock@canada.com>
  2005-2007, Linus Walleij <triad@df.lth.se>
 License: LGPL-2+
 
-Files: examples/newplaylist.c, examples/thumb.c
+Files: ./examples/newplaylist.c, ./examples/thumb.c
 Copyright: 2006, Robert Reardon <rreardon@monkshatch.vispa.com>
 License: LGPL-2+
 
-Files: examples/albumart.c, examples/emptyfolders.c
+Files: ./examples/albumart.c, ./examples/emptyfolders.c
 Copyright: 2006, Andy Kelk <andy@mopoke.co.uk>
 License: LGPL-2+
 
-Files: examples/hotplug.c
+Files: ./examples/hotplug.c
 Copyright:
  2006-2008, Marcus Meissner <marcus@jet.franken.de>
  2005-2007, Linus Walleij <triad@df.lth.se>
 License: LGPL-2+
 
-Files: examples/pathutils.h
+Files: ./examples/pathutils.h
 Copyright: 2006, Chris A. Debenham <chris@adebenham.com>
 License: LGPL-2+
 
-Files: examples/sendtr.c
+Files: ./examples/sendtr.c
 Copyright:
  2003-2005, Shaun Jackman
  2006, Chris A. Debenham <chris@adebenham.com>
@@ -102,11 +109,11 @@ Copyright:
  2008, Joseph Nahmias <joe@nahmias.net>]
 License: LGPL-2+
 
-Files: examples/trexist.c
+Files: ./examples/trexist.c
 Copyright: 2006, The libmtp development team
 License: LGPL-2+
 
-Files: debian/*
+Files: ./debian/*
 Copyright:
  2010, Alessio Treglia <quadrispro@ubuntu.com>
  2007-2009, Rafael Laboissiere <rafael@debian.org>
