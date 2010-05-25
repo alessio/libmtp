@@ -1,3 +1,37 @@
+2010-05-23  Linus Walleij <triad@df.lth.se>
+
+	* src/libusb-glue.c: don't probe HID equipment for device
+	  descriptors, some Kensington mice don't like that and
+	  there generally is not point either
+	* src/Makefile.am: interface libmtp.so.8.3.3
+	* configure.ac: libmtp 1.0.3
+	* Release 1.0.3
+
+2010-05-16  Richard Low <richard@wentnet.com>
+
+	* src/libusb-glue.c: usb bus location fix for Mac and disable
+	  usb_set_altinterface on Mac
+
+2010-04-25  Linus Walleij <triad@df.lth.se>
+
+	* src/ptp.c: sync to upstream.
+	* src/ptp.h: dito.
+	* src/playlist-spl.c: fix an issue with Samsung playlists disappearing
+	  since they were using a custom MTP type.
+	* src/libmtp.c: moan about PTP devices without MTP extension
+
+2010-04-05  Linus Walleij <triad@df.lth.se>
+
+	* src/ptp.c: sync to upstream.
+	* src/ptp.h: dito.
+	* src/ptp-pack.c: dito.
+
+2010-02-01  Linus Walleij <triad@df.lth.se>
+
+	* src/Makefile.am: interface libmtp.so.8.3.2
+	* configure.ac: libmtp 1.0.2
+	* Release 1.0.2.
+
 2010-01-30  Linus Walleij <triad@df.lth.se>
 
 	* examples/connect.c: bad prototype for sendtrack_.
