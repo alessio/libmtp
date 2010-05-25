@@ -561,6 +561,13 @@ ptp_free_params (PTPParams *params) {
 	for (i=0;i<params->nrofobjects;i++)
 		ptp_free_object (&params->objects[i]);
 	free (params->objects);
+	free (params->events);
+	for (i=0;i<params->nrofcanon_props;i++) {
+		free (params->canon_props[i].data);
+		ptp_free_devicepropdesc (&params->canon_props[i].dpd);
+	}
+	free (params->canon_props);
+	free (params->backlogentries);
 	ptp_free_DI (&params->deviceinfo);
 }
 
@@ -712,6 +719,52 @@ ptp_getnumobjects (PTPParams* params, uint32_t storage,
 }
 
 /**
+ * ptp_eos_bulbstart:
+ * params:	PTPParams*
+ *
+ * Starts EOS Bulb capture.
+ *
+ * Return values: Some PTP_RC_* code.
+ **/
+uint16_t
+ptp_canon_eos_bulbstart (PTPParams* params)
+{
+	uint16_t ret;
+	PTPContainer ptp;
+
+	PTP_CNT_INIT(ptp);
+	ptp.Code   = PTP_OC_CANON_EOS_BulbStart;
+	ptp.Nparam = 0;
+	ret = ptp_transaction(params, &ptp, PTP_DP_NODATA, 0, NULL, NULL);
+	if ((ret == PTP_RC_OK) && (ptp.Nparam >= 1) && ((ptp.Param1 & 0x7000) == 0x2000))
+		ret = ptp.Param1;
+	return ret;
+}
+
+/**
+ * ptp_canon_eos_bulbend:
+ * params:	PTPParams*
+ *
+ * Starts EOS Bulb capture.
+ *
+ * Return values: Some PTP_RC_* code.
+ **/
+uint16_t
+ptp_canon_eos_bulbend (PTPParams* params)
+{
+	uint16_t ret;
+	PTPContainer ptp;
+
+	PTP_CNT_INIT(ptp);
+	ptp.Code   = PTP_OC_CANON_EOS_BulbEnd;
+	ptp.Nparam = 0;
+	ret = ptp_transaction(params, &ptp, PTP_DP_NODATA, 0, NULL, NULL);
+	if ((ret == PTP_RC_OK) && (ptp.Nparam >= 1) && ((ptp.Param1 & 0x7000) == 0x2000))
+		ret = ptp.Param1;
+	return ret;
+}
+
+/**
  * ptp_getobjectinfo:
  * params:	PTPParams*
  *		handle			- Object handle
@@ -824,6 +877,7 @@ ptp_getobject_tofd (PTPParams* params, uint32_t handle, int fd)
  *		offset			- Offset into object
  *		maxbytes		- Maximum of bytes to read
  *		object			- pointer to data area
+ *		len			- pointer to returned length
  *
  * Get object 'handle' from device and store the data in newly
  * allocated 'object'. Start from offset and read at most maxbytes.
@@ -832,10 +886,10 @@ ptp_getobject_tofd (PTPParams* params, uint32_t handle, int fd)
  **/
 uint16_t
 ptp_getpartialobject (PTPParams* params, uint32_t handle, uint32_t offset,
-			uint32_t maxbytes, unsigned char** object)
+			uint32_t maxbytes, unsigned char** object,
+			uint32_t *len)
 {
 	PTPContainer ptp;
-	unsigned int len;
 
 	PTP_CNT_INIT(ptp);
 	ptp.Code=PTP_OC_GetPartialObject;
@@ -843,8 +897,8 @@ ptp_getpartialobject (PTPParams* params, uint32_t handle, uint32_t offset,
 	ptp.Param2=offset;
 	ptp.Param3=maxbytes;
 	ptp.Nparam=3;
-	len=0;
-	return ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, object, &len);
+	*len=0;
+	return ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, object, len);
 }
 
 /**
@@ -1589,6 +1643,10 @@ ptp_get_one_event(PTPParams *params, PTPContainer *event) {
 	memmove (params->events, params->events+1, sizeof(PTPContainer)*(params->nrofevents-1));
 	/* do not realloc on shrink. */
 	params->nrofevents--;
+	if (!params->nrofevents) {
+		free (params->events);
+		params->events = NULL;
+	}
 	return 1;
 }
 
@@ -1620,8 +1678,54 @@ ptp_canon_eos_getevent (PTPParams* params, PTPCanon_changes_entry **entries, int
 	ret = ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, &data, &size);
 	if (ret != PTP_RC_OK) return ret;
         *nrofentries = ptp_unpack_CANON_changes(params,data,size,entries);
+	free (data);
 	return PTP_RC_OK;
 }
+
+uint16_t
+ptp_check_eos_events (PTPParams *params) {
+	uint16_t		ret;
+	PTPCanon_changes_entry	*entries = NULL, *nentries;
+	int			nrofentries = 0;
+
+	ret = ptp_canon_eos_getevent (params, &entries, &nrofentries);
+	if (ret != PTP_RC_OK)
+		return ret;
+	if (!nrofentries)
+		return PTP_RC_OK;
+
+	if (params->nrofbacklogentries) {
+		nentries = realloc(params->backlogentries,sizeof(entries[0])*(params->nrofbacklogentries+nrofentries));
+		if (!nentries)
+			return PTP_RC_GeneralError;
+		params->backlogentries = nentries;
+		memcpy (nentries+params->nrofbacklogentries, entries, nrofentries*sizeof(entries[0]));
+		params->nrofbacklogentries += nrofentries;
+		free (entries);
+	} else {
+		params->backlogentries = entries;
+		params->nrofbacklogentries = nrofentries;
+	}
+	return PTP_RC_OK;
+}
+
+int
+ptp_get_one_eos_event (PTPParams *params, PTPCanon_changes_entry *entry) {
+	if (!params->nrofbacklogentries)
+		return 0;
+	memcpy (entry, params->backlogentries, sizeof(*entry));
+	if (params->nrofbacklogentries > 1) {
+		memmove (params->backlogentries,params->backlogentries+1,sizeof(*entry)*(params->nrofbacklogentries-1));
+		params->nrofbacklogentries--;
+	} else {
+		free (params->backlogentries);
+		params->backlogentries = NULL;
+		params->nrofbacklogentries = 0;
+	}
+	return 1;
+}
+
+
 
 uint16_t
 ptp_canon_eos_getdevicepropdesc (PTPParams* params, uint16_t propcode,
@@ -1670,18 +1774,18 @@ ptp_canon_eos_getstorageids (PTPParams* params, PTPStorageIDs* storageids)
 }
 
 uint16_t
-ptp_canon_eos_getstorageinfo (PTPParams* params, uint32_t p1)
+ptp_canon_eos_getstorageinfo (PTPParams* params, uint32_t p1, unsigned char **data, unsigned int *size)
 {
 	PTPContainer ptp;
-	unsigned char	*data = NULL;
-	unsigned int	size = 0;
 	uint16_t	ret;
 	
+	*size = 0;
+	*data = NULL;
 	PTP_CNT_INIT(ptp);
 	ptp.Code 	= PTP_OC_CANON_EOS_GetStorageInfo;
 	ptp.Nparam	= 1;
 	ptp.Param1	= p1;
-	ret = ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, &data, &size);
+	ret = ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, data, size);
 	/* FIXME: do stuff with data */
 	return ret;
 }
@@ -2071,7 +2175,7 @@ uint16_t
 ptp_nikon_get_vendorpropcodes (PTPParams* params, uint16_t **props, unsigned int *size) {
 	PTPContainer	ptp;
 	uint16_t	ret;
-	unsigned char	*xdata;
+	unsigned char	*xdata = NULL;
 	unsigned int 	xsize;
 
 	*props = NULL;
@@ -2082,6 +2186,7 @@ ptp_nikon_get_vendorpropcodes (PTPParams* params, uint16_t **props, unsigned int
 	ret = ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, &xdata, &xsize); 
 	if (ret == PTP_RC_OK)
         	*size = ptp_unpack_uint16_t_array(params,xdata,0,props);
+	free (xdata);
 	return ret;
 }
 
@@ -3167,7 +3272,7 @@ ptp_get_property_description(PTPParams* params, uint16_t dpc)
 		 N_("Shooting Speed")},
 		{PTP_DPC_NIKON_D2MaximumShots,			/* 0xD069 */
 		 N_("Maximum Shots")},
-		{PTP_DPC_NIKON_D3ExpDelayMode,			/* 0xD06A */
+		{PTP_DPC_NIKON_ExposureDelayMode,		/* 0xD06A */
 		 N_("Exposure delay mode")},
 		{PTP_DPC_NIKON_LongExposureNoiseReduction,	/* 0xD06B */
 		 N_("Long Exposure Noise Reduction")},
@@ -3771,7 +3876,7 @@ ptp_render_property_value(PTPParams* params, uint16_t dpc,
 		{PTP_DPC_NIKON_MonitorOff, PTP_VENDOR_NIKON, 4, N_("10 minutes")},
 		{PTP_DPC_NIKON_MonitorOff, PTP_VENDOR_NIKON, 5, N_("5 seconds")}, /* d80 observed */
 
-		PTP_VENDOR_VAL_BOOL(PTP_DPC_NIKON_D3ExpDelayMode,PTP_VENDOR_NIKON),	/* D06A */
+		PTP_VENDOR_VAL_BOOL(PTP_DPC_NIKON_ExposureDelayMode,PTP_VENDOR_NIKON),	/* D06A */
 		PTP_VENDOR_VAL_BOOL(PTP_DPC_NIKON_LongExposureNoiseReduction,PTP_VENDOR_NIKON),	/* D06B */
 		PTP_VENDOR_VAL_BOOL(PTP_DPC_NIKON_FileNumberSequence,PTP_VENDOR_NIKON),	/* D06C */
 		PTP_VENDOR_VAL_BOOL(PTP_DPC_NIKON_D7Illumination,PTP_VENDOR_NIKON),	/* D06F */
@@ -3827,6 +3932,7 @@ ptp_render_property_value(PTPParams* params, uint16_t dpc,
 		{PTP_DPC_NIKON_LensID, PTP_VENDOR_NIKON, 139, "AF-S Nikkor 18-200mm 1:3.5-5.6 GED DX VR"},
 		{PTP_DPC_NIKON_LensID, PTP_VENDOR_NIKON, 147, "AF-S Nikkor 24-70mm 1:2.8G ED DX"},
 		{PTP_DPC_NIKON_LensID, PTP_VENDOR_NIKON, 154, "AF-S Nikkor 18-55mm 1:3.5-F5.6G DX VR"},
+		{PTP_DPC_NIKON_LensID, PTP_VENDOR_NIKON, 159, "AF-S Nikkor 35mm 1:1.8G DX"},
 		{PTP_DPC_NIKON_FinderISODisp, PTP_VENDOR_NIKON, 0, "Show ISO sensitivity"},/* 0xD0F0 */
 		{PTP_DPC_NIKON_FinderISODisp, PTP_VENDOR_NIKON, 1, "Show ISO/Easy ISO"},
 		{PTP_DPC_NIKON_FinderISODisp, PTP_VENDOR_NIKON, 2, "Show frame count"},
@@ -4283,6 +4389,7 @@ struct {
 	{PTP_OFC_MTP_AAC,"AAC"},
 	{PTP_OFC_MTP_AudibleCodec,N_("Audible.com Codec")},
 	{PTP_OFC_MTP_FLAC,"FLAC"},
+	{PTP_OFC_MTP_SamsungPlaylist,N_("Samsung Playlist")},
 	{PTP_OFC_MTP_UndefinedVideo,N_("Undefined Video")},
 	{PTP_OFC_MTP_WMV,"WMV"},
 	{PTP_OFC_MTP_MP4,"MP4"},
@@ -4880,8 +4987,11 @@ ptp_object_want (PTPParams *params, uint32_t handle, int want, PTPObject **retob
 			saveparent = ob->oi.ParentObject;
 
 		ret = ptp_getobjectinfo (params, handle, &ob->oi);
-		if (ret != PTP_RC_OK)
+		if (ret != PTP_RC_OK) {
+			/* kill it from the internal list ... */
+			ptp_remove_object_from_cache(params, handle);
 			return ret;
+		}
 		if (!ob->oi.Filename) ob->oi.Filename=strdup("<none>");
 		if (ob->flags & PTPOBJECT_PARENTOBJECT_LOADED)
 			ob->oi.ParentObject = saveparent;
