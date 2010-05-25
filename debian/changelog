@@ -1,3 +1,14 @@
+libmtp (1.0.3-1) unstable; urgency=low
+
+  * debian/copyright: Update according to DEP-5 proposal.
+  * Add apport package hook to reduce delta with Ubuntu.
+  * New upstream release:
+    - Don't probe HID equipment for device "OS descriptors"
+      some Kensington mice really don't like that (LP: #559892).
+  * Switch to debian 3.0 (quilt) source format.
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Tue, 25 May 2010 08:22:17 +0200
+
 libmtp (1.0.2-3) unstable; urgency=low
 
   * Provide a -dbg package (Closes: #576966).
