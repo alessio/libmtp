@@ -115,7 +115,7 @@ License: LGPL-2+
 
 Files: ./debian/*
 Copyright:
- 2010, Alessio Treglia <quadrispro@ubuntu.com>
+ 2010, Alessio Treglia <alessio@debian.org>
  2007-2009, Rafael Laboissiere <rafael@debian.org>
  2006, Jean Parpaillon <artefact@altern.org>
 License: LGPL-2.1+

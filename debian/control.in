@@ -1,7 +1,7 @@
 Source: libmtp
 Section: libs
 Priority: optional
-Maintainer: Alessio Treglia <quadrispro@ubuntu.com>
+Maintainer: Alessio Treglia <alessio@debian.org>
 Build-Depends: libusb-dev,
  doxygen,
  debhelper (>= 5),
