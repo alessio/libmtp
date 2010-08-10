@@ -17,7 +17,8 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
 
 Package: libmtp8
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends},
+ ${misc:Depends}
 Recommends: ${udev}
 Breaks: udev (<< 0.136-1)
 Description: Media Transfer Protocol (MTP) library
@@ -82,7 +83,8 @@ Description: Media Transfer Protocol (MTP) library documentation
 Package: mtp-tools
 Section: utils
 Architecture: any
-Depends: libmtp8 (= ${binary:Version}), ${shlibs:Depends},
+Depends: libmtp8 (= ${binary:Version}),
+ ${shlibs:Depends},
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) library tools
  libmtp is a library for communicating with MTP aware devices in POSIX
