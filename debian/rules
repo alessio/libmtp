@@ -12,6 +12,7 @@ SUBSTFILES = debian/libmtp$(SOVERSION).docs	\
 	debian/libmtp$(SOVERSION).preinst	\
 	debian/libmtp$(SOVERSION).postinst
 UDEVFILES = 45-libmtp$(SOVERSION).rules 20-libmtp$(SOVERSION).fdi
+DISTRIBUTION = $(shell lsb_release -i | cut -f2 -d':')
 
 debdir = $(CURDIR)/debian
 debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
@@ -39,6 +40,13 @@ install/libmtp-doc::
 
 binary-install/libmtp-dev::
 	rm -f debian/libmtp-dev/usr/lib/libmtp.la
+
+binary-install/libmtp$(SOVERSION)::
+	if [ ${DISTRIBUTION} = 'Ubuntu' ]; then \
+		mkdir -p $(debdir)/libmtp$(SOVERSION)/usr/share/apport/package-hooks/ ;\
+		install -m 0644 $(debdir)/apport/* \
+			$(debdir)/libmtp$(SOVERSION)/usr/share/apport/package-hooks/ ; \
+	fi
 
 build/libmtp$(SOVERSION)::
 	# Fix mode of udev lifting script
