@@ -1,0 +1,21 @@
+Author: Alessio Treglia <alessio@debian.org>
+Description: Remove DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS flag for
+ Creative ZEN device 041E:4157.
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520961
+Forwarded: https://sourceforge.net/support/tracker.php?aid=2745107
+---
+ src/music-players.h |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+--- libmtp.orig/src/music-players.h
++++ libmtp/src/music-players.h
+@@ -72,8 +72,7 @@
+   // Don't add 0x4155: this is a Zen Stone device which is not MTP
+   // Reported by Paul Kurczaba <paul@kurczaba.com>
+   { "Creative", 0x041e, "ZEN", 0x4157, DEVICE_FLAG_IGNORE_HEADER_ERRORS |
+-    DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS |
+-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
++    DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS },
+   // Reported by Ringofan <mcroman@users.sourceforge.net>
+   { "Creative", 0x041e, "ZEN V 2GB", 0x4158,
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
