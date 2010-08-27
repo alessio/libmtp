@@ -30,8 +30,14 @@ configure)
     if [ -L $oldlink2 -a ! -f $oldlink2 ] ; then
         rm -f $oldlink2
     fi
+    
+    # PART C: Remove broken link, libmtp7 leftover
+    oldlink3=/etc/udev/rules.d/libmtp7.rules
+    if [ -L $oldlink3 -a ! -f $oldlink3 ] ; then
+        rm -f $oldlink3
+    fi
 
-    # PART C
+    # PART D
     # Check if package version is 0.3.7-3 or less
     # Do not mix with package-default rules file: /lib/udev/rules.d/libmtp8.rules
     # If rules file is in /etc/udev/, move it to correct path /etc/udev/rules.d/ 
