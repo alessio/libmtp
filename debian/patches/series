@@ -1,1 +1,3 @@
 01-find_all_tracks_on_zen.patch
+02-add_devices.patch
+10-connect_exit_status.patch
