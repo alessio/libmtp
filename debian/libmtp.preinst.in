@@ -93,6 +93,12 @@ install|upgrade)
     # Do not mix with user-modified file: /etc/udev/rules.d/libmtp8.rules
     # Will be replaced by unversioned /lib/udev/rules.d/45-libmtp.rules
     #rm_conffile $PACKAGE /lib/udev/rules.d/45-libmtp8.rules
+    
+    # PART D:
+    # Remove ancient /etc/udev/rules.d/65-libmtp.rules
+    if [ -e /etc/udev/rules.d/65-libmtp.rules ]; then
+        rm_conffile $PACKAGE /etc/udev/rules.d/65-libmtp.rules
+	fi
 
 esac
 
