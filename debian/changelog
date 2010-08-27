@@ -1,3 +1,26 @@
+libmtp (1.0.3-2) experimental; urgency=low
+
+  * Install apport package hooks only if system is Ubuntu.
+  * Build-Depends on lsb-release.
+  * Remove unnecessary DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL for
+    device Creative ZEN 041E:4157 (Closes: #520961).
+  * Add device entry for the device ID 041E:4133 Creative ZEN MicroPhoto;
+    Closes: #594560; LP: #537386
+  * mtp-connect should not return exit status 0 regardless if the
+    connect was successful; Closes: #594565, LP: #620814
+  * Update series file.
+  * Purge ancient /etc/udev/rules.d/65-libmtp.rules conffile; LP: #506791.
+  * Remove broken link /etc/udev/rules.d/libmtp7.rules, libmtp7
+    leftover.
+  * debian/control{,.in}:
+    - Change my email address.
+    - Bump Standards.
+    - Remove DM-Upload-Allowed: yes.
+  * Add debian/gbp.conf file.
+  * Add .gitignore file.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 27 Aug 2010 14:21:06 +0200
+
 libmtp (1.0.3-1) unstable; urgency=low
 
   * debian/copyright: Update according to DEP-5 proposal.
