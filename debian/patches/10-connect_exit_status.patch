@@ -1,0 +1,63 @@
+Author: Alessio Treglia <alessio@debian.org>
+Description: mtp-connect should not return 0 when something goes wrong.
+Bug-Ubuntu: https://launchpad.net/bugs/620814
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594565
+Forwarded: http://sourceforge.net/support/tracker.php?aid=3050064
+---
+ examples/connect.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+--- libmtp.orig/examples/connect.c
++++ libmtp/examples/connect.c
+@@ -28,6 +28,10 @@
+ #include "util.h"
+ #include "pathutils.h"
+ 
++#define		ERRNODEVICE		-1
++#define		ERRWRONGARG		1
++#define		ERRUNKNOPT		2
++
+ LIBMTP_folder_t *folders;
+ LIBMTP_file_t *files;
+ LIBMTP_mtpdevice_t *device;
+@@ -77,6 +81,8 @@ usage(void)
+ 
+ int main (int argc, char **argv)
+ {
++  int ret = 0;
++
+   checklang();
+ 
+   LIBMTP_Init();
+@@ -86,7 +92,7 @@ int main (int argc, char **argv)
+   device = LIBMTP_Get_First_Device();
+   if (device == NULL) {
+     printf("No devices.\n");
+-    return 0;
++    return ERRNODEVICE;
+   }
+   files = LIBMTP_Get_Filelisting_With_Callback (device, NULL, NULL);
+   folders = LIBMTP_Get_Folder_List (device);
+@@ -104,7 +110,7 @@ int main (int argc, char **argv)
+   } else {
+     if ( argc < 2 ) {
+       usage ();
+-      return 1;
++      return ERRWRONGARG;
+     }
+ 
+     while (1) {
+@@ -159,11 +165,12 @@ int main (int argc, char **argv)
+       while (optind < argc)
+         printf("%s ", argv[optind++]);
+       printf("\n");
++      ret = ERRUNKNOPT;
+     }
+   }
+ 
+   LIBMTP_Release_Device(device);
+ 
+-  exit (0);
++  exit (ret);
+ }
+ 
