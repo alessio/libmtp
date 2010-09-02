@@ -14,13 +14,14 @@ Description: Add device entry for
  SonyEricsson U5 0fce:0133
  Samsung Galaxy S GT-I9000 04e8:6877
  Samsung Vibrant SGH-T959 04e8:68a9
+ COBY MP705 1e74:6512
 Origin: upstream, commit:1136,1148,1149
 Forwarded: http://sourceforge.net/support/tracker.php?aid=3053793
 Bug-Ubuntu: https://launchpad.net/bugs/537386
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
 ---
- src/music-players.h |   26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ src/music-players.h |   31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -56,10 +57,15 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    // Reported by Jonas Nyrén <spectralmks@users.sourceforge.net>
    { "SonyEricsson", 0x0fce, "W302", 0x10c8, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
  
-@@ -1143,6 +1154,21 @@
+@@ -1143,6 +1154,26 @@
    { "Nextar", 0x0402, "MA715A-8R", 0x5668 },
  
    /*
++   * Coby
++   */
++  { "Coby", 0x1e74, "COBY MP705", 0x6512 },
++
++  /*
 +   * Apple devices, which are not MTP natively but can be made to speak MTP
 +   * using PwnTunes (http://www.pwntunes.net/)
 +   */
