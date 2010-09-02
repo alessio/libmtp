@@ -2,8 +2,9 @@ Description: Set proper Ogg flags on some Cowon and Samsung devices.
  See http://wiki.xiph.org/index.php/PortablePlayers for Ogg status.
 Origin: upstream, commit:1134
 ---
+ src/libmtp.c        |   25 +++++++++++++++++++++++++
  src/music-players.h |   31 ++++++++++++++++++++++---------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ 2 files changed, 47 insertions(+), 9 deletions(-)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -62,7 +63,7 @@ Origin: upstream, commit:1134
    // From Paul Clinch
    // Guessing on .spl flag
    { "Samsung", 0x04e8, "YP-T10", 0x508a, DEVICE_FLAG_UNLOAD_DRIVER |
-@@ -832,19 +840,24 @@
+@@ -833,19 +841,24 @@
    /*
     * Cowon Systems, Inc.
     * The iAudio audiophile devices don't encourage the use of MTP.

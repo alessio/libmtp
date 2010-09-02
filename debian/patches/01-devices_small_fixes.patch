@@ -6,7 +6,7 @@ Description: Remove DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS flag for
  Add flag to mark Samsung M7600 Beat/GT-S8300T as unable to read the
  battery status.
  Add DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST flag to LG KM900.
-Origin: upstream, commit:1135,1136
+Origin: upstream, commit:1135,1136,1137,1146
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520961
 Forwarded: https://sourceforge.net/support/tracker.php?aid=2745107
 ---
