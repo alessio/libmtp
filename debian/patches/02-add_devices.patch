@@ -1,12 +1,13 @@
 Author: Alessio Treglia <quadrispro@ubuntu.com>
 Description: Add device entry for
  Creative ZEN MicroPhoto (ID 041E:4133).
+ Adjust BlackBerry 0fca:8007 device's name.
 Forwarded: http://sourceforge.net/support/tracker.php?aid=3053793
 Bug-Ubuntu: https://launchpad.net/bugs/537386
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
 ---
- src/music-players.h |    1 +
- 1 file changed, 1 insertion(+)
+ src/music-players.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -18,3 +19,12 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    { "Creative", 0x041e, "ZEN Sleek (MTP mode)", 0x4137, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
    { "Creative", 0x041e, "ZEN MicroPhoto", 0x413c, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
    { "Creative", 0x041e, "ZEN Sleek Photo", 0x413d, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+@@ -1133,7 +1134,7 @@
+    * RIM's BlackBerry
+    */
+   // Reported by Nicolas VIVIEN <nicolas@vivien.fr>
+-  { "RIM", 0x0fca, "BlackBerry Storm", 0x8007, DEVICE_FLAG_UNLOAD_DRIVER |
++  { "RIM", 0x0fca, "BlackBerry Storm/9650", 0x8007, DEVICE_FLAG_UNLOAD_DRIVER |
+       DEVICE_FLAG_SWITCH_MODE_BLACKBERRY | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+ 
+   /*
