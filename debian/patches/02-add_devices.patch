@@ -15,13 +15,14 @@ Description: Add device entry for
  Samsung Galaxy S GT-I9000 04e8:6877
  Samsung Vibrant SGH-T959 04e8:68a9
  COBY MP705 1e74:6512
-Origin: upstream, commit:1136,1148,1149
+ Cowon iAudio J3 0e21:0921
+Origin: upstream, commit:1136,1148,1149,1150,1151
 Forwarded: http://sourceforge.net/support/tracker.php?aid=3053793
 Bug-Ubuntu: https://launchpad.net/bugs/537386
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
 ---
- src/music-players.h |   31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ src/music-players.h |   35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -47,7 +48,18 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    // From anonymous Sourceforge user
    { "Samsung", 0x04e8, "GT-S5230", 0xe20c, DEVICE_FLAG_NONE },
  
-@@ -1039,6 +1047,9 @@
+@@ -873,6 +881,10 @@
+   { "Cowon", 0x0e21, "iAudio 9 (MTP mode)", 0x0911,
+    DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+    DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
++  // Reported by Franck VDL <franckv@users.sourceforge.net>
++  { "Cowon", 0x0e21, "iAudio J3 (MTP mode)", 0x0921,
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
+ 
+   /*
+    * Insignia, dual-mode.
+@@ -1039,6 +1051,9 @@
    { "SonyEricsson", 0x0fce, "W705/W715", 0x0105, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
    // Reported by Håkan Kvist
    { "SonyEricsson", 0x0fce, "W995", 0x0112, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
@@ -57,7 +69,7 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    // Reported by Jonas Nyrén <spectralmks@users.sourceforge.net>
    { "SonyEricsson", 0x0fce, "W302", 0x10c8, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
  
-@@ -1143,6 +1154,26 @@
+@@ -1143,6 +1158,26 @@
    { "Nextar", 0x0402, "MA715A-8R", 0x5668 },
  
    /*
