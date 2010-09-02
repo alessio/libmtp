@@ -5,12 +5,13 @@ Description: Remove DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS flag for
  Adjust BlackBerry 0fca:8007 device's name.
  Add flag to mark Samsung M7600 Beat/GT-S8300T as unable to read the
  battery status.
+ Add DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST flag to LG KM900.
 Origin: upstream, commit:1135,1136
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520961
 Forwarded: https://sourceforge.net/support/tracker.php?aid=2745107
 ---
- src/music-players.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ src/music-players.h |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -34,6 +35,15 @@ Forwarded: https://sourceforge.net/support/tracker.php?aid=2745107
    // From Lionel Bouton
    { "Samsung", 0x04e8, "X830 Mobile Phone", 0x6702, DEVICE_FLAG_UNLOAD_DRIVER },
    // From James <jamestech@gmail.com>
+@@ -903,7 +903,7 @@
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST | DEVICE_FLAG_ALWAYS_PROBE_DESCRIPTOR },
+   // Reported by anonymous sourceforge user
+   { "LG Electronics Inc.", 0x1004, "KM900", 0x6132,
+-      DEVICE_FLAG_UNLOAD_DRIVER },
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST | DEVICE_FLAG_UNLOAD_DRIVER },
+ 
+   /*
+    * Sony
 @@ -997,7 +997,7 @@
        DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
        DEVICE_FLAG_UNIQUE_FILENAMES },
