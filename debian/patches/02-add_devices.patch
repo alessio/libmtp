@@ -11,16 +11,13 @@ Description: Add device entry for
  Apple 05ac:1298
  Apple iPod Touch 3rd Gen 05ac:0x1299
  Apple iPad 05ac:129a
- .
- Adjust BlackBerry 0fca:8007 device's name.
- .
- Fix Sony DCR-SR75 device ID.
+Origin: upstream, commit:1136
 Forwarded: http://sourceforge.net/support/tracker.php?aid=3053793
 Bug-Ubuntu: https://launchpad.net/bugs/537386
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
 ---
- src/music-players.h |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ src/music-players.h |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -32,29 +29,10 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    { "Creative", 0x041e, "ZEN Sleek (MTP mode)", 0x4137, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
    { "Creative", 0x041e, "ZEN MicroPhoto", 0x413c, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
    { "Creative", 0x041e, "ZEN Sleek Photo", 0x413d, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
-@@ -996,7 +997,7 @@
-       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
-       DEVICE_FLAG_UNIQUE_FILENAMES },
-   // Reported by Anonymous SourceForge user
--  { "Sony", 0x05ac, "DCR-SR75", 0x1294,
-+  { "Sony", 0x054c, "DCR-SR75", 0x1294,
-       DEVICE_FLAG_UNLOAD_DRIVER |
-       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
-       DEVICE_FLAG_UNIQUE_FILENAMES },
-@@ -1133,13 +1134,28 @@
-    * RIM's BlackBerry
-    */
-   // Reported by Nicolas VIVIEN <nicolas@vivien.fr>
--  { "RIM", 0x0fca, "BlackBerry Storm", 0x8007, DEVICE_FLAG_UNLOAD_DRIVER |
-+  { "RIM", 0x0fca, "BlackBerry Storm/9650", 0x8007, DEVICE_FLAG_UNLOAD_DRIVER |
-       DEVICE_FLAG_SWITCH_MODE_BLACKBERRY | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+@@ -1142,6 +1143,21 @@
+   { "Nextar", 0x0402, "MA715A-8R", 0x5668 },
  
    /*
-    * Nextar
-    */
-   { "Nextar", 0x0402, "MA715A-8R", 0x5668 },
-+
-+  /*
 +   * Apple devices, which are not MTP natively but can be made to speak MTP
 +   * using PwnTunes (http://www.pwntunes.net/)
 +   */
@@ -68,6 +46,8 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
 +  { "Apple", 0x05ac, "0x1298", 0x1298 },
 +  { "Apple", 0x05ac, "iPod Touch 3rd Gen", 0x1299 },
 +  { "Apple", 0x05ac, "iPad", 0x129a },
- 
-   /*
++
++  /*
     * Other strange stuff.
+    */
+   { "Isabella", 0x0b20, "Her Prototype", 0xddee, DEVICE_FLAG_NONE }
