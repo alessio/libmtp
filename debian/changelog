@@ -1,3 +1,10 @@
+libmtp (1.0.3-4) experimental; urgency=low
+
+  * New device: Wyplay Wyplayer 1e53:0007.
+  * Refresh patches.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 03 Sep 2010 19:18:19 +0200
+
 libmtp (1.0.3-3) experimental; urgency=low
 
   * Rename, refresh and re-organize patches.
