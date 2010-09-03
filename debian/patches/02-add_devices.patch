@@ -1,5 +1,5 @@
 Author: Alessio Treglia <quadrispro@ubuntu.com>
-Description: Add device entry for
+Description: Add device entries for
  Creative ZEN MicroPhoto 041E:4133
  Apple iPhone 05ac:0x1290
  Apple iPod Touch 1st Gen 05ac:1291
@@ -17,13 +17,14 @@ Description: Add device entry for
  COBY MP705 1e74:6512
  Cowon iAudio J3 0e21:0921
  Motorola Droid X 22b8:41d6
+ Wyplay Wyplayer 1e53:0007
 Origin: upstream, commit:1136,1148,1149,1150,1151,1152,1153,1154
 Forwarded: http://sourceforge.net/support/tracker.php?aid=3053793
 Bug-Ubuntu: https://launchpad.net/bugs/537386
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
 ---
- src/music-players.h |   43 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 41 insertions(+), 2 deletions(-)
+ src/music-players.h |   45 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 43 insertions(+), 2 deletions(-)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -90,7 +91,16 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
  
    /*
     * Media Keg
-@@ -1140,7 +1159,27 @@
+@@ -1126,6 +1145,8 @@
+ 
+   // Reported by Demadridsur <demadridsur@gmail.com>
+   { "O2 Sistemas", 0x1e53, "ZoltarTV", 0x0006, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  // Reported by da-beat <dabeat@gmail.com>
++  { "Wyplay", 0x1e53, "Wyplayer", 0x0007, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+ 
+   // Reported by Sense Hofstede <qense@users.sourceforge.net>
+   { "Perception Digital, Ltd", 0x0aa6, "Gigaware GX400", 0x9702, DEVICE_FLAG_NONE },
+@@ -1140,7 +1161,27 @@
    /*
     * Nextar
     */
