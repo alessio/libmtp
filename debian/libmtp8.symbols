@@ -12,6 +12,7 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Get_Album@Base 0.3.1
  LIBMTP_Get_Album_List@Base 0.3.1
  LIBMTP_Get_Album_List_For_Storage@Base 1.0.2
+ LIBMTP_Get_Allowed_Property_Values@Base 1.0.3
  LIBMTP_Get_Batterylevel@Base 0.3.1
  LIBMTP_Get_Connected_Devices@Base 0.3.1
  LIBMTP_Get_Device_Certificate@Base 0.3.1
@@ -30,11 +31,13 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Get_Modelname@Base 0.3.1
  LIBMTP_Get_Playlist@Base 0.3.1
  LIBMTP_Get_Playlist_List@Base 0.3.1
+ LIBMTP_Get_Property_Description@Base 1.0.3
  LIBMTP_Get_Representative_Sample@Base 0.3.1
  LIBMTP_Get_Representative_Sample_Format@Base 0.3.1
  LIBMTP_Get_Secure_Time@Base 0.3.1
  LIBMTP_Get_Serialnumber@Base 0.3.1
  LIBMTP_Get_Storage@Base 0.3.1
+ LIBMTP_Get_String_From_Object@Base 1.0.3
  LIBMTP_Get_Supported_Devices_List@Base 0.3.1
  LIBMTP_Get_Supported_Filetypes@Base 0.3.1
  LIBMTP_Get_Syncpartner@Base 0.3.1
@@ -44,7 +47,12 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Get_Tracklisting_With_Callback@Base 0.3.1
  LIBMTP_Get_Tracklisting_With_Callback_For_Storage@Base 1.0.2
  LIBMTP_Get_Trackmetadata@Base 0.3.1
+ LIBMTP_Get_u16_From_Object@Base 1.0.3
+ LIBMTP_Get_u32_From_Object@Base 1.0.3
+ LIBMTP_Get_u64_From_Object@Base 1.0.3
+ LIBMTP_Get_u8_From_Object@Base 1.0.3
  LIBMTP_Init@Base 0.3.1
+ LIBMTP_Is_Property_Supported@Base 1.0.3
  LIBMTP_Number_Devices_In_List@Base 0.3.1
  LIBMTP_Open_Raw_Device@Base 0.3.1
  LIBMTP_Release_Device@Base 0.3.1
@@ -61,6 +69,10 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Set_Folder_Name@Base 0.3.3
  LIBMTP_Set_Friendlyname@Base 0.3.1
  LIBMTP_Set_Object_Filename@Base 0.3.1
+ LIBMTP_Set_Object_String@Base 1.0.3
+ LIBMTP_Set_Object_u16@Base 1.0.3
+ LIBMTP_Set_Object_u32@Base 1.0.3
+ LIBMTP_Set_Object_u8@Base 1.0.3
  LIBMTP_Set_Playlist_Name@Base 0.3.3
  LIBMTP_Set_Syncpartner@Base 0.3.1
  LIBMTP_Set_Track_Name@Base 0.3.3
@@ -69,6 +81,7 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Update_Playlist@Base 0.3.1
  LIBMTP_Update_Track_Metadata@Base 0.3.1
  LIBMTP_destroy_album_t@Base 0.3.1
+ LIBMTP_destroy_allowed_values_t@Base 1.0.3
  LIBMTP_destroy_file_t@Base 0.3.1
  LIBMTP_destroy_filesampledata_t@Base 0.3.1
  LIBMTP_destroy_folder_t@Base 0.3.1
