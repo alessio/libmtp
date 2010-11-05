@@ -1,3 +1,10 @@
+libmtp (1.0.3-5) experimental; urgency=low
+
+  * New device: iRiver T5 4102:1153
+  * Update symbols.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 05 Nov 2010 11:12:22 +0100
+
 libmtp (1.0.3-4) experimental; urgency=low
 
   * New device: Wyplay Wyplayer 1e53:0007.
