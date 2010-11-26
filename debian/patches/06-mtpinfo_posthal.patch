@@ -1,0 +1,19 @@
+Description: Provide useful information via libudev to userspace programs
+ to determine what device is plugged in.
+Origin: upstream, commit:1174
+From: http://bazaar.launchpad.net/~vcs-imports/libmtp/trunk/revision/1174#examples/hotplug.c
+---
+ examples/hotplug.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- libmtp.orig/examples/hotplug.c
++++ libmtp/examples/hotplug.c
+@@ -54,7 +54,7 @@ int main (int argc, char **argv)
+   extern int optind;
+   extern char *optarg;
+   char *udev_action = NULL;
+-  char default_udev_action[] = "SYMLINK+=\"libmtp-%k\", MODE=\"666\"";
++  char default_udev_action[] = "SYMLINK+=\"libmtp-%k\", MODE=\"666\" ENV{ID_MEDIA_PLAYER}=\"1\"";
+   char *action; // To hold the action actually used.
+   uint16_t last_vendor = 0x0000U;  
+ 
