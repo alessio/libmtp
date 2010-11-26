@@ -1,5 +1,6 @@
 Description: Provide useful information via libudev to userspace programs
  to determine what device is plugged in.
+ FIXME.
 Origin: upstream, commit:1174
 Bug: http://sourceforge.net/support/tracker.php?aid=3109858
 From: http://bazaar.launchpad.net/~vcs-imports/libmtp/trunk/revision/1174#examples/hotplug.c
