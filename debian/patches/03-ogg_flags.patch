@@ -62,7 +62,7 @@ Origin: upstream, commit:1134
    // From Paul Clinch
    // Guessing on .spl flag
    { "Samsung", 0x04e8, "YP-T10", 0x508a, DEVICE_FLAG_UNLOAD_DRIVER |
-@@ -841,19 +849,24 @@
+@@ -854,19 +862,24 @@
    /*
     * Cowon Systems, Inc.
     * The iAudio audiophile devices don't encourage the use of MTP.
