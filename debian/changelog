@@ -1,3 +1,20 @@
+libmtp (1.0.3-6) experimental; urgency=low
+
+  * New devices:
+    - Nokia 2710 0421:02c1.
+    - Nokia 5230 0421:02e2.
+    - SanDisk Sansa Fuze+ 0781:74e0
+    - Sony Walkman NWZ-B153F 054c:04be
+    - Sony Walkman NWZ-E354 054c:04cb
+  * Take patch from upstream trunk:
+    - examples/hotplug.c: Set ENV{ID_MEDIA_PLAYER}="1" to allow userspace
+      programs to retrieve information about plugged-in device via udev.
+      Thanks to Martin Pitt for reporting this.
+  * Refresh remaining patches.
+  * Set libmtp-dev Architecture to 'all', regenerate debian/control.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 26 Nov 2010 12:08:52 +0100
+
 libmtp (1.0.3-5) experimental; urgency=low
 
   * New device: iRiver T5 4102:1153
