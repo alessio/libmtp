@@ -12,6 +12,7 @@ Description: Add device entries for
  Apple iPod Touch 3rd Gen 05ac:0x1299
  Apple iPad 05ac:129a
  Nokia 2710 0421:02c1
+ Nokia 5230 0421:02e2
  Sony Walkman NWZ-B153F 054c:04be
  SonyEricsson U5 0fce:0133
  Samsung Galaxy S GT-I9000 04e8:6877
@@ -26,8 +27,8 @@ Forwarded: http://sourceforge.net/support/tracker.php?aid=3053793
 Bug-Ubuntu: https://launchpad.net/bugs/537386
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
 ---
- src/music-players.h |   55 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 53 insertions(+), 2 deletions(-)
+ src/music-players.h |   57 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 55 insertions(+), 2 deletions(-)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -65,16 +66,18 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    // Reported by pyalex@users.sourceforge.net
    // Guessing that this needs the FLAG_NO_ZERO_READS...
    { "iRiver", 0x4102, "E30", 0x1167,
-@@ -712,6 +725,8 @@
+@@ -712,6 +725,10 @@
    { "Nokia", 0x0421, "N97 mini", 0x026b, DEVICE_FLAG_NONE },
    // From: Alexander Kojevnikov <alex-kay@users.sourceforge.net>
    { "Nokia", 0x0421, "6600i", 0x0297, DEVICE_FLAG_NONE },
 +  // From: Karthik Paithankar <whyagain2005@users.sourceforge.net>
 +  { "Nokia", 0x0421, "2710", 0x02c1, DEVICE_FLAG_NONE },
++  // From: Anonymous sourceforge user
++  { "Nokia", 0x0421, "5230", 0x02e2, DEVICE_FLAG_NONE },
    // https://sourceforge.net/tracker/index.php?func=detail&aid=2692473&group_id=8874&atid=358874
    { "Nokia", 0x0421, "5200", 0x0421, DEVICE_FLAG_NONE },
    // From: http://nds2.nokia.com/files/support/global/phones/software/Nokia_3250_WMP10_driver.inf
-@@ -873,6 +888,10 @@
+@@ -873,6 +890,10 @@
    { "Cowon", 0x0e21, "iAudio 9 (MTP mode)", 0x0911,
     DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
     DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
@@ -85,7 +88,7 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
  
    /*
     * Insignia, dual-mode.
-@@ -996,6 +1015,10 @@
+@@ -996,6 +1017,10 @@
        DEVICE_FLAG_UNLOAD_DRIVER |
        DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
        DEVICE_FLAG_UNIQUE_FILENAMES },
@@ -96,7 +99,7 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    // Reported by Anonymous SourceForge user
    { "Sony", 0x054c, "DCR-SR75", 0x1294,
        DEVICE_FLAG_UNLOAD_DRIVER |
-@@ -1039,6 +1062,9 @@
+@@ -1039,6 +1064,9 @@
    { "SonyEricsson", 0x0fce, "W705/W715", 0x0105, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
    // Reported by Håkan Kvist
    { "SonyEricsson", 0x0fce, "W995", 0x0112, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
@@ -106,7 +109,7 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    // Reported by Jonas Nyrén <spectralmks@users.sourceforge.net>
    { "SonyEricsson", 0x0fce, "W302", 0x10c8, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
  
-@@ -1051,6 +1077,9 @@
+@@ -1051,6 +1079,9 @@
    { "Motorola", 0x22b8, "V3m/V750 verizon", 0x2a65,
        DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
        DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
@@ -116,7 +119,7 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
    // Reported by anonymous user
    { "Motorola", 0x22b8, "Milestone / Verizon Droid", 0x41dc,
        DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
-@@ -1068,7 +1097,7 @@
+@@ -1068,7 +1099,7 @@
    // Reported by anonymous user
    { "Motorola", 0x22b8, "RAZR2 V8/U9/Z6", 0x6415,
        DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
@@ -125,7 +128,7 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
  
    /*
     * Media Keg
-@@ -1126,6 +1155,8 @@
+@@ -1126,6 +1157,8 @@
  
    // Reported by Demadridsur <demadridsur@gmail.com>
    { "O2 Sistemas", 0x1e53, "ZoltarTV", 0x0006, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
@@ -134,7 +137,7 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594560
  
    // Reported by Sense Hofstede <qense@users.sourceforge.net>
    { "Perception Digital, Ltd", 0x0aa6, "Gigaware GX400", 0x9702, DEVICE_FLAG_NONE },
-@@ -1140,7 +1171,27 @@
+@@ -1140,7 +1173,27 @@
    /*
     * Nextar
     */
