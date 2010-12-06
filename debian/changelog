@@ -12,8 +12,9 @@ libmtp (1.0.3-6) experimental; urgency=low
       Thanks to Martin Pitt for reporting this.
   * Refresh remaining patches.
   * Set libmtp-dev Architecture to 'all', regenerate debian/control.
+  * Remove static libraries from the -DEV binary.
 
- -- Alessio Treglia <alessio@debian.org>  Fri, 26 Nov 2010 12:08:52 +0100
+ -- Alessio Treglia <alessio@debian.org>  Sat, 27 Nov 2010 09:50:44 +0100
 
 libmtp (1.0.3-5) experimental; urgency=low
 
