@@ -29,8 +29,8 @@
 #ifndef LIBMTP_H_INCLUSION_GUARD
 #define LIBMTP_H_INCLUSION_GUARD
 
-#define LIBMTP_VERSION 1.0.3
-#define LIBMTP_VERSION_STRING "1.0.3"
+#define LIBMTP_VERSION 1.0.4
+#define LIBMTP_VERSION_STRING "1.0.4"
 
 /* This handles MSVC pecularities */
 #ifdef _MSC_VER
@@ -415,10 +415,12 @@ typedef enum {
   LIBMTP_ERROR_CONNECTING,
   LIBMTP_ERROR_CANCELLED
 } LIBMTP_error_number_t;
+
 typedef struct LIBMTP_device_entry_struct LIBMTP_device_entry_t; /**< @see LIBMTP_device_entry_struct */
 typedef struct LIBMTP_raw_device_struct LIBMTP_raw_device_t; /**< @see LIBMTP_raw_device_struct */
 typedef struct LIBMTP_error_struct LIBMTP_error_t; /**< @see LIBMTP_error_struct */
 typedef struct LIBMTP_allowed_values_struct LIBMTP_allowed_values_t; /**< @see LIBMTP_allowed_values_struct */
+typedef struct LIBMTP_device_extension_struct LIBMTP_device_extension_t; /** < @see LIBMTP_device_extension_struct */
 typedef struct LIBMTP_mtpdevice_struct LIBMTP_mtpdevice_t; /**< @see LIBMTP_mtpdevice_struct */
 typedef struct LIBMTP_file_struct LIBMTP_file_t; /**< @see LIBMTP_file_struct */
 typedef struct LIBMTP_track_struct LIBMTP_track_t; /**< @see LIBMTP_track_struct */
@@ -566,6 +568,29 @@ struct LIBMTP_allowed_values_struct {
 };
 
 /**
+ * MTP device extension holder struct
+ */
+struct LIBMTP_device_extension_struct {
+  /**
+   * Name of extension e.g. "foo.com"
+   */
+  char *name;
+  /**
+   * Major revision of extension
+   */
+  int major;
+  /**
+   * Minor revision of extension
+   */
+  int minor;
+  /**
+   * Pointer to the next extension or NULL if this is the
+   * last extension.
+   */
+  LIBMTP_device_extension_t *next;
+};
+
+/**
  * Main MTP device object struct
  */
 struct LIBMTP_mtpdevice_struct {
@@ -615,6 +640,8 @@ struct LIBMTP_mtpdevice_struct {
   uint32_t default_text_folder;
   /** Per device iconv() converters, only used internally */
   void *cd;
+  /** Extension list */
+  LIBMTP_device_extension_t *extensions;
   
   /** Pointer to next device in linked list; NULL if this is the last device */
   LIBMTP_mtpdevice_t *next;
@@ -756,6 +783,7 @@ int LIBMTP_Get_Supported_Devices_List(LIBMTP_device_entry_t ** const, int * cons
  * @{
  */
 LIBMTP_error_number_t LIBMTP_Detect_Raw_Devices(LIBMTP_raw_device_t **, int *);
+int LIBMTP_Check_Specific_Device(int busno, int devno);
 LIBMTP_mtpdevice_t *LIBMTP_Open_Raw_Device(LIBMTP_raw_device_t *);
 /* Begin old, legacy interface */
 LIBMTP_mtpdevice_t *LIBMTP_Get_First_Device(void);

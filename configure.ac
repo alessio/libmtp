@@ -1,16 +1,10 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.52)
-AC_INIT([libmtp], [1.0.3], [libmtp-discuss@lists.sourceforge.net])
+AC_INIT([libmtp], [1.0.4], [libmtp-discuss@lists.sourceforge.net])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src/libmtp.c])
 AM_CONFIG_HEADER(config.h)
-
-# This can be overridden by the command line switch
-if test "$program_prefix" = NONE; then
-   program_prefix=mtp-
-   program_transform_name="s,^,$program_prefix,;$program_transform_name"
-fi
 
 # Checks for programs.
 AC_PROG_CC
@@ -19,6 +13,11 @@ AC_PROG_LN_S
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 AM_ICONV
+
+# For this library the default libexecdir is the udev
+# dir, because it's only used for the udev probe program
+# nothing else makes sense for this.
+libexecdir=/lib/udev
 
 # Check for doxygen
 AC_CHECK_PROG(HAVE_DOXYGEN, doxygen, true, false)
@@ -38,6 +37,19 @@ case "$host" in
   *) AC_MSG_RESULT([no]) ;;
 esac
 AC_SUBST(OSFLAGS)
+
+AC_MSG_CHECKING([if the host operating system is Linux])
+AC_TRY_COMPILE([#ifndef __linux__
+		#error "FAIL"
+		#endif
+		],
+		[int test;],
+		[ AC_MSG_RESULT(yes)
+		  AM_CONDITIONAL(USE_LINUX, true)
+		],
+		[ AC_MSG_RESULT(no)
+		  AM_CONDITIONAL(USE_LINUX, false)
+		])
 
 # Check for mingw compiler platform
 AC_MSG_CHECKING([For MinGW32])
@@ -87,7 +99,7 @@ AC_STRUCT_ST_BLKSIZE
 AC_FUNC_MALLOC
 AC_FUNC_MEMCMP
 AC_FUNC_STAT
-AC_CHECK_FUNCS(basename memset select strdup strerror strrchr strtoul usleep mkstemp)
+AC_CHECK_FUNCS(basename memset select strdup strerror strndup strrchr strtoul usleep mkstemp)
 
 # Switches.
 # Enable LFS (Large File Support)
@@ -110,6 +122,6 @@ AX_NEED_STDINT_H([src/_stdint.h])
 AC_NEED_BYTEORDER_H(src/gphoto2-endian.h)
 
 AC_CONFIG_FILES([src/libmtp.h doc/Doxyfile Makefile doc/Makefile src/Makefile
-	examples/Makefile libmtp.sh hotplug.sh libmtp.pc])
+	examples/Makefile util/Makefile libmtp.sh hotplug.sh libmtp.pc])
 AC_OUTPUT
 chmod +x hotplug.sh

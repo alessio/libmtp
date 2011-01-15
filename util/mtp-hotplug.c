@@ -1,8 +1,8 @@
-/** 
- * \file hotplug.c
- * Example program to create hotplug scripts.
+/**
+ * \file mtp-hotplug.c
+ * Program to create hotplug scripts.
  *
- * Copyright (C) 2005-2007 Linus Walleij <triad@df.lth.se>
+ * Copyright (C) 2005-2010 Linus Walleij <triad@df.lth.se>
  * Copyright (C) 2006-2008 Marcus Meissner <marcus@jet.franken.de>
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-#include "common.h"
+#include <libmtp.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -30,6 +30,7 @@ static void usage(void)
 {
   fprintf(stderr, "usage: hotplug [-u -H -i -a\"ACTION\"]\n");
   fprintf(stderr, "       -u:  use udev syntax\n");
+  fprintf(stderr, "       -o:  use old udev syntax\n");
   fprintf(stderr, "       -H:  use hal syntax\n");
   fprintf(stderr, "       -i:  use usb.ids simple list syntax\n");
   fprintf(stderr, "       -a\"ACTION\": perform udev action ACTION on attachment\n");
@@ -39,6 +40,7 @@ static void usage(void)
 enum style {
   style_usbmap,
   style_udev,
+  style_udev_old,
   style_hal,
   style_usbids
 };
@@ -54,16 +56,26 @@ int main (int argc, char **argv)
   extern int optind;
   extern char *optarg;
   char *udev_action = NULL;
-  char default_udev_action[] = "SYMLINK+=\"libmtp-%k\", MODE=\"666\"";
+  /*
+   * You could tag on MODE="0666" here to enfore writeable
+   * device nodes, use the command line argument for that.
+   * Current udev default rules will make any device tagged
+   * with ENV{ID_MEDIA_PLAYER}=1 writable for the console
+   * user.
+   */
+  char default_udev_action[] = "SYMLINK+=\"libmtp-%k\", ENV{ID_MTP_DEVICE}=\"1\", ENV{ID_MEDIA_PLAYER}=\"1\"";
   char *action; // To hold the action actually used.
-  uint16_t last_vendor = 0x0000U;  
+  uint16_t last_vendor = 0x0000U;
 
-  while ( (opt = getopt(argc, argv, "uUiHa:")) != -1 ) {
+  while ( (opt = getopt(argc, argv, "uoUiHa:")) != -1 ) {
     switch (opt) {
     case 'a':
       udev_action = strdup(optarg);
     case 'u':
       style = style_udev;
+      break;
+    case 'o':
+      style = style_udev_old;
       break;
     case 'H':
       style = style_hal;
@@ -92,10 +104,17 @@ int main (int argc, char **argv)
       printf("ACTION!=\"add\", GOTO=\"libmtp_rules_end\"\n");
       printf("ENV{MAJOR}!=\"?*\", GOTO=\"libmtp_rules_end\"\n");
       printf("SUBSYSTEM==\"usb\", GOTO=\"libmtp_usb_rules\"\n"
-	     "# The following thing will be deprecated when older kernels are phased out.\n"
-             "SUBSYSTEM==\"usb_device\", GOTO=\"libmtp_usb_device_rules\"\n"
 	     "GOTO=\"libmtp_rules_end\"\n\n"
 	     "LABEL=\"libmtp_usb_rules\"\n\n");
+      break;
+    case style_udev_old:
+      printf("# UDEV-style hotplug map for libmtp\n");
+      printf("# Put this file in /etc/udev/rules.d\n\n");
+      printf("ACTION!=\"add\", GOTO=\"libmtp_rules_end\"\n");
+      printf("ENV{MAJOR}!=\"?*\", GOTO=\"libmtp_rules_end\"\n");
+      printf("SUBSYSTEM==\"usb_device\", GOTO=\"libmtp_usb_device_rules\"\n"
+	     "GOTO=\"libmtp_rules_end\"\n\n"
+	     "LABEL=\"libmtp_usb_device_rules\"\n\n");
       break;
     case style_usbmap:
       printf("# This usermap will call the script \"libmtp.sh\" whenever a known MTP device is attached.\n\n");
@@ -117,15 +136,11 @@ int main (int argc, char **argv)
       LIBMTP_device_entry_t * entry = &entries[i];
 
       switch (style) {
-      case style_udev: 
-	{
-          printf("# %s %s\n", entry->vendor, entry->product);
-	  // Old style directly SYSFS named.
-	  // printf("SYSFS{idVendor}==\"%04x\", SYSFS{idProduct}==\"%04x\", %s\n", entry->vendor_id, entry->product_id, action);
-	  // Newer style
-	  printf("ATTR{idVendor}==\"%04x\", ATTR{idProduct}==\"%04x\", %s\n", entry->vendor_id, entry->product_id, action);
-	  break;
-        }
+      case style_udev:
+      case style_udev_old:
+	printf("# %s %s\n", entry->vendor, entry->product);
+	printf("ATTR{idVendor}==\"%04x\", ATTR{idProduct}==\"%04x\", %s\n", entry->vendor_id, entry->product_id, action);
+	break;
       case style_usbmap:
           printf("# %s %s\n", entry->vendor, entry->product);
           printf("libmtp.sh    0x0003  0x%04x  0x%04x  0x0000  0x0000  0x00    0x00    0x00    0x00    0x00    0x00    0x00000000\n", entry->vendor_id, entry->product_id);
@@ -179,26 +194,19 @@ int main (int argc, char **argv)
     exit(1);
   }
 
-  // For backward comparibility with the #$!+@! ever changing
-  // udev rule style...
-  if (style == style_udev) {
-    printf("GOTO=\"libmtp_rules_end\"\n\n");
-    printf("LABEL=\"libmtp_usb_device_rules\"\n");
-    for (i = 0; i < numentries; i++) {
-      LIBMTP_device_entry_t * entry = &entries[i];
-
-      printf("# %s %s\n", entry->vendor, entry->product);
-      printf("ATTRS{idVendor}==\"%04x\", ATTRS{idProduct}==\"%04x\", %s\n", entry->vendor_id, entry->product_id, action); 
-    }
-    printf("GOTO=\"libmtp_rules_end\"\n\n");
-  }
-
   // Then the footer.
   switch (style) {
   case style_usbmap:
     break;
   case style_udev:
-    printf("LABEL=\"libmtp_rules_end\"\n");
+  case style_udev_old:
+    /*
+     * This is code that invokes the mtp-probe program on
+     * every USB device that is either PTP or vendor specific
+     */
+    printf("\n# Autoprobe vendor-specific and PTP devices\n");
+    printf("ENV{ID_MTP_DEVICE}!=\"1\", ATTR{bDeviceClass}==\"00|06|ff\", PROGRAM=\"/lib/udev/mtp-probe /sys$env{DEVPATH} $attr{busnum} $attr{devnum}\", RESULT==\"1\", %s\n", action);
+    printf("\nLABEL=\"libmtp_rules_end\"\n");
     break;
   case style_hal:
     printf("    </match>\n");
