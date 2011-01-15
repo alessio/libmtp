@@ -1,4 +1,3 @@
-04-autoremove_oggflac_unkn_flags.patch
 05-update_sym.patch
 06-mtpinfo_posthal.patch
 10-connect_exit_status.patch
