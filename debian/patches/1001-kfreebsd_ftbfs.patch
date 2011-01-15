@@ -1,0 +1,27 @@
+---
+ configure    |    2 +-
+ configure.ac |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+--- libmtp.orig/configure
++++ libmtp/configure
+@@ -12013,7 +12013,7 @@ esac
+ $as_echo_n "checking if the host operating system is Linux... " >&6; }
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-#ifndef __linux__
++#if !(defined __linux__ || defined __FreeBSD_kernel__)
+ 		#error "FAIL"
+ 		#endif
+ 
+--- libmtp.orig/configure.ac
++++ libmtp/configure.ac
+@@ -39,7 +39,7 @@ esac
+ AC_SUBST(OSFLAGS)
+ 
+ AC_MSG_CHECKING([if the host operating system is Linux])
+-AC_TRY_COMPILE([#ifndef __linux__
++AC_TRY_COMPILE([#if !(defined __linux__ || defined __FreeBSD_kernel__)
+ 		#error "FAIL"
+ 		#endif
+ 		],
