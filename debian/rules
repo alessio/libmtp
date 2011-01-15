@@ -3,6 +3,8 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
+LDFLAGS+=-Wl,--as-needed
+
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
 DB2MAN = /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
 XP = xsltproc -''-nonet
