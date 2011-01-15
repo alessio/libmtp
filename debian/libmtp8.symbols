@@ -17,6 +17,7 @@ libmtp.so.8 libmtp8 #MINVER#
  LIBMTP_Get_Connected_Devices@Base 0.3.1
  LIBMTP_Get_Device_Certificate@Base 0.3.1
  LIBMTP_Get_Deviceversion@Base 0.3.1
+ LIBMTP_Check_Specific_Device@Base 1.0.4
  LIBMTP_Get_Errorstack@Base 0.3.1
  LIBMTP_Get_File_To_File@Base 0.3.1
  LIBMTP_Get_File_To_File_Descriptor@Base 0.3.1
