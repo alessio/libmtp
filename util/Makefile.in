@@ -34,14 +34,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = mtp-connect$(EXEEXT) mtp-detect$(EXEEXT) \
-	mtp-tracks$(EXEEXT) mtp-files$(EXEEXT) mtp-folders$(EXEEXT) \
-	mtp-trexist$(EXEEXT) mtp-playlists$(EXEEXT) \
-	mtp-getplaylist$(EXEEXT) mtp-format$(EXEEXT) \
-	mtp-albumart$(EXEEXT) mtp-albums$(EXEEXT) \
-	mtp-newplaylist$(EXEEXT) mtp-emptyfolders$(EXEEXT) \
-	mtp-thumb$(EXEEXT) mtp-reset$(EXEEXT)
-subdir = examples
+@USE_LINUX_TRUE@bin_PROGRAMS = mtp-hotplug$(EXEEXT)
+@USE_LINUX_TRUE@libexec_PROGRAMS = mtp-probe$(EXEEXT)
+subdir = util
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/byteorder.m4 \
@@ -55,70 +50,18 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)"
-PROGRAMS = $(bin_PROGRAMS)
-am_mtp_albumart_OBJECTS = albumart.$(OBJEXT) util.$(OBJEXT)
-mtp_albumart_OBJECTS = $(am_mtp_albumart_OBJECTS)
-mtp_albumart_LDADD = $(LDADD)
-mtp_albumart_DEPENDENCIES = ../src/libmtp.la
-am_mtp_albums_OBJECTS = albums.$(OBJEXT) util.$(OBJEXT)
-mtp_albums_OBJECTS = $(am_mtp_albums_OBJECTS)
-mtp_albums_LDADD = $(LDADD)
-mtp_albums_DEPENDENCIES = ../src/libmtp.la
-am_mtp_connect_OBJECTS = connect.$(OBJEXT) delfile.$(OBJEXT) \
-	getfile.$(OBJEXT) newfolder.$(OBJEXT) sendfile.$(OBJEXT) \
-	sendtr.$(OBJEXT) pathutils.$(OBJEXT) util.$(OBJEXT)
-mtp_connect_OBJECTS = $(am_mtp_connect_OBJECTS)
-mtp_connect_LDADD = $(LDADD)
-mtp_connect_DEPENDENCIES = ../src/libmtp.la
-am_mtp_detect_OBJECTS = detect.$(OBJEXT) util.$(OBJEXT)
-mtp_detect_OBJECTS = $(am_mtp_detect_OBJECTS)
-mtp_detect_LDADD = $(LDADD)
-mtp_detect_DEPENDENCIES = ../src/libmtp.la
-am_mtp_emptyfolders_OBJECTS = emptyfolders.$(OBJEXT) util.$(OBJEXT)
-mtp_emptyfolders_OBJECTS = $(am_mtp_emptyfolders_OBJECTS)
-mtp_emptyfolders_LDADD = $(LDADD)
-mtp_emptyfolders_DEPENDENCIES = ../src/libmtp.la
-am_mtp_files_OBJECTS = files.$(OBJEXT) util.$(OBJEXT)
-mtp_files_OBJECTS = $(am_mtp_files_OBJECTS)
-mtp_files_LDADD = $(LDADD)
-mtp_files_DEPENDENCIES = ../src/libmtp.la
-am_mtp_folders_OBJECTS = folders.$(OBJEXT) util.$(OBJEXT)
-mtp_folders_OBJECTS = $(am_mtp_folders_OBJECTS)
-mtp_folders_LDADD = $(LDADD)
-mtp_folders_DEPENDENCIES = ../src/libmtp.la
-am_mtp_format_OBJECTS = format.$(OBJEXT) util.$(OBJEXT)
-mtp_format_OBJECTS = $(am_mtp_format_OBJECTS)
-mtp_format_LDADD = $(LDADD)
-mtp_format_DEPENDENCIES = ../src/libmtp.la
-am_mtp_getplaylist_OBJECTS = getplaylist.$(OBJEXT) util.$(OBJEXT)
-mtp_getplaylist_OBJECTS = $(am_mtp_getplaylist_OBJECTS)
-mtp_getplaylist_LDADD = $(LDADD)
-mtp_getplaylist_DEPENDENCIES = ../src/libmtp.la
-am_mtp_newplaylist_OBJECTS = newplaylist.$(OBJEXT) util.$(OBJEXT)
-mtp_newplaylist_OBJECTS = $(am_mtp_newplaylist_OBJECTS)
-mtp_newplaylist_LDADD = $(LDADD)
-mtp_newplaylist_DEPENDENCIES = ../src/libmtp.la
-am_mtp_playlists_OBJECTS = playlists.$(OBJEXT) util.$(OBJEXT)
-mtp_playlists_OBJECTS = $(am_mtp_playlists_OBJECTS)
-mtp_playlists_LDADD = $(LDADD)
-mtp_playlists_DEPENDENCIES = ../src/libmtp.la
-am_mtp_reset_OBJECTS = reset.$(OBJEXT) util.$(OBJEXT)
-mtp_reset_OBJECTS = $(am_mtp_reset_OBJECTS)
-mtp_reset_LDADD = $(LDADD)
-mtp_reset_DEPENDENCIES = ../src/libmtp.la
-am_mtp_thumb_OBJECTS = thumb.$(OBJEXT) util.$(OBJEXT)
-mtp_thumb_OBJECTS = $(am_mtp_thumb_OBJECTS)
-mtp_thumb_LDADD = $(LDADD)
-mtp_thumb_DEPENDENCIES = ../src/libmtp.la
-am_mtp_tracks_OBJECTS = tracks.$(OBJEXT) util.$(OBJEXT)
-mtp_tracks_OBJECTS = $(am_mtp_tracks_OBJECTS)
-mtp_tracks_LDADD = $(LDADD)
-mtp_tracks_DEPENDENCIES = ../src/libmtp.la
-am_mtp_trexist_OBJECTS = trexist.$(OBJEXT) util.$(OBJEXT)
-mtp_trexist_OBJECTS = $(am_mtp_trexist_OBJECTS)
-mtp_trexist_LDADD = $(LDADD)
-mtp_trexist_DEPENDENCIES = ../src/libmtp.la
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)"
+PROGRAMS = $(bin_PROGRAMS) $(libexec_PROGRAMS)
+am__mtp_hotplug_SOURCES_DIST = mtp-hotplug.c
+@USE_LINUX_TRUE@am_mtp_hotplug_OBJECTS = mtp-hotplug.$(OBJEXT)
+mtp_hotplug_OBJECTS = $(am_mtp_hotplug_OBJECTS)
+mtp_hotplug_LDADD = $(LDADD)
+mtp_hotplug_DEPENDENCIES = ../src/libmtp.la
+am__mtp_probe_SOURCES_DIST = mtp-probe.c
+@USE_LINUX_TRUE@am_mtp_probe_OBJECTS = mtp-probe.$(OBJEXT)
+mtp_probe_OBJECTS = $(am_mtp_probe_OBJECTS)
+mtp_probe_LDADD = $(LDADD)
+mtp_probe_DEPENDENCIES = ../src/libmtp.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -132,22 +75,9 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(mtp_albumart_SOURCES) $(mtp_albums_SOURCES) \
-	$(mtp_connect_SOURCES) $(mtp_detect_SOURCES) \
-	$(mtp_emptyfolders_SOURCES) $(mtp_files_SOURCES) \
-	$(mtp_folders_SOURCES) $(mtp_format_SOURCES) \
-	$(mtp_getplaylist_SOURCES) $(mtp_newplaylist_SOURCES) \
-	$(mtp_playlists_SOURCES) $(mtp_reset_SOURCES) \
-	$(mtp_thumb_SOURCES) $(mtp_tracks_SOURCES) \
-	$(mtp_trexist_SOURCES)
-DIST_SOURCES = $(mtp_albumart_SOURCES) $(mtp_albums_SOURCES) \
-	$(mtp_connect_SOURCES) $(mtp_detect_SOURCES) \
-	$(mtp_emptyfolders_SOURCES) $(mtp_files_SOURCES) \
-	$(mtp_folders_SOURCES) $(mtp_format_SOURCES) \
-	$(mtp_getplaylist_SOURCES) $(mtp_newplaylist_SOURCES) \
-	$(mtp_playlists_SOURCES) $(mtp_reset_SOURCES) \
-	$(mtp_thumb_SOURCES) $(mtp_tracks_SOURCES) \
-	$(mtp_trexist_SOURCES)
+SOURCES = $(mtp_hotplug_SOURCES) $(mtp_probe_SOURCES)
+DIST_SOURCES = $(am__mtp_hotplug_SOURCES_DIST) \
+	$(am__mtp_probe_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -269,27 +199,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-mtp_connect_SOURCES = connect.c connect.h delfile.c getfile.c newfolder.c \
-	sendfile.c sendtr.c pathutils.c pathutils.h \
-	util.c util.h common.h
-
-mtp_detect_SOURCES = detect.c util.c util.h common.h
-mtp_tracks_SOURCES = tracks.c util.c util.h common.h
-mtp_files_SOURCES = files.c util.c util.h common.h
-mtp_folders_SOURCES = folders.c util.c util.h common.h
-mtp_trexist_SOURCES = trexist.c util.c util.h common.h
-mtp_playlists_SOURCES = playlists.c util.c util.h common.h
-mtp_getplaylist_SOURCES = getplaylist.c util.c util.h common.h
-mtp_newplaylist_SOURCES = newplaylist.c util.c util.h common.h
-mtp_format_SOURCES = format.c util.c util.h common.h
-mtp_albumart_SOURCES = albumart.c util.c util.h common.h
-mtp_albums_SOURCES = albums.c util.c util.h common.h
-mtp_emptyfolders_SOURCES = emptyfolders.c util.c util.h common.h
-mtp_thumb_SOURCES = thumb.c util.c util.h common.h
-mtp_reset_SOURCES = reset.c util.c util.h common.h
+@USE_LINUX_TRUE@mtp_hotplug_SOURCES = mtp-hotplug.c
+@USE_LINUX_TRUE@mtp_probe_SOURCES = mtp-probe.c
 AM_CPPFLAGS = -I$(top_builddir)/src
 LDADD = ../src/libmtp.la
-EXTRA_DIST = evolution-sync.sh
 all: all-am
 
 .SUFFIXES:
@@ -303,9 +216,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign examples/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign util/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign examples/Makefile
+	  $(AUTOMAKE) --foreign util/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -367,51 +280,55 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-mtp-albumart$(EXEEXT): $(mtp_albumart_OBJECTS) $(mtp_albumart_DEPENDENCIES) 
-	@rm -f mtp-albumart$(EXEEXT)
-	$(LINK) $(mtp_albumart_OBJECTS) $(mtp_albumart_LDADD) $(LIBS)
-mtp-albums$(EXEEXT): $(mtp_albums_OBJECTS) $(mtp_albums_DEPENDENCIES) 
-	@rm -f mtp-albums$(EXEEXT)
-	$(LINK) $(mtp_albums_OBJECTS) $(mtp_albums_LDADD) $(LIBS)
-mtp-connect$(EXEEXT): $(mtp_connect_OBJECTS) $(mtp_connect_DEPENDENCIES) 
-	@rm -f mtp-connect$(EXEEXT)
-	$(LINK) $(mtp_connect_OBJECTS) $(mtp_connect_LDADD) $(LIBS)
-mtp-detect$(EXEEXT): $(mtp_detect_OBJECTS) $(mtp_detect_DEPENDENCIES) 
-	@rm -f mtp-detect$(EXEEXT)
-	$(LINK) $(mtp_detect_OBJECTS) $(mtp_detect_LDADD) $(LIBS)
-mtp-emptyfolders$(EXEEXT): $(mtp_emptyfolders_OBJECTS) $(mtp_emptyfolders_DEPENDENCIES) 
-	@rm -f mtp-emptyfolders$(EXEEXT)
-	$(LINK) $(mtp_emptyfolders_OBJECTS) $(mtp_emptyfolders_LDADD) $(LIBS)
-mtp-files$(EXEEXT): $(mtp_files_OBJECTS) $(mtp_files_DEPENDENCIES) 
-	@rm -f mtp-files$(EXEEXT)
-	$(LINK) $(mtp_files_OBJECTS) $(mtp_files_LDADD) $(LIBS)
-mtp-folders$(EXEEXT): $(mtp_folders_OBJECTS) $(mtp_folders_DEPENDENCIES) 
-	@rm -f mtp-folders$(EXEEXT)
-	$(LINK) $(mtp_folders_OBJECTS) $(mtp_folders_LDADD) $(LIBS)
-mtp-format$(EXEEXT): $(mtp_format_OBJECTS) $(mtp_format_DEPENDENCIES) 
-	@rm -f mtp-format$(EXEEXT)
-	$(LINK) $(mtp_format_OBJECTS) $(mtp_format_LDADD) $(LIBS)
-mtp-getplaylist$(EXEEXT): $(mtp_getplaylist_OBJECTS) $(mtp_getplaylist_DEPENDENCIES) 
-	@rm -f mtp-getplaylist$(EXEEXT)
-	$(LINK) $(mtp_getplaylist_OBJECTS) $(mtp_getplaylist_LDADD) $(LIBS)
-mtp-newplaylist$(EXEEXT): $(mtp_newplaylist_OBJECTS) $(mtp_newplaylist_DEPENDENCIES) 
-	@rm -f mtp-newplaylist$(EXEEXT)
-	$(LINK) $(mtp_newplaylist_OBJECTS) $(mtp_newplaylist_LDADD) $(LIBS)
-mtp-playlists$(EXEEXT): $(mtp_playlists_OBJECTS) $(mtp_playlists_DEPENDENCIES) 
-	@rm -f mtp-playlists$(EXEEXT)
-	$(LINK) $(mtp_playlists_OBJECTS) $(mtp_playlists_LDADD) $(LIBS)
-mtp-reset$(EXEEXT): $(mtp_reset_OBJECTS) $(mtp_reset_DEPENDENCIES) 
-	@rm -f mtp-reset$(EXEEXT)
-	$(LINK) $(mtp_reset_OBJECTS) $(mtp_reset_LDADD) $(LIBS)
-mtp-thumb$(EXEEXT): $(mtp_thumb_OBJECTS) $(mtp_thumb_DEPENDENCIES) 
-	@rm -f mtp-thumb$(EXEEXT)
-	$(LINK) $(mtp_thumb_OBJECTS) $(mtp_thumb_LDADD) $(LIBS)
-mtp-tracks$(EXEEXT): $(mtp_tracks_OBJECTS) $(mtp_tracks_DEPENDENCIES) 
-	@rm -f mtp-tracks$(EXEEXT)
-	$(LINK) $(mtp_tracks_OBJECTS) $(mtp_tracks_LDADD) $(LIBS)
-mtp-trexist$(EXEEXT): $(mtp_trexist_OBJECTS) $(mtp_trexist_DEPENDENCIES) 
-	@rm -f mtp-trexist$(EXEEXT)
-	$(LINK) $(mtp_trexist_OBJECTS) $(mtp_trexist_LDADD) $(LIBS)
+install-libexecPROGRAMS: $(libexec_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	test -z "$(libexecdir)" || $(MKDIR_P) "$(DESTDIR)$(libexecdir)"
+	@list='$(libexec_PROGRAMS)'; test -n "$(libexecdir)" || list=; \
+	for p in $$list; do echo "$$p $$p"; done | \
+	sed 's/$(EXEEXT)$$//' | \
+	while read p p1; do if test -f $$p || test -f $$p1; \
+	  then echo "$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
+	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
+	sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
+	    else { print "f", $$3 "/" $$4, $$1; } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	    test -z "$$files" || { \
+	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(libexecdir)$$dir'"; \
+	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(libexecdir)$$dir" || exit $$?; \
+	    } \
+	; done
+
+uninstall-libexecPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(libexec_PROGRAMS)'; test -n "$(libexecdir)" || list=; \
+	files=`for p in $$list; do echo "$$p"; done | \
+	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
+	      -e 's/$$/$(EXEEXT)/' `; \
+	test -n "$$list" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(libexecdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(libexecdir)" && rm -f $$files
+
+clean-libexecPROGRAMS:
+	@list='$(libexec_PROGRAMS)'; test -n "$$list" || exit 0; \
+	echo " rm -f" $$list; \
+	rm -f $$list || exit $$?; \
+	test -n "$(EXEEXT)" || exit 0; \
+	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
+	echo " rm -f" $$list; \
+	rm -f $$list
+mtp-hotplug$(EXEEXT): $(mtp_hotplug_OBJECTS) $(mtp_hotplug_DEPENDENCIES) 
+	@rm -f mtp-hotplug$(EXEEXT)
+	$(LINK) $(mtp_hotplug_OBJECTS) $(mtp_hotplug_LDADD) $(LIBS)
+mtp-probe$(EXEEXT): $(mtp_probe_OBJECTS) $(mtp_probe_DEPENDENCIES) 
+	@rm -f mtp-probe$(EXEEXT)
+	$(LINK) $(mtp_probe_OBJECTS) $(mtp_probe_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -419,28 +336,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/albumart.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/albums.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/connect.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/delfile.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/emptyfolders.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/files.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/folders.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getfile.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getplaylist.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/newfolder.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/newplaylist.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pathutils.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/playlists.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reset.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sendfile.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sendtr.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thumb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tracks.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/trexist.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mtp-hotplug.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mtp-probe.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -555,7 +452,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -585,7 +482,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic clean-libtool mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-libexecPROGRAMS \
+	clean-libtool mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -611,9 +509,8 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS
-	@$(NORMAL_INSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
+install-exec-am: install-binPROGRAMS install-libexecPROGRAMS
+
 install-html: install-html-am
 
 install-html-am:
@@ -652,31 +549,25 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS
+uninstall-am: uninstall-binPROGRAMS uninstall-libexecPROGRAMS
 
-.MAKE: install-am install-exec-am install-strip
+.MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic clean-libtool ctags distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-exec-hook \
-	install-html install-html-am install-info install-info-am \
+	clean-generic clean-libexecPROGRAMS clean-libtool ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-binPROGRAMS \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-libexecPROGRAMS \
 	install-man install-pdf install-pdf-am install-ps \
 	install-ps-am install-strip installcheck installcheck-am \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-binPROGRAMS
+	uninstall-am uninstall-binPROGRAMS uninstall-libexecPROGRAMS
 
-
-install-exec-hook:
-	ln -f -s mtp-connect$(EXEEXT) $(DESTDIR)$(bindir)/mtp-delfile$(EXEEXT)
-	ln -f -s mtp-connect$(EXEEXT) $(DESTDIR)$(bindir)/mtp-getfile$(EXEEXT)
-	ln -f -s mtp-connect$(EXEEXT) $(DESTDIR)$(bindir)/mtp-newfolder$(EXEEXT)
-	ln -f -s mtp-connect$(EXEEXT) $(DESTDIR)$(bindir)/mtp-sendfile$(EXEEXT)
-	ln -f -s mtp-connect$(EXEEXT) $(DESTDIR)$(bindir)/mtp-sendtr$(EXEEXT)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

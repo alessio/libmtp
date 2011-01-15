@@ -1,3 +1,87 @@
+2011-01-09  Linus Walleij <triad@df.lth.se>
+
+	* configure.ac: bump to 1.0.4
+	* src/Makefile.am: bump interface to libmtp.so.8.3.4
+	* Release libmtp 1.0.4
+
+2010-12-07  Linus Walleij <triad@df.lth.se>
+
+	* configure.ac: make sure the prober only compiles for
+	  Linux.
+	* src/ptp.c: update to match upstream.
+	* src/ptp.h: dito.
+	* src/ptp-pack.c: dito.
+
+2010-12-05  Linus Walleij <triad@df.lth.se>
+
+	* utils/mtp-probe.c: enhanced to use libmtp intrinsics
+	  and e.g. OS descriptor to probe new devices from
+	  udev.
+	* utils/mtp-hotplug.c: utilize mtp-probe.
+	* src/libmtp.h.in: add new interface used by the mtp-probe
+	  utility to probe a certain device in a certain bus.
+	* src/libusb-glue.c: introduce new function to probe a
+	  certain bus and device.
+	* examples/Makefile.am: reform the way of making all
+	  executable examples prefixed with "mtp-*" just set this
+	  name in the make target!
+	* configure.ac: drop the default "mtp-*" prefixing of all
+	  programs, instead I have renamed the executables.
+	* Makefile.am: install the mtp-probe script in the
+	  libexecdir, and FORCE this to be /lib/udev.
+	  We now also install the udev rules to
+	  $libexecdir/rules.d, which is thus also forced to
+	  be /lib/udev/rules.d.
+
+2010-12-01  Linus Walleij <triad@df.lth.se>
+
+	* examples/hotplug.c: drop old udev style somewhat.
+	* utils/: move out mtp-hotplug into its own subdir,
+	  intend to put programs to probe devices here too.
+	* utils/mtp-hotplug.c: moved the hotplug program here.
+	* utils/check_mtp_device.sh: tentative script for
+	  checking MTP devices.
+	* utils/mtp-probe.c: C program intended to check if
+	  devices are MTP.
+
+2010-11-24  Linus Walleij <triad@df.lth.se>
+
+	* examples/hotplug.c: set the music player environment
+	  variable for userspace programs watching udev output to
+	  determine what device is plugged in.
+
+2010-10-31  Linus Walleij <triad@df.lth.se>
+
+	* src/libusb-glue.c: only reset the device if a connection
+	  fails, then retry. We were resetting the device on every
+	  close() - not good.
+
+2010-10-17  Linus Walleij <triad@df.lth.se>
+
+	* src/libmtp.c: Windows file open fixes from Jelle Geerts.
+	* examples/sendfile.c: exit with 1 on error.
+	* examples/*: condensed connect subprograms to a single
+	  header and propagate error codes.
+
+2010-09-18  Linus Walleij <triad@df.lth.se>
+
+	* src/libmtp.c: NULL check on abstract lists, drop unused
+	  folder variable.
+
+2010-07-25  Linus Walleij <triad@df.lth.se>
+
+	* src/libmtp.c: if the Ogg or FLAC filetypes have been
+	  flagged as being stored as "unknown" and the device now
+	  indicates it supports them: remove the flag.
+	* src/libmtp.c: parse device extensions.
+	* src/libmtp.h.in: stack up device extensions in the
+	  device struct.
+
+2010-06-19  Richard Low <richard@wentnet.com>
+
+	* src/music-players.h: add Apple devices as supported by
+	  PwnTunes
+
 2010-05-23  Linus Walleij <triad@df.lth.se>
 
 	* src/libusb-glue.c: don't probe HID equipment for device
