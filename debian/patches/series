@@ -1,4 +1,3 @@
-02-add_devices.patch
 03-ogg_flags.patch
 04-autoremove_oggflac_unkn_flags.patch
 05-update_sym.patch
