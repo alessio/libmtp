@@ -40,6 +40,7 @@ install/libmtp-doc::
 
 binary-install/libmtp-dev::
 	rm -f debian/libmtp-dev/usr/lib/libmtp.la
+	rm -f debian/libmtp-dev/usr/lib/libmtp.a
 
 binary-install/libmtp$(SOVERSION)::
 	if [ ${DISTRIBUTION} = 'Ubuntu' ]; then \

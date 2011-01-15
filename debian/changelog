@@ -1,3 +1,70 @@
+libmtp (1.0.3-6) experimental; urgency=low
+
+  * New devices:
+    - Nokia 2710 0421:02c1.
+    - Nokia 5230 0421:02e2.
+    - SanDisk Sansa Fuze+ 0781:74e0
+    - Sony Walkman NWZ-B153F 054c:04be
+    - Sony Walkman NWZ-E354 054c:04cb
+  * Take patch from upstream trunk:
+    - examples/hotplug.c: Set ENV{ID_MEDIA_PLAYER}="1" to allow userspace
+      programs to retrieve information about plugged-in device via udev.
+      Thanks to Martin Pitt for reporting this.
+  * Refresh remaining patches.
+  * Set libmtp-dev Architecture to 'all', regenerate debian/control.
+  * Remove static libraries from the -DEV binary.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 27 Nov 2010 09:50:44 +0100
+
+libmtp (1.0.3-5) experimental; urgency=low
+
+  * New device: iRiver T5 4102:1153
+  * Update symbols.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 05 Nov 2010 11:12:22 +0100
+
+libmtp (1.0.3-4) experimental; urgency=low
+
+  * New device: Wyplay Wyplayer 1e53:0007.
+  * Refresh patches.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 03 Sep 2010 19:18:19 +0200
+
+libmtp (1.0.3-3) experimental; urgency=low
+
+  * Rename, refresh and re-organize patches.
+  * debian/patches/01-devices_small_fixes.patch:
+    - Fix Blackberry's name.
+    - Fix Sony DCR-SR75 device ID.
+    - Add flag to mark Samsung M7600 Beat/GT-S8300T as unable to read
+      the battery status.
+    - Add DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST flag to LG KM900.
+  * New devices now supported:
+    - Apple iPhone 05ac:0x1290
+    - Apple iPod Touch 1st Gen 05ac:1291
+    - Apple iPhone 3G 05ac:0x1292
+    - Apple iPod Touch 2nd Gen 05ac:0x1293
+    - Apple iPhone 3GS 05ac:0x1294
+    - Apple 05ac:1296
+    - Apple 05ac:1297
+    - Apple 05ac:1298
+    - Apple iPod Touch 3rd Gen 05ac:0x1299
+    - Apple iPad 05ac:129a
+    - SonyEricsson U5 0fce:0133
+    - Samsung Galaxy S GT-I9000 04e8:6877
+    - Samsung Vibrant SGH-T959 04e8:68a9
+    - COBY MP705 1e74:6512
+    - Cowon iAudio J3 0e21:0921
+    - Motorola Droid X 22b8:41d6
+  * debian/patches/03-ogg_flags.patch:
+    - Set proper Ogg flags on some Cowon and Samsung devices.
+  * debian/patches/04-autoremove_oggflac_unkn_flags.patch:
+    - If the Ogg or FLAC filetypes have been flagged as being stored as
+      unknown and the device now indicates it supports them then remove
+      the flag.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 02 Sep 2010 21:58:25 +0200
+
 libmtp (1.0.3-2) experimental; urgency=low
 
   * Install apport package hooks only if system is Ubuntu.

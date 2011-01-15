@@ -33,8 +33,9 @@ Description: Media Transfer Protocol (MTP) library
 
 Package: libmtp-dev
 Section: libdevel
-Architecture: any
-Depends: libmtp@SOVERSION@ (= ${binary:Version}),
+Architecture: all
+Depends: libmtp@SOVERSION@ (>= ${source:Version}),
+ libmtp@SOVERSION@ (<< ${source:Upstream-Version}+1~),
  libusb-dev (>> 0.1.7),
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) development files

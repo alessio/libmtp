@@ -1,0 +1,64 @@
+Author: Alessio Treglia <alessio@debian.org>
+Description: Remove DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS flag for
+ Creative ZEN device 041E:4157 (Debian bug#520961).
+ Fix Sony DCR-SR75 device ID.
+ Adjust BlackBerry 0fca:8007 device's name.
+ Add flag to mark Samsung M7600 Beat/GT-S8300T as unable to read the
+ battery status.
+ Add DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST flag to LG KM900.
+Origin: upstream, commit:1135,1136,1137,1146
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520961
+Forwarded: https://sourceforge.net/support/tracker.php?aid=2745107
+---
+ src/music-players.h |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+--- libmtp.orig/src/music-players.h
++++ libmtp/src/music-players.h
+@@ -72,8 +72,7 @@
+   // Don't add 0x4155: this is a Zen Stone device which is not MTP
+   // Reported by Paul Kurczaba <paul@kurczaba.com>
+   { "Creative", 0x041e, "ZEN", 0x4157, DEVICE_FLAG_IGNORE_HEADER_ERRORS |
+-    DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS |
+-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
++    DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS },
+   // Reported by Ringofan <mcroman@users.sourceforge.net>
+   { "Creative", 0x041e, "ZEN V 2GB", 0x4158,
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+@@ -219,7 +218,8 @@
+   // From Santi Béjar <sbejar@gmail.com> - not sure this is MTP...
+   // { "Samsung", 0x04e8, "E250 Mobile Phone", 0x663e, DEVICE_FLAG_UNLOAD_DRIVER },
+   // From an anonymous SF user
+-  { "Samsung", 0x04e8, "M7600 Beat", 0x6642, DEVICE_FLAG_UNLOAD_DRIVER },
++  { "Samsung", 0x04e8, "M7600 Beat/GT-S8300T", 0x6642,
++      DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_BATTERY_LEVEL},
+   // From Lionel Bouton
+   { "Samsung", 0x04e8, "X830 Mobile Phone", 0x6702, DEVICE_FLAG_UNLOAD_DRIVER },
+   // From James <jamestech@gmail.com>
+@@ -903,7 +903,7 @@
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST | DEVICE_FLAG_ALWAYS_PROBE_DESCRIPTOR },
+   // Reported by anonymous sourceforge user
+   { "LG Electronics Inc.", 0x1004, "KM900", 0x6132,
+-      DEVICE_FLAG_UNLOAD_DRIVER },
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST | DEVICE_FLAG_UNLOAD_DRIVER },
+ 
+   /*
+    * Sony
+@@ -997,7 +997,7 @@
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+       DEVICE_FLAG_UNIQUE_FILENAMES },
+   // Reported by Anonymous SourceForge user
+-  { "Sony", 0x05ac, "DCR-SR75", 0x1294,
++  { "Sony", 0x054c, "DCR-SR75", 0x1294,
+       DEVICE_FLAG_UNLOAD_DRIVER |
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+       DEVICE_FLAG_UNIQUE_FILENAMES },
+@@ -1134,7 +1134,7 @@
+    * RIM's BlackBerry
+    */
+   // Reported by Nicolas VIVIEN <nicolas@vivien.fr>
+-  { "RIM", 0x0fca, "BlackBerry Storm", 0x8007, DEVICE_FLAG_UNLOAD_DRIVER |
++  { "RIM", 0x0fca, "BlackBerry Storm/9650", 0x8007, DEVICE_FLAG_UNLOAD_DRIVER |
+       DEVICE_FLAG_SWITCH_MODE_BLACKBERRY | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+ 
+   /*
