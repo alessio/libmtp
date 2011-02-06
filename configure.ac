@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.52)
-AC_INIT([libmtp], [1.0.4], [libmtp-discuss@lists.sourceforge.net])
+AC_INIT([libmtp], [1.0.5], [libmtp-discuss@lists.sourceforge.net])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src/libmtp.c])
@@ -14,17 +14,37 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 AM_ICONV
 
-# For this library the default libexecdir is the udev
-# dir, because it's only used for the udev probe program
-# nothing else makes sense for this.
-libexecdir=/lib/udev
+# Optionally set install location of udev
+UDEV=/lib/udev
+AC_ARG_WITH(udev,
+    AC_HELP_STRING([--with-udev=DIR],
+    [directory where udev is installed [default=/lib/udev]]),
+    [UDEV="${withval}"], [])
+AC_SUBST(UDEV)
 
-# Check for doxygen
-AC_CHECK_PROG(HAVE_DOXYGEN, doxygen, true, false)
-AM_CONDITIONAL(HAVE_DOXYGEN,$HAVE_DOXYGEN)
-if test $HAVE_DOXYGEN = "false"; then
-             AC_MSG_WARN([*** doxygen not found, docs will not be built])
+# Optionally set name of udev rules file
+UDEV_RULES=libmtp.rules
+AC_ARG_WITH(udev-rules,
+    AC_HELP_STRING([--with-udev-rules=NAME],
+    [file name for udev rules [default=libmtp.rules]]),
+    [UDEV_RULES="${withval}"], [])
+AC_SUBST(UDEV_RULES)
+
+# Optionally enable and check for doxygen
+AC_ARG_ENABLE([doxygen],
+    AS_HELP_STRING([--enable-doxygen], [Build API documentation using Doxygen [default=no]]),
+    [ac_enable_doxygen=$enableval], [ac_enable_doxygen=auto])
+if test "x$ac_enable_doxygen" == "xyes"; then
+    AC_CHECK_PROG(HAVE_DOXYGEN, doxygen, true, false)
+    if test "x$HAVE_DOXYGEN" = "xfalse" -a "x$ac_enable_doxygen" = "xyes"; then
+        AC_MSG_ERROR([*** API documentation explicitly requested but Doxygen not found])
+    fi
+    AC_MSG_NOTICE([API documentation will be generated using Doxygen])
+else
+    HAVE_DOXYGEN=false
+    AC_MSG_NOTICE([API documentation will not be generated])
 fi
+AM_CONDITIONAL(HAVE_DOXYGEN,$HAVE_DOXYGEN)
 
 # Check for Darwin
 AC_MSG_CHECKING([if the host operating system is Darwin])

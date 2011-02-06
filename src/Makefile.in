@@ -165,6 +165,8 @@ SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+UDEV = @UDEV@
+UDEV_RULES = @UDEV_RULES@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -222,7 +224,7 @@ top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = libmtp.la
 libmtp_la_SOURCES = libmtp.c unicode.c unicode.h util.c util.h playlist-spl.c \
 	libusb-glue.c libusb-glue.h \
-	gphoto2-endian.h libptp-stdint.h ptp.c ptp.h \
+	gphoto2-endian.h _stdint.h ptp.c ptp.h \
 	music-players.h device-flags.h playlist-spl.h
 
 include_HEADERS = libmtp.h
@@ -252,7 +254,7 @@ EXTRA_DIST = libmtp.h.in libmtp.sym ptp-pack.c
 # ---------------------------------------------------------------------------
 CURRENT = 11
 AGE = 3
-REVISION = 4
+REVISION = 5
 SOVERSION = $(CURRENT):$(REVISION):$(AGE)
 LT_CURRENT_MINUS_AGE = `expr $(CURRENT) - $(AGE)`
 @COMPILE_MINGW32_TRUE@W32_LIBS = -lws2_32
@@ -261,7 +263,7 @@ LT_CURRENT_MINUS_AGE = `expr $(CURRENT) - $(AGE)`
 libmtp_la_LDFLAGS = @LDFLAGS@ -no-undefined -export-symbols $(srcdir)/libmtp.sym -version-info $(SOVERSION) $(W32_LDFLAGS)
 libmtp_la_LIBADD = $(W32_LIBS) $(LTLIBICONV)
 libmtp_la_DEPENDENCIES = $(srcdir)/libmtp.sym
-DISTCLEANFILES = _stdint.h
+DISTCLEANFILES = _stdint.h gphoto2-endian.h
 all: all-am
 
 .SUFFIXES:

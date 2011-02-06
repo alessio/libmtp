@@ -196,6 +196,8 @@ SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+UDEV = @UDEV@
+UDEV_RULES = @UDEV_RULES@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -258,10 +260,10 @@ EXTRA_DIST = libmtp.pc libmtp.sh COPYING README.windows.txt
 
 # This stuff only makes sense on Linux so only
 # build and ship it on Linux.
-@USE_LINUX_TRUE@udevrulesdir = $(libexecdir)/rules.d
-@USE_LINUX_TRUE@udevrules_DATA = libmtp.rules
+@USE_LINUX_TRUE@udevrulesdir = $(prefix)/@UDEV@/rules.d
+@USE_LINUX_TRUE@udevrules_DATA = @UDEV_RULES@
 @USE_LINUX_TRUE@noinst_DATA = libmtp.usermap libmtp.fdi
-@USE_LINUX_TRUE@CLEANFILES = libmtp.usermap libmtp.rules libmtp.fdi
+@USE_LINUX_TRUE@CLEANFILES = libmtp.usermap @UDEV_RULES@ libmtp.fdi
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -811,8 +813,8 @@ uninstall-am: uninstall-pkgconfigDATA uninstall-udevrulesDATA
 
 @USE_LINUX_TRUE@libmtp.usermap: util/mtp-hotplug
 @USE_LINUX_TRUE@	util/mtp-hotplug > libmtp.usermap
-@USE_LINUX_TRUE@libmtp.rules: util/mtp-hotplug
-@USE_LINUX_TRUE@	util/mtp-hotplug -u > libmtp.rules
+@USE_LINUX_TRUE@@UDEV_RULES@: util/mtp-hotplug
+@USE_LINUX_TRUE@	util/mtp-hotplug -u -p"@UDEV@" > @UDEV_RULES@
 @USE_LINUX_TRUE@libmtp.fdi: util/mtp-hotplug
 @USE_LINUX_TRUE@	util/mtp-hotplug -H > libmtp.fdi
 
