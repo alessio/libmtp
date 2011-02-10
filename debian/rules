@@ -52,9 +52,6 @@ binary-install/libmtp$(SOVERSION)::
 build/libmtp$(SOVERSION)::
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
-	# Adapt upstream udev rules file to Debian standards
-	perl -pi -e 's/MODE.*/MODE="660", GROUP="audio"/ if /MODE/' \
-		libmtp.rules
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
