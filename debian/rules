@@ -5,6 +5,8 @@ include /usr/share/cdbs/1/class/autotools.mk
 
 LDFLAGS+=-Wl,--as-needed
 
+DEB_CONFIGURE_EXTRA_FLAGS := --enable-doxygen \
+ --enable-static=no
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
 DB2MAN = /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
 XP = xsltproc -''-nonet
@@ -39,10 +41,6 @@ install/libmtp-doc::
 	  for i in $$(ls *.3 | grep -v ^mtp_) ; do			\
 		../../../debian/sanitize-manpage.pl < $$i > mtp_$$i ;	\
 	  done )
-
-binary-install/libmtp-dev::
-	rm -f debian/libmtp-dev/usr/lib/libmtp.la
-	rm -f debian/libmtp-dev/usr/lib/libmtp.a
 
 binary-install/libmtp$(SOVERSION)::
 	if [ ${DISTRIBUTION} = 'Ubuntu' ]; then \
