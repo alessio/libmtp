@@ -1,11 +1,12 @@
 libmtp (1.0.5-1) unstable; urgency=low
 
+  * Upload to unstable.
   * New upstream release:
     - soname libmtp.so.8.3.5
     - several fixes from Denis Dupeyron to ease work for maintainers:
-      + ./configure --enable-doxygen: make Doxygen doc generation optional
-      + ./configure --with-udev=DIR: select a dir for udev
-      + ./configure --with-udev-rules=NAME: select name of udev rules file
+      + ./configure --enable-doxygen: make Doxygen doc generation optional.
+      + ./configure --with-udev=DIR: select a dir for udev.
+      + ./configure --with-udev-rules=NAME: select name of udev rules file.
     - several mtp-probe fixes for udev use, now we only probe:
       + Devices that are of known classes to conatin MTP extensions:
         COMM, PTP, CUSTOM and per-interface.
@@ -14,9 +15,11 @@ libmtp (1.0.5-1) unstable; urgency=low
       + Clear halt on EP 0 after probe if it fails with error.
       + Stop accepting *all* PTP devices as MTP, this is confusing.
     - Minor fixes and new devices.
+  * Don't build,install static libraries.
+  * Pass --enable-doxygen to the configure script.
   * Refresh patches.
 
- -- Alessio Treglia <alessio@debian.org>  Tue, 08 Feb 2011 19:05:59 +0100
+ -- Alessio Treglia <alessio@debian.org>  Thu, 10 Feb 2011 10:43:52 +0100
 
 libmtp (1.0.4-2) experimental; urgency=low
 
