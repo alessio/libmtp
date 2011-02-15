@@ -1,3 +1,13 @@
+libmtp (1.0.6-1) unstable; urgency=low
+
+  * New upstream release:
+    - Fix probe code, hopefully MTP devices are now properly detected.
+    - Fix an older iconv.m4 and other stuff needed for Solaris builds.
+    - Some new devices and minor bug fixes.
+  * Refresh patches.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 15 Feb 2011 20:45:39 +0100
+
 libmtp (1.0.5-2) unstable; urgency=low
 
   * 1002-udev_rules.patch:
