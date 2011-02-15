@@ -40,10 +40,10 @@ subdir = util
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/byteorder.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/stdint.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/stdint.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -146,6 +146,8 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 UDEV = @UDEV@
+UDEV_GROUP = @UDEV_GROUP@
+UDEV_MODE = @UDEV_MODE@
 UDEV_RULES = @UDEV_RULES@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
@@ -202,7 +204,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @USE_LINUX_TRUE@mtp_hotplug_SOURCES = mtp-hotplug.c
-@USE_LINUX_TRUE@mtp_probedir = $(prefix)/@UDEV@
+@USE_LINUX_TRUE@mtp_probedir = @UDEV@
 @USE_LINUX_TRUE@mtp_probe_SOURCES = mtp-probe.c
 AM_CPPFLAGS = -I$(top_builddir)/src
 LDADD = ../src/libmtp.la

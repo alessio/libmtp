@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.52)
-AC_INIT([libmtp], [1.0.5], [libmtp-discuss@lists.sourceforge.net])
+AC_INIT([libmtp], [1.0.6], [libmtp-discuss@lists.sourceforge.net])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src/libmtp.c])
@@ -29,6 +29,22 @@ AC_ARG_WITH(udev-rules,
     [file name for udev rules [default=libmtp.rules]]),
     [UDEV_RULES="${withval}"], [])
 AC_SUBST(UDEV_RULES)
+
+# Optionally set group for device nodes
+UDEV_GROUP=
+AC_ARG_WITH(udev-group,
+    AC_HELP_STRING([--with-udev-group=GROUP],
+    [file group for device nodes [default: none specified]]]),
+    [UDEV_GROUP="-g\"${withval}\""], [])
+AC_SUBST(UDEV_GROUP)
+
+# Optionally set mode for device nodes
+UDEV_MODE=
+AC_ARG_WITH(udev-mode,
+    AC_HELP_STRING([--with-udev-mode=GROUP],
+    [file mode for device nodes [default: none specified]]]),
+    [UDEV_MODE="-m\"${withval}\""], [])
+AC_SUBST(UDEV_MODE)
 
 # Optionally enable and check for doxygen
 AC_ARG_ENABLE([doxygen],
@@ -101,7 +117,7 @@ AC_HEADER_TIME
 # zlib.h the day we need to decompress firmware
 AC_CHECK_HEADERS([ctype.h errno.h fcntl.h getopt.h libgen.h \
 	limits.h stdio.h string.h sys/stat.h sys/time.h unistd.h \
-	iconv.h langinfo.h locale.h arpa/inet.h byteswap.h sys/uio.h])
+	langinfo.h locale.h arpa/inet.h byteswap.h sys/uio.h])
 AC_CHECK_HEADER([usb.h],,
 	AC_MSG_ERROR([I can't find the libusb header file on your system.
 	You may need to set the CPPFLAGS environment variable to include

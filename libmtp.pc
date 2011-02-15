@@ -7,7 +7,7 @@ includedir=${prefix}/include
 
 Name: libmtp
 Description: libmtp is a library for accessing Media Transfer Protocol devices
-Version: 1.0.5
+Version: 1.0.6
 Requires: libusb
 Conflicts:
 Libs: -L${libdir} -lmtp

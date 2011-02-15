@@ -41,10 +41,10 @@ DIST_COMMON = README $(include_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/libmtp.h.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/byteorder.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/stdint.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/stdint.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -166,6 +166,8 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 UDEV = @UDEV@
+UDEV_GROUP = @UDEV_GROUP@
+UDEV_MODE = @UDEV_MODE@
 UDEV_RULES = @UDEV_RULES@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
@@ -254,7 +256,7 @@ EXTRA_DIST = libmtp.h.in libmtp.sym ptp-pack.c
 # ---------------------------------------------------------------------------
 CURRENT = 11
 AGE = 3
-REVISION = 5
+REVISION = 6
 SOVERSION = $(CURRENT):$(REVISION):$(AGE)
 LT_CURRENT_MINUS_AGE = `expr $(CURRENT) - $(AGE)`
 @COMPILE_MINGW32_TRUE@W32_LIBS = -lws2_32

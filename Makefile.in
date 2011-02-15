@@ -43,10 +43,10 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	depcomp install-sh ltmain.sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/byteorder.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/stdint.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/stdint.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -197,6 +197,8 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 UDEV = @UDEV@
+UDEV_GROUP = @UDEV_GROUP@
+UDEV_MODE = @UDEV_MODE@
 UDEV_RULES = @UDEV_RULES@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
@@ -260,7 +262,7 @@ EXTRA_DIST = libmtp.pc libmtp.sh COPYING README.windows.txt
 
 # This stuff only makes sense on Linux so only
 # build and ship it on Linux.
-@USE_LINUX_TRUE@udevrulesdir = $(prefix)/@UDEV@/rules.d
+@USE_LINUX_TRUE@udevrulesdir = @UDEV@/rules.d
 @USE_LINUX_TRUE@udevrules_DATA = @UDEV_RULES@
 @USE_LINUX_TRUE@noinst_DATA = libmtp.usermap libmtp.fdi
 @USE_LINUX_TRUE@CLEANFILES = libmtp.usermap @UDEV_RULES@ libmtp.fdi
@@ -814,7 +816,7 @@ uninstall-am: uninstall-pkgconfigDATA uninstall-udevrulesDATA
 @USE_LINUX_TRUE@libmtp.usermap: util/mtp-hotplug
 @USE_LINUX_TRUE@	util/mtp-hotplug > libmtp.usermap
 @USE_LINUX_TRUE@@UDEV_RULES@: util/mtp-hotplug
-@USE_LINUX_TRUE@	util/mtp-hotplug -u -p"@UDEV@" > @UDEV_RULES@
+@USE_LINUX_TRUE@	util/mtp-hotplug -u -p"@UDEV@" @UDEV_GROUP@ @UDEV_MODE@ > @UDEV_RULES@
 @USE_LINUX_TRUE@libmtp.fdi: util/mtp-hotplug
 @USE_LINUX_TRUE@	util/mtp-hotplug -H > libmtp.fdi
 
