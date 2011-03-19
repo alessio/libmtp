@@ -4,8 +4,8 @@ Description: Extend list of the supported devices.
 Origin: upstream, see above
 Applied-Upstream: yes
 ---
- src/music-players.h |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ src/music-players.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -21,7 +21,16 @@ Applied-Upstream: yes
    // From a rouge .INF file
    // this device ID seems to have been recycled for:
    // the Samsung SGH-A707 Cingular cellphone
-@@ -1155,6 +1160,10 @@
+@@ -764,6 +769,8 @@
+   { "Nokia", 0x0421, "N8", 0x02fe, DEVICE_FLAG_NONE },
+   // From: Lan Liu at Nokia <lan.liu@nokia.com>
+   { "Nokia", 0x0421, "N8 (Ovi mode)", 0x0302, DEVICE_FLAG_NONE },
++  // From: Raul Metsma <raul@innovaatik.ee>
++  { "Nokia", 0x0421, "E7", 0x0335, DEVICE_FLAG_NONE },
+   // https://sourceforge.net/tracker/index.php?func=detail&aid=2692473&group_id=8874&atid=358874
+   { "Nokia", 0x0421, "5200", 0x0421, DEVICE_FLAG_NONE },
+   // From: http://nds2.nokia.com/files/support/global/phones/software/Nokia_3250_WMP10_driver.inf
+@@ -1155,6 +1162,10 @@
    // Reported by anonymous user
    { "Motorola", 0x22b8, "RAZR2 V8/U9/Z6", 0x6415,
        DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
