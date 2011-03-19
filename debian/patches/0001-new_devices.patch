@@ -1,6 +1,8 @@
 Description: Extend list of the supported devices.
  commit:1b077906ea - Motorola Xoom (two devices)
  commit:509cd65c8f - Samsung YP-Q3
+ .
+ The patch for Nokia E7 comes from Launchpad bug#738185.
 Origin: upstream, see above
 Applied-Upstream: yes
 ---
