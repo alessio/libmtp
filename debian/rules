@@ -56,10 +56,12 @@ endif
 build/libmtp$(SOVERSION)::
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
+ifneq (hurd,$(DEB_HOST_ARCH_OS))
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
 	done
+endif
 
 binary-predeb/libmtp$(SOVERSION)::
 ifeq (linux,$(DEB_HOST_ARCH_OS))
