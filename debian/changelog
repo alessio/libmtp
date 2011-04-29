@@ -1,3 +1,11 @@
+libmtp (1.0.6-3) unstable; urgency=low
+
+  * Install mtp-probe (Closes: #624537).
+  * Attempt to fix FTBFS on hurd.
+  * Bump Standards-Version.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 29 Apr 2011 18:24:05 +0200
+
 libmtp (1.0.6-2) unstable; urgency=low
 
   * Add support for new devices:
