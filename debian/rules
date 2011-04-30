@@ -48,9 +48,12 @@ binary-install/libmtp$(SOVERSION)::
 		install -m 0644 $(debdir)/apport/* \
 			$(debdir)/libmtp$(SOVERSION)/usr/share/apport/package-hooks/ ; \
 	fi
-ifeq (linux,$(DEB_HOST_ARCH_OS))
+
+binary-install/mtp-tools::
+ifneq (hurd,$(DEB_HOST_ARCH_OS))
+	mkdir -p $(debdir)/mtp-tools/lib/udev
 	install $(debdir)/tmp/lib/udev/mtp-probe \
-		$(debdir)/libmtp$(SOVERSION)/lib/udev/
+		$(debdir)/mtp-tools/lib/udev/
 endif
 
 build/libmtp$(SOVERSION)::

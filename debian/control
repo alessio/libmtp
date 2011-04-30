@@ -20,7 +20,8 @@ Package: libmtp8
 Architecture: any
 Depends: ${shlibs:Depends},
  ${misc:Depends}
-Recommends: ${udev}
+Recommends: ${udev},
+ mtp-tools
 Breaks: udev (<< 0.136-1)
 Description: Media Transfer Protocol (MTP) library
  libmtp is a library for communicating with MTP aware devices in POSIX
@@ -88,6 +89,8 @@ Architecture: any
 Depends: libmtp8 (= ${binary:Version}),
  ${shlibs:Depends},
  ${misc:Depends}
+Breaks: libmtp8 (= 1.0.6-3)
+Replaces: libmtp8 (= 1.0.6-3)
 Description: Media Transfer Protocol (MTP) library tools
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
