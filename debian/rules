@@ -57,13 +57,6 @@ binary-install/libmtp$(SOVERSION)::
 			$(debdir)/libmtp$(SOVERSION)/usr/share/apport/package-hooks/ ; \
 	fi
 
-binary-install/mtp-tools::
-ifeq (linux,$(DEB_HOST_ARCH_OS))
-	mkdir -p $(debdir)/mtp-tools/lib/udev
-	install $(debdir)/tmp/lib/udev/mtp-probe \
-		$(debdir)/mtp-tools/lib/udev/
-endif
-
 build/libmtp$(SOVERSION)::
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
