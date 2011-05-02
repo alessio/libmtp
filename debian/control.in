@@ -110,6 +110,7 @@ Architecture: any
 Depends: libmtp@SOVERSION@ (= ${binary:Version}),
  ${shlibs:Depends},
  ${misc:Depends}
+Enhances: libmtp@SOVERSION@
 Description: Media Transfer Protocol (MTP) library tools
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
