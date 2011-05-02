@@ -21,7 +21,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
  ${misc:Depends}
 Recommends: ${udev},
- mtp-tools
+ libmtp-runtime [linux-any]
 Breaks: udev (<< 0.136-1)
 Description: Media Transfer Protocol (MTP) library
  libmtp is a library for communicating with MTP aware devices in POSIX
@@ -31,6 +31,27 @@ Description: Media Transfer Protocol (MTP) library
  The Media Transfer Protocol (commonly referred to as MTP) is a devised
  set of custom extensions to support the transfer of music files on
  USB digital audio players and movie files on USB portable media players.
+
+Package: libmtp-runtime
+Architecture: linux-any
+Depends: ${shlibs:Depends},
+ libmtp8 (= ${binary:Version}),
+ ${misc:Depends}
+Replaces: libmtp8 (= 1.0.6-3)
+Breaks: libmtp8 (= 1.0.6-3)
+Enhances: libmtp8
+Description: Media Transfer Protocol (MTP) runtime tools
+ libmtp is a library for communicating with MTP aware devices in POSIX
+ compliant operating systems.  It implements MTP Basic, the subset
+ proposed for standardization.
+ .
+ The Media Transfer Protocol (commonly referred to as MTP) is a devised
+ set of custom extensions to support the transfer of music files on
+ USB digital audio players and movie files on USB portable media players.
+ .
+ This package provides mtp-probe, a program to probe newly connected
+ device interfaces from userspace to determine if they are MTP devices,
+ used for udev rules.
 
 Package: libmtp-dev
 Section: libdevel
@@ -89,8 +110,7 @@ Architecture: any
 Depends: libmtp8 (= ${binary:Version}),
  ${shlibs:Depends},
  ${misc:Depends}
-Breaks: libmtp8 (= 1.0.6-3)
-Replaces: libmtp8 (= 1.0.6-3)
+Enhances: libmtp8
 Description: Media Transfer Protocol (MTP) library tools
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
