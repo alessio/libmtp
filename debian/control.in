@@ -20,7 +20,8 @@ Package: libmtp@SOVERSION@
 Architecture: any
 Depends: ${shlibs:Depends},
  ${misc:Depends}
-Recommends: ${udev}
+Recommends: ${udev},
+ libmtp-runtime [linux-any]
 Breaks: udev (<< 0.136-1)
 Description: Media Transfer Protocol (MTP) library
  libmtp is a library for communicating with MTP aware devices in POSIX
