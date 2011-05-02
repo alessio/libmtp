@@ -15,7 +15,10 @@ SUBSTFILES = debian/libmtp$(SOVERSION).docs	\
 	debian/libmtp$(SOVERSION).install	\
 	debian/libmtp$(SOVERSION).preinst	\
 	debian/libmtp$(SOVERSION).postinst
-UDEVFILES = 45-libmtp$(SOVERSION).rules 20-libmtp$(SOVERSION).fdi
+UDEVFILES = 20-libmtp$(SOVERSION).fdi
+ifeq (linux,$(DEB_HOST_ARCH_OS))
+	UDEVFILES += 45-libmtp$(SOVERSION).rules
+endif
 DISTRIBUTION = $(shell lsb_release -i | cut -f2 -d':')
 
 debdir = $(CURDIR)/debian
@@ -25,6 +28,11 @@ debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
 # Replace SOVERSION string in debian/ files
 libmtp$(SOVERSION).%: libmtp.%.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
+ifneq (linux,$(DEB_HOST_ARCH_OS))
+	mv $@ $@.tmp
+	grep -v '/udev/' $@.tmp > $@
+	rm $@.tmp
+endif
 %: %.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
 
@@ -50,7 +58,7 @@ binary-install/libmtp$(SOVERSION)::
 	fi
 
 binary-install/mtp-tools::
-ifneq (hurd,$(DEB_HOST_ARCH_OS))
+ifeq (linux,$(DEB_HOST_ARCH_OS))
 	mkdir -p $(debdir)/mtp-tools/lib/udev
 	install $(debdir)/tmp/lib/udev/mtp-probe \
 		$(debdir)/mtp-tools/lib/udev/
@@ -59,12 +67,10 @@ endif
 build/libmtp$(SOVERSION)::
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
-ifneq (hurd,$(DEB_HOST_ARCH_OS))
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
 	done
-endif
 
 binary-predeb/libmtp$(SOVERSION)::
 ifeq (linux,$(DEB_HOST_ARCH_OS))
