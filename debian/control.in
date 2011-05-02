@@ -77,7 +77,7 @@ Priority: extra
 Architecture: any
 Depends: libmtp@SOVERSION@ (= ${binary:Version}),
  mtp-tools (= ${binary:Version}),
- libmtp-runtime (= ${binary:Version}),
+ libmtp-runtime (= ${binary:Version}) [linux-any],
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) debugging symbols
  libmtp is a library for communicating with MTP aware devices in POSIX
