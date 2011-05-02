@@ -1,3 +1,27 @@
+libmtp (1.0.6-4) unstable; urgency=low
+
+  [ Pino Toscano ]
+  * 1001-kfreebsd_ftbfs.patch: rename to 1001-kfreebsd_hurd_ftbfs.patch,
+    and add Hurd.
+  * More non-Linux fixes, especially for Hurd: (Closes: #624640)
+    - Handle and install the udev .rules file and mtp-probe only on Linux
+      architectures.
+    - Install the HAL .fdi file (part of the UDEVFILES) on any architecture.
+
+  [ Alessio Treglia ]
+  * debian/copyright:
+    - Update to DEP-5 rev.174.
+    - Group copyright information by licensing.
+  * Move mtp-probe into a new libmtp-runtime package to keep the opportunity
+    to co-install libmtp8 with future libmtpN packages:
+    - Add libmtp-runtime [linux-any] to libmtp8's Recommends field.
+    - Add libmtp-runtime [linux-any] to libmtp-dbg's Depends field.
+  * Add Enhances: libmtp8 to mtp-tools package's stanza.
+  * Re-generate debian/control.
+  * Update quilt's series file.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 02 May 2011 20:44:55 +0200
+
 libmtp (1.0.6-3) unstable; urgency=low
 
   * Install mtp-probe (Closes: #624537).
