@@ -19,9 +19,9 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
 Package: libmtp@SOVERSION@
 Architecture: any
 Depends: ${shlibs:Depends},
+ libmtp-runtime [linux-any],
  ${misc:Depends}
-Recommends: ${udev},
- libmtp-runtime [linux-any]
+Recommends: ${udev}
 Breaks: udev (<< 0.136-1)
 Description: Media Transfer Protocol (MTP) library
  libmtp is a library for communicating with MTP aware devices in POSIX
