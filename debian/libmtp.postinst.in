@@ -5,18 +5,6 @@ set -e
 
 PACKAGE=libmtp@SOVERSION@
 
-# Taken from http://wiki.debian.org/DpkgConffileHandling
-# Move a conffile without triggering a dpkg question
-mv_conffile() {
-    OLDCONFFILE="$1"
-    NEWCONFFILE="$2"
-    if [ -e "$OLDCONFFILE" ]; then
-        echo "Preserving user changes to $NEWCONFFILE ..."
-        mv -f "$NEWCONFFILE" "$NEWCONFFILE".dpkg-new
-        mv -f "$OLDCONFFILE" "$NEWCONFFILE"
-    fi
-}
-
 case "$1" in
 configure)
     # PART A: Remove broken link (0.3.7-3 upgrade, bug #527206)
@@ -42,9 +30,9 @@ configure)
     # Do not mix with package-default rules file: /lib/udev/rules.d/libmtp8.rules
     # If rules file is in /etc/udev/, move it to correct path /etc/udev/rules.d/ 
     # and with 45- prefix.
-    if dpkg --compare-versions "$2" lt-nl 0.3.7-3 ; then
-        mv_conffile /etc/udev/$PACKAGE.rules /etc/udev/rules.d/45-$PACKAGE.rules
-    fi
+    dpkg-maintscript-helper mv_conffile \
+        /etc/udev/$PACKAGE.rules /etc/udev/rules.d/45-$PACKAGE.rules \
+            0.3.7-3 libmtp8 -- "$@"
 esac
 
 #DEBHELPER#
