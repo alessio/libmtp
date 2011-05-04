@@ -20,24 +20,6 @@ prep_mv_conffile() {
 
 case "$1" in
 install|upgrade)
-    # PART A: Check if current version is 0.3.7-3 or less
-    if dpkg --compare-versions "$2" le 0.3.7-3 ; then
-        # PART A.1: Remove /etc/udev/rules.d/$PACKAGE.rules (the link)
-        # Do not mix with package-default rules file: /lib/udev/rules.d/libmtp8.rules
-        rm -f /etc/udev/rules.d/$PACKAGE.rules
-        # PART A.2: Prepare to move conffile
-        prep_mv_conffile $PACKAGE /etc/udev/$PACKAGE.rules
-        # PART A.3: Basically rm_conffile without marking the file obsolete (I think)
-        if [ -e "/etc/udev/rules.d/45-libmtp8.rules" ]; then
-            if [ "`md5sum \"/etc/udev/rules.d/45-libmtp8.rules\" | sed -e \"s/ .*//\"`" = \
-                 "`dpkg-query -W -f='${Conffiles}' $PACKAGE | sed -n -e \"\\\\' /etc/udev/rules.d/45-libmtp8.rules's/.* //p\"`" ]
-            then
-                rm -f "/etc/udev/rules.d/45-libmtp8.rules"
-            fi
-    fi
-        rm -f /etc/udev/$PACKAGE.rules
-    fi
-
     # PART B: Check if file /etc/udev/libmtp.rules exists
     # Do not mix with package-default rules file: /lib/udev/rules.d/libmtp8.rules
     if [ -e "/etc/udev/libmtp.rules" ]; then
