@@ -1,3 +1,22 @@
+libmtp (1.0.6-5) unstable; urgency=low
+
+  [ Alessio Treglia ]
+  * Promote libmtp-runtime as dependency (for linux-any archs).
+  * Drop hardcoded {mv,rm}_conffile in favor of dpkg-maintscript-helper.
+    - Add a Pre-Depends: dpkg (>= 1.15.7.2) to libmtp8;
+      this could be removed once Ubuntu Lucid reached EOL.
+  * debian/libmtp.preinst.in
+    - Remove "PART A" since 0.3.7-3 is obsolete for both Debian and Ubuntu.
+      + Debian Squeeze provides libmtp 1.0.3-1
+      + Ubuntu Lucid provides libmtp higher than 1.0.2-1.
+  * Re-generate debian/control.
+
+  [ Pino Toscano ]
+  * Remove udev files only in libmbtp$(SOVERSION).install files;
+    Closes: #625628
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 06 May 2011 00:46:02 +0200
+
 libmtp (1.0.6-4) unstable; urgency=low
 
   [ Pino Toscano ]
