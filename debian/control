@@ -23,6 +23,7 @@ Depends: ${shlibs:Depends},
  ${misc:Depends}
 Recommends: ${udev}
 Breaks: udev (<< 0.136-1)
+Pre-Depends: dpkg (>= 1.15.7.2)
 Description: Media Transfer Protocol (MTP) library
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
