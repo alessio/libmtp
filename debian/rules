@@ -28,11 +28,6 @@ debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
 # Replace SOVERSION string in debian/ files
 libmtp$(SOVERSION).%: libmtp.%.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
-ifneq (linux,$(DEB_HOST_ARCH_OS))
-	mv $@ $@.tmp
-	grep -v '/udev/' $@.tmp > $@
-	rm $@.tmp
-endif
 %: %.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
 
@@ -57,13 +52,18 @@ binary-install/libmtp$(SOVERSION)::
 			$(debdir)/libmtp$(SOVERSION)/usr/share/apport/package-hooks/ ; \
 	fi
 
-build/libmtp$(SOVERSION)::
+build/libmtp$(SOVERSION):: debian/libmtp$(SOVERSION).install
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
 	done
+ifneq (linux,$(DEB_HOST_ARCH_OS))
+	mv debian/libmtp$(SOVERSION).install debian/libmtp$(SOVERSION).install.tmp
+	grep -v '/udev/' debian/libmtp$(SOVERSION).install.tmp > debian/libmtp$(SOVERSION).install
+	rm debian/libmtp$(SOVERSION).install.tmp
+endif
 
 binary-predeb/libmtp$(SOVERSION)::
 ifeq (linux,$(DEB_HOST_ARCH_OS))
