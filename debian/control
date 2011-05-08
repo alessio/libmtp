@@ -19,9 +19,9 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
 Package: libmtp8
 Architecture: any
 Depends: ${shlibs:Depends},
- libmtp-runtime [linux-any],
  ${misc:Depends}
-Recommends: ${udev}
+Recommends: ${udev},
+ libmtp-runtime [linux-any]
 Breaks: udev (<< 0.136-1)
 Pre-Depends: dpkg (>= 1.15.7.2)
 Description: Media Transfer Protocol (MTP) library
