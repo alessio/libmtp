@@ -31,6 +31,7 @@ libmtp (1.1.0-1) unstable; urgency=low
     - Bump SONAME (libmtp8 -> libmtp9)
   * Move libmtp8.symbols to libmtp9.symbols.
   * Update symbols file.
+  * udev rules file has been renamed: 45-libmtp.rules -> 39-libmtp.rules.
   * Delete 0001-new_devices.patch, applied upstream.
   * Refresh 1001-kfreebsd_hurd_ftbfs.patch
 
