@@ -1,3 +1,1 @@
 usr/lib/*.so.*
-../../20-libmtp@SOVERSION@.fdi usr/share/hal/fdi/information/20thirdparty
-../../39-libmtp.rules lib/udev/rules.d/39-libmtp@SOVERSION@.rules
