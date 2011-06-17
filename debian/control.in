@@ -19,6 +19,7 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
 Package: libmtp@SOVERSION@
 Architecture: any
 Depends: ${shlibs:Depends},
+ libmtp-common,
  ${misc:Depends}
 Recommends: ${udev},
  libmtp-runtime [linux-any]
