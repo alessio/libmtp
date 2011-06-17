@@ -26,13 +26,15 @@ libmtp (1.1.0-1) unstable; urgency=low
     - Probing for IAD (Interface Association Descriptors) courtesy of Roger
       Quadros.
     - A horde of new devices in the database.
-  * Delete 0001-new_devices.patch, applied upstream.
-  * Refresh 1001-kfreebsd_hurd_ftbfs.patch
   * debian/rules: Bump SOVERSION to 9.
+  * Regenerate debian/control:
+    - Bump SONAME (libmtp8 -> libmtp9)
   * Move libmtp8.symbols to libmtp9.symbols.
   * Update symbols file.
+  * Delete 0001-new_devices.patch, applied upstream.
+  * Refresh 1001-kfreebsd_hurd_ftbfs.patch
 
- -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 12:26:30 +0200
+ -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 12:38:32 +0200
 
 libmtp (1.0.6-6) unstable; urgency=low
 
