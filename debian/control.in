@@ -36,7 +36,6 @@ Description: Media Transfer Protocol (MTP) library
 Package: libmtp-common
 Architecture: all
 Depends: ${misc:Depends}
-Breaks: libmtp8
 Enhances: libmtp@SOVERSION@
 Description: Media Transfer Protocol (MTP) common files
  libmtp is a library for communicating with MTP aware devices in POSIX
