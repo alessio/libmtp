@@ -1,3 +1,39 @@
+libmtp (1.1.0-1) unstable; urgency=low
+
+  * New upstream release:
+    - soname libmtp.so.9.0.0 - NOT bninary
+      backwards compatible, i.e. new ABI. The reason
+      is that new state fields are added in an exposed
+      public struct. Programs need to be recompiled and
+      relinked against the new libmtp but then they
+      should work.
+    - New interfaces:
+      + LIBMTP_Open_Raw_Device_Uncached()
+      + LIBMTP_Get_Files_And_Folders()
+    - Tentative event interface:
+      + LIBMTP_Read_Event()
+        Support for some basic device event. It should be polled by a
+        separate thread in clients, and we expect to handle most events
+        internally in libmtp (such as updating the data cache when objects
+        are added or removed) but this thread is required to drive it.
+    - Even more careful device probe code in the mtp-probe executable.
+      Some distros reported problems with some rouge devices with custom
+      interfaces going into endless probe loops. This should now be fixed:
+      we're making sure we have exactly the right kind of endpoints before
+      probing.
+    - udev rule prio for probe command set to match what comes with stock
+      udev (level 39)
+    - Probing for IAD (Interface Association Descriptors) courtesy of Roger
+      Quadros.
+    - A horde of new devices in the database.
+  * Delete 0001-new_devices.patch, applied upstream.
+  * Refresh 1001-kfreebsd_hurd_ftbfs.patch
+  * debian/rules: Bump SOVERSION to 9.
+  * Move libmtp8.symbols to libmtp9.symbols.
+  * Update symbols file.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 12:26:30 +0200
+
 libmtp (1.0.6-6) unstable; urgency=low
 
   * Demote libmtp-runtime to Recommends (Closes: #625976).
