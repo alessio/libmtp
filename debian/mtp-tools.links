@@ -5,6 +5,7 @@ usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-delfile.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-detect.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-emptyfolders.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-files.1
+usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-filetree.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-folders.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-format.1
 usr/share/man/man1/mtp-tools.1 usr/share/man/man1/mtp-getfile.1
