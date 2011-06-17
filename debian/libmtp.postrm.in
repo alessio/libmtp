@@ -1,0 +1,14 @@
+#!/bin/sh
+# postrm script for libmtp
+
+PACKAGE=libmtp@SOVERSION@
+
+set -e
+
+# Remove libmtp8's /lib/udev/rules.d/45-libmtp8.rules
+dpkg-maintscript-helper rm_conffile /lib/udev/rules.d/45-libmtp8.rules \
+    1.0.6-6 libmtp8 -- "$@"
+
+#DEBHELPER#
+
+exit 0

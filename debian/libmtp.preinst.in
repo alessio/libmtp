@@ -64,6 +64,11 @@ install|upgrade)
             /etc/udev/rules.d/65-libmtp.rules -- "$@"
     fi
 
+    # PART E:
+    # Remove libmtp8's /lib/udev/rules.d/45-libmtp8.rules
+    dpkg-maintscript-helper rm_conffile /lib/udev/rules.d/45-libmtp8.rules \
+        1.0.6-6 libmtp8 -- "$@"
+
 esac
 
 #DEBHELPER#
