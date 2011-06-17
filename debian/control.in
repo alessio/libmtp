@@ -54,6 +54,7 @@ Package: libmtp-runtime
 Architecture: linux-any
 Depends: ${shlibs:Depends},
  libmtp@SOVERSION@ (= ${binary:Version}),
+ libmtp-common,
  ${misc:Depends}
 Replaces: libmtp8 (= 1.0.6-3)
 Breaks: libmtp8 (= 1.0.6-3)
