@@ -40,7 +40,7 @@ bin_PROGRAMS = mtp-connect$(EXEEXT) mtp-detect$(EXEEXT) \
 	mtp-getplaylist$(EXEEXT) mtp-format$(EXEEXT) \
 	mtp-albumart$(EXEEXT) mtp-albums$(EXEEXT) \
 	mtp-newplaylist$(EXEEXT) mtp-emptyfolders$(EXEEXT) \
-	mtp-thumb$(EXEEXT) mtp-reset$(EXEEXT)
+	mtp-thumb$(EXEEXT) mtp-reset$(EXEEXT) mtp-filetree$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -83,6 +83,10 @@ am_mtp_files_OBJECTS = files.$(OBJEXT) util.$(OBJEXT)
 mtp_files_OBJECTS = $(am_mtp_files_OBJECTS)
 mtp_files_LDADD = $(LDADD)
 mtp_files_DEPENDENCIES = ../src/libmtp.la
+am_mtp_filetree_OBJECTS = filetree.$(OBJEXT) util.$(OBJEXT)
+mtp_filetree_OBJECTS = $(am_mtp_filetree_OBJECTS)
+mtp_filetree_LDADD = $(LDADD)
+mtp_filetree_DEPENDENCIES = ../src/libmtp.la
 am_mtp_folders_OBJECTS = folders.$(OBJEXT) util.$(OBJEXT)
 mtp_folders_OBJECTS = $(am_mtp_folders_OBJECTS)
 mtp_folders_LDADD = $(LDADD)
@@ -135,19 +139,19 @@ LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 SOURCES = $(mtp_albumart_SOURCES) $(mtp_albums_SOURCES) \
 	$(mtp_connect_SOURCES) $(mtp_detect_SOURCES) \
 	$(mtp_emptyfolders_SOURCES) $(mtp_files_SOURCES) \
-	$(mtp_folders_SOURCES) $(mtp_format_SOURCES) \
-	$(mtp_getplaylist_SOURCES) $(mtp_newplaylist_SOURCES) \
-	$(mtp_playlists_SOURCES) $(mtp_reset_SOURCES) \
-	$(mtp_thumb_SOURCES) $(mtp_tracks_SOURCES) \
-	$(mtp_trexist_SOURCES)
+	$(mtp_filetree_SOURCES) $(mtp_folders_SOURCES) \
+	$(mtp_format_SOURCES) $(mtp_getplaylist_SOURCES) \
+	$(mtp_newplaylist_SOURCES) $(mtp_playlists_SOURCES) \
+	$(mtp_reset_SOURCES) $(mtp_thumb_SOURCES) \
+	$(mtp_tracks_SOURCES) $(mtp_trexist_SOURCES)
 DIST_SOURCES = $(mtp_albumart_SOURCES) $(mtp_albums_SOURCES) \
 	$(mtp_connect_SOURCES) $(mtp_detect_SOURCES) \
 	$(mtp_emptyfolders_SOURCES) $(mtp_files_SOURCES) \
-	$(mtp_folders_SOURCES) $(mtp_format_SOURCES) \
-	$(mtp_getplaylist_SOURCES) $(mtp_newplaylist_SOURCES) \
-	$(mtp_playlists_SOURCES) $(mtp_reset_SOURCES) \
-	$(mtp_thumb_SOURCES) $(mtp_tracks_SOURCES) \
-	$(mtp_trexist_SOURCES)
+	$(mtp_filetree_SOURCES) $(mtp_folders_SOURCES) \
+	$(mtp_format_SOURCES) $(mtp_getplaylist_SOURCES) \
+	$(mtp_newplaylist_SOURCES) $(mtp_playlists_SOURCES) \
+	$(mtp_reset_SOURCES) $(mtp_thumb_SOURCES) \
+	$(mtp_tracks_SOURCES) $(mtp_trexist_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -194,6 +198,7 @@ LN_S = @LN_S@
 LTLIBICONV = @LTLIBICONV@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
+MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -224,6 +229,7 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
 am__include = @am__include@
@@ -291,6 +297,7 @@ mtp_albums_SOURCES = albums.c util.c util.h common.h
 mtp_emptyfolders_SOURCES = emptyfolders.c util.c util.h common.h
 mtp_thumb_SOURCES = thumb.c util.c util.h common.h
 mtp_reset_SOURCES = reset.c util.c util.h common.h
+mtp_filetree_SOURCES = filetree.c util.c util.h common.h
 AM_CPPFLAGS = -I$(top_builddir)/src
 LDADD = ../src/libmtp.la
 EXTRA_DIST = evolution-sync.sh
@@ -389,6 +396,9 @@ mtp-emptyfolders$(EXEEXT): $(mtp_emptyfolders_OBJECTS) $(mtp_emptyfolders_DEPEND
 mtp-files$(EXEEXT): $(mtp_files_OBJECTS) $(mtp_files_DEPENDENCIES) 
 	@rm -f mtp-files$(EXEEXT)
 	$(LINK) $(mtp_files_OBJECTS) $(mtp_files_LDADD) $(LIBS)
+mtp-filetree$(EXEEXT): $(mtp_filetree_OBJECTS) $(mtp_filetree_DEPENDENCIES) 
+	@rm -f mtp-filetree$(EXEEXT)
+	$(LINK) $(mtp_filetree_OBJECTS) $(mtp_filetree_LDADD) $(LIBS)
 mtp-folders$(EXEEXT): $(mtp_folders_OBJECTS) $(mtp_folders_DEPENDENCIES) 
 	@rm -f mtp-folders$(EXEEXT)
 	$(LINK) $(mtp_folders_OBJECTS) $(mtp_folders_LDADD) $(LIBS)
@@ -430,6 +440,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/emptyfolders.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/files.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filetree.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/folders.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getfile.Po@am__quote@
