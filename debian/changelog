@@ -34,8 +34,12 @@ libmtp (1.1.0-1) unstable; urgency=low
   * udev rules file has been renamed: 45-libmtp.rules -> 39-libmtp.rules.
   * Delete 0001-new_devices.patch, applied upstream.
   * Refresh 1001-kfreebsd_hurd_ftbfs.patch
+  * Install new udev's 39-libmtp.rules, it is the replacement for the old
+    45-libmtp.rules.
+  * debian/libmtp.{preinst,postinst,postrm}.in:
+    - Handle the removal of the old 45-libmtp.rules file.
 
- -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 12:38:32 +0200
+ -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 13:13:18 +0200
 
 libmtp (1.0.6-6) unstable; urgency=low
 
