@@ -15,7 +15,7 @@ SUBSTFILES = debian/libmtp$(SOVERSION).docs	\
 	debian/libmtp$(SOVERSION).install	\
 	debian/libmtp$(SOVERSION).preinst	\
 	debian/libmtp$(SOVERSION).postinst \
-	debian/libmtp$(SOVERSION).postrm \
+	debian/libmtp$(SOVERSION).postrm
 UDEVFILES = 20-libmtp$(SOVERSION).fdi
 
 DISTRIBUTION = $(shell lsb_release -i | cut -f2 -d':')
