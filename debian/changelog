@@ -38,8 +38,9 @@ libmtp (1.1.0-1) unstable; urgency=low
     45-libmtp.rules.
   * debian/libmtp.{preinst,postinst,postrm}.in:
     - Handle the removal of the old 45-libmtp.rules file.
+  * Update mtp-tools' manpage to document the new mtp-filetree utility.
 
- -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 13:13:18 +0200
+ -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 15:12:55 +0200
 
 libmtp (1.0.6-6) unstable; urgency=low
 
