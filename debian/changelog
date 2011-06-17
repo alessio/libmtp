@@ -1,47 +1,40 @@
 libmtp (1.1.0-1) unstable; urgency=low
 
   * New upstream release:
-    - soname libmtp.so.9.0.0 - NOT bninary
-      backwards compatible, i.e. new ABI. The reason
-      is that new state fields are added in an exposed
-      public struct. Programs need to be recompiled and
-      relinked against the new libmtp but then they
-      should work.
+    - Soname libmtp.so.9.0.0 - new ABI:
+      + New state fields are added in an exposed public struct. Programs need
+        to be recompiled and relinked against the new libmtp but then they
+        should work.
     - New interfaces:
       + LIBMTP_Open_Raw_Device_Uncached()
       + LIBMTP_Get_Files_And_Folders()
-    - Tentative event interface:
-      + LIBMTP_Read_Event()
-        Support for some basic device event. It should be polled by a
-        separate thread in clients, and we expect to handle most events
-        internally in libmtp (such as updating the data cache when objects
-        are added or removed) but this thread is required to drive it.
-    - Even more careful device probe code in the mtp-probe executable.
-      Some distros reported problems with some rouge devices with custom
-      interfaces going into endless probe loops. This should now be fixed:
-      we're making sure we have exactly the right kind of endpoints before
-      probing.
-    - udev rule prio for probe command set to match what comes with stock
-      udev (level 39)
-    - Probing for IAD (Interface Association Descriptors) courtesy of Roger
-      Quadros.
+    - Tentative event interface: LIBMTP_Read_Event
+      + Support for some basic device event. It should be polled by a separate
+        thread in clients, and we expect to handle most events internally in
+        libmtp (such as updating the data cache when objects are added or
+        removed) but this thread is required to drive it.
+    - Even more careful device probe code in the mtp-probe executable. Some
+      distros reported problems with some rouge devices with custom interfaces
+      going into endless probe loops. This should now be fixed: we're making
+      sure we have exactly the right kind of endpoints before probing.
+    - udev rule prio for probe command set to match what comes with stock udev.
+    - Probing for IAD (Interface Association Descriptors).
     - A horde of new devices in the database.
-  * debian/rules: Bump SOVERSION to 9.
-  * Regenerate debian/control:
-    - Bump SONAME (libmtp8 -> libmtp9)
-  * Move libmtp8.symbols to libmtp9.symbols.
-  * Update symbols file.
-  * udev rules file has been renamed: 45-libmtp.rules -> 39-libmtp.rules.
   * Delete 0001-new_devices.patch, applied upstream.
   * Refresh 1001-kfreebsd_hurd_ftbfs.patch
-  * Install new udev's 39-libmtp.rules, it is the replacement for the old
-    45-libmtp.rules.
-  * Drop Breaks on ancient udev << 0.136-1.
+  * debian/{control,rules}: Bump SOVERSION to 9.
+  * Move libmtp8.symbols to libmtp9.symbols.
+  * Update symbols file.
+  * New libmtp-common runtime:
+    - It brings just the udev rules file and the FreeDesktop.org Device
+      Information file (used by HAL), formerly provided by libmtp8.
+    - udev rules file has been renamed: 45-libmtp.rules -> 39-libmtp.rules.
+  * debian/control:
+    - Drop ancient udev << 0.136-1 from the libmtp9's Breaks field.
+    - libmtp{9,-runtime} depend on libmtp-common.
   * debian/libmtp.{preinst,postinst,postrm}.in:
-    - Handle the removal of the old 45-libmtp.rules file.
+    - Handle the removal of the old udev's versioned rules file.
   * Update mtp-tools' manpage to document the new mtp-filetree utility.
-  * Add new libmtp-common runtime, it provides the udev rules and the HAL
-    device information file.
 
  -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 15:36:14 +0200
 
