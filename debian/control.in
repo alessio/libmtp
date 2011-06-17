@@ -35,7 +35,6 @@ Description: Media Transfer Protocol (MTP) library
 Package: libmtp-common
 Architecture: all
 Depends: ${misc:Depends}
-Recommends: ${udev}
 Breaks: libmtp8
 Enhances: libmtp@SOVERSION@
 Description: Media Transfer Protocol (MTP) common files
