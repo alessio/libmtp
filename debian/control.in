@@ -33,6 +33,23 @@ Description: Media Transfer Protocol (MTP) library
  set of custom extensions to support the transfer of music files on
  USB digital audio players and movie files on USB portable media players.
 
+Package: libmtp-common
+Architecture: all
+Depends: ${misc:Depends}
+Breaks: libmtp8
+Enhances: libmtp@SOVERSION@
+Description: Media Transfer Protocol (MTP) common files
+ libmtp is a library for communicating with MTP aware devices in POSIX
+ compliant operating systems.  It implements MTP Basic, the subset
+ proposed for standardization.
+ .
+ The Media Transfer Protocol (commonly referred to as MTP) is a devised
+ set of custom extensions to support the transfer of music files on
+ USB digital audio players and movie files on USB portable media players.
+ .
+ This package provides the udev rules file and the FreeDesktop.org Device
+ Information Files file (used by HAL).
+
 Package: libmtp-runtime
 Architecture: linux-any
 Depends: ${shlibs:Depends},
