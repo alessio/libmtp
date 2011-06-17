@@ -24,9 +24,11 @@ libmtp.so.9 libmtp9 #MINVER#
  LIBMTP_Get_Filelisting@Base 1.1.0
  LIBMTP_Get_Filelisting_With_Callback@Base 1.1.0
  LIBMTP_Get_Filemetadata@Base 1.1.0
+ LIBMTP_Get_Files_And_Folders@Base 1.1.0
  LIBMTP_Get_Filetype_Description@Base 1.1.0
  LIBMTP_Get_First_Device@Base 1.1.0
  LIBMTP_Get_Folder_List@Base 1.1.0
+ LIBMTP_Get_Folder_List_For_Storage@Base 1.1.0
  LIBMTP_Get_Friendlyname@Base 1.1.0
  LIBMTP_Get_Manufacturername@Base 1.1.0
  LIBMTP_Get_Modelname@Base 1.1.0
@@ -56,6 +58,7 @@ libmtp.so.9 libmtp9 #MINVER#
  LIBMTP_Is_Property_Supported@Base 1.1.0
  LIBMTP_Number_Devices_In_List@Base 1.1.0
  LIBMTP_Open_Raw_Device@Base 1.1.0
+ LIBMTP_Open_Raw_Device_Uncached@Base 1.1.0
  LIBMTP_Release_Device@Base 1.1.0
  LIBMTP_Release_Device_List@Base 1.1.0
  LIBMTP_Reset_Device@Base 1.1.0
