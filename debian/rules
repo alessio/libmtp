@@ -16,9 +16,7 @@ SUBSTFILES = debian/libmtp$(SOVERSION).docs	\
 	debian/libmtp$(SOVERSION).preinst	\
 	debian/libmtp$(SOVERSION).postinst
 UDEVFILES = 20-libmtp$(SOVERSION).fdi
-ifeq (linux,$(DEB_HOST_ARCH_OS))
-	UDEVFILES += 45-libmtp$(SOVERSION).rules
-endif
+UDEVFILES += 45-libmtp.rules
 DISTRIBUTION = $(shell lsb_release -i | cut -f2 -d':')
 
 debdir = $(CURDIR)/debian
@@ -52,18 +50,13 @@ binary-install/libmtp$(SOVERSION)::
 			$(debdir)/libmtp$(SOVERSION)/usr/share/apport/package-hooks/ ; \
 	fi
 
-build/libmtp$(SOVERSION):: debian/libmtp$(SOVERSION).install
+build/libmtp-common::
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
 	done
-ifneq (linux,$(DEB_HOST_ARCH_OS))
-	mv debian/libmtp$(SOVERSION).install debian/libmtp$(SOVERSION).install.tmp
-	grep -v '/udev/' debian/libmtp$(SOVERSION).install.tmp > debian/libmtp$(SOVERSION).install
-	rm debian/libmtp$(SOVERSION).install.tmp
-endif
 
 binary-predeb/libmtp$(SOVERSION)::
 ifeq (linux,$(DEB_HOST_ARCH_OS))

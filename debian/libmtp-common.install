@@ -1,0 +1,2 @@
+../../20-*.fdi usr/share/hal/fdi/information/20thirdparty
+../../45-*.rules lib/udev/rules.d
