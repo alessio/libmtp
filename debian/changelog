@@ -1,3 +1,9 @@
+libmtp (1.0.6-7) unstable; urgency=low
+
+  * Move udev,hal files into new 'libmtp-common' package.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 18 Jun 2011 12:13:54 +0200
+
 libmtp (1.0.6-6) unstable; urgency=low
 
   * Demote libmtp-runtime to Recommends (Closes: #625976).
