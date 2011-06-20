@@ -126,8 +126,7 @@ Description: Media Transfer Protocol (MTP) library documentation
 Package: mtp-tools
 Section: utils
 Architecture: any
-Depends: libmtp9 (= ${binary:Version}),
- ${shlibs:Depends},
+Depends: ${shlibs:Depends},
  ${misc:Depends}
 Enhances: libmtp9
 Description: Media Transfer Protocol (MTP) library tools
