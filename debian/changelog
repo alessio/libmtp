@@ -1,4 +1,4 @@
-libmtp (1.1.0-1) unstable; urgency=low
+libmtp (1.1.0-1) experimental; urgency=low
 
   * New upstream release:
     - Soname libmtp.so.9.0.0 - new ABI:
@@ -25,18 +25,13 @@ libmtp (1.1.0-1) unstable; urgency=low
   * debian/{control,rules}: Bump SOVERSION to 9.
   * Move libmtp8.symbols to libmtp9.symbols.
   * Update symbols file.
-  * New libmtp-common runtime:
-    - It brings just the udev rules file and the FreeDesktop.org Device
-      Information file (used by HAL), formerly provided by libmtp8.
-    - udev rules file has been renamed: 45-libmtp.rules -> 39-libmtp.rules.
+  * udev rules file has been renamed: 45-libmtp.rules -> 39-libmtp.rules.
   * debian/control:
     - Drop ancient udev << 0.136-1 from the libmtp9's Breaks field.
     - libmtp{9,-runtime} depend on libmtp-common.
-  * debian/libmtp.{preinst,postinst,postrm}.in:
-    - Handle the removal of the old udev's versioned rules file.
   * Update mtp-tools' manpage to document the new mtp-filetree utility.
 
- -- Alessio Treglia <alessio@debian.org>  Fri, 17 Jun 2011 15:36:14 +0200
+ -- Alessio Treglia <alessio@debian.org>  Mon, 20 Jun 2011 10:14:41 +0200
 
 libmtp (1.0.6-7) unstable; urgency=low
 
