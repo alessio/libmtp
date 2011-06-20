@@ -16,7 +16,6 @@ SUBSTFILES = debian/libmtp$(SOVERSION).docs	\
 	debian/libmtp$(SOVERSION).preinst	\
 	debian/libmtp$(SOVERSION).postinst
 UDEVFILES = 20-libmtp$(SOVERSION).fdi
-UDEVFILES += 45-libmtp.rules
 DISTRIBUTION = $(shell lsb_release -i | cut -f2 -d':')
 
 debdir = $(CURDIR)/debian
