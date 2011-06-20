@@ -55,8 +55,7 @@ install|upgrade)
     # /lib/udev/rules.d/libmtp8.rules is rules file installed by default.
     # Do not mix with user-modified file: /etc/udev/rules.d/libmtp8.rules
     # Will be replaced by unversioned /lib/udev/rules.d/45-libmtp.rules
-    dpkg-maintscript-helper rm_conffile /lib/udev/rules.d/45-libmtp8.rules \
-        1.0.6-6 libmtp8 -- "$@"
+    #rm_conffile $PACKAGE /lib/udev/rules.d/45-libmtp8.rules
     
     # PART D:
     # Remove ancient /etc/udev/rules.d/65-libmtp.rules
