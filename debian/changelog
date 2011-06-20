@@ -29,9 +29,10 @@ libmtp (1.1.0-1) experimental; urgency=low
   * debian/control:
     - Drop ancient udev << 0.136-1 from the libmtp9's Breaks field.
     - libmtp{9,-runtime} depend on libmtp-common.
+    - Relax mtp-tools' dependency on libmtp@SONAME@.
   * Update mtp-tools' manpage to document the new mtp-filetree utility.
 
- -- Alessio Treglia <alessio@debian.org>  Mon, 20 Jun 2011 10:14:41 +0200
+ -- Alessio Treglia <alessio@debian.org>  Mon, 20 Jun 2011 10:48:47 +0200
 
 libmtp (1.0.6-7) unstable; urgency=low
 
