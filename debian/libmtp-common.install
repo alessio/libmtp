@@ -1,2 +1,2 @@
-../../20-libmtp.fdi usr/share/hal/fdi/information/20thirdparty
-../../39-libmtp.rules lib/udev/rules.d
+../../20-*.fdi usr/share/hal/fdi/information/20thirdparty
+../../45-*.rules lib/udev/rules.d
