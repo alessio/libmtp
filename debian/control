@@ -23,6 +23,7 @@ Depends: ${shlibs:Depends},
  ${misc:Depends}
 Recommends: ${udev},
  libmtp-runtime [linux-any]
+Replaces: libmtp8
 Pre-Depends: dpkg (>= 1.15.7.2)
 Description: Media Transfer Protocol (MTP) library
  libmtp is a library for communicating with MTP aware devices in POSIX
