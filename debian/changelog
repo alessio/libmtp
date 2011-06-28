@@ -1,3 +1,20 @@
+libmtp (1.1.0-2) experimental; urgency=low
+
+  [ Alessio Treglia ]
+  * debian/copyright:
+    - Credits to Sense Hofstede for the apport script.
+    - Fix formatting to comply with DEP-5 svn r174.
+  * debian/patches/0001-new_devices.patch
+    - New device: Google Xoom 18d1:70a8 (LP: #793064)
+
+  [ Loïc Minier ]
+  * Let libmtpN replace libmtp8; LP: #802441
+  * Move apport hook to libmtp-common. Shipping the apport hook in
+    libmtp-common instead of libmtpN avoids the need for Replaces in
+    the future; thanks Michael Vogt.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 28 Jun 2011 09:42:56 +0200
+
 libmtp (1.1.0-1) experimental; urgency=low
 
   * New upstream release:
