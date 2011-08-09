@@ -1,3 +1,11 @@
+libmtp (1.1.0-3) experimental; urgency=low
+
+  * Patches taken from upstream's git:
+    - Add another Xoom variant.
+    - Add new GoGear device.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 09 Aug 2011 14:38:54 +0200
+
 libmtp (1.1.0-2) experimental; urgency=low
 
   [ Alessio Treglia ]
