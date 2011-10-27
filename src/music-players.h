@@ -254,8 +254,11 @@
   // Guessing on .spl flag, maybe needs NO_ZERO_READS, whatdoIknow
   { "Samsung", 0x04e8, "GT-S8500", 0x6819,
       DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_PLAYLIST_SPL_V1 },
-  // Reported by anonymous sourceforge user
-  { "Samsung", 0x04e8, "GT-P7510/Galaxy Tab 10.1", 0x6860,
+  // Reported by anonymous sourceforge user - this is an Android
+  // device. It seems to be hard to use this device under Linux,
+  // which may be because it seems to implement fairly strong
+  // Microsoft DRM stuff.
+  { "Samsung", 0x04e8, "GT-P7510/Galaxy Tab 10.1/S2", 0x6860,
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT },
   // From: Erik Berglund <erikjber@users.sourceforge.net>
@@ -348,9 +351,14 @@
   // From Anonymous SourceForge User
   { "Philips", 0x0471, "GoGear VIBE SA2VBE[08|16]K/02", 0x20b7,
       DEVICE_FLAG_UNLOAD_DRIVER },
+  // From Anonymous SourceForge User
+  { "Philips", 0x0471, "GoGear Ariaz", 0x20b9,
+      DEVICE_FLAG_UNLOAD_DRIVER },
+  // From Anonymous SourceForge User
+  { "Philips", 0x0471, "GoGear Vibe/02", 0x20e5,
+      DEVICE_FLAG_UNLOAD_DRIVER },
   // from XNJB user
   { "Philips", 0x0471, "PSA235", 0x7e01, DEVICE_FLAG_NONE },
-
 
   /*
    * Acer
@@ -359,7 +367,8 @@
   { "Acer", 0x0502, "Iconia TAB A500 v1", 0x3325, DEVICE_FLAG_NONE },
   // Reported by: Franck VDL <franckv@users.sourceforge.net>
   { "Acer", 0x0502, "Iconia TAB A500 v2", 0x3341, DEVICE_FLAG_NONE },
-
+  // Reported by: Arvin Schnell <arvins@users.sourceforge.net>
+  { "Acer", 0x0502, "Iconia TAB A100", 0x3349, DEVICE_FLAG_NONE },
 
   /*
    * SanDisk
@@ -464,7 +473,12 @@
     DEVICE_FLAG_NO_RELEASE_INTERFACE | DEVICE_FLAG_ALWAYS_PROBE_DESCRIPTOR |
     DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS |
     DEVICE_FLAG_CANNOT_HANDLE_DATEMODIFIED},
-
+  // Reported by mattyj2001@users.sourceforge.net
+  { "SanDisk", 0x0781, "Sansa Clip Zip", 0x74e4,
+    DEVICE_FLAG_UNLOAD_DRIVER |  DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+    DEVICE_FLAG_NO_RELEASE_INTERFACE | DEVICE_FLAG_ALWAYS_PROBE_DESCRIPTOR |
+    DEVICE_FLAG_BROKEN_SET_SAMPLE_DIMENSIONS |
+    DEVICE_FLAG_CANNOT_HANDLE_DATEMODIFIED},
 
   /*
    * iRiver
@@ -581,6 +595,8 @@
    * Dell
    */
   { "Dell, Inc", 0x413c, "DJ Itty", 0x4500, DEVICE_FLAG_NONE },
+  /* Reported by: JR */
+  { "Dell, Inc", 0x413c, "Dell Streak 7", 0xb10b, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Toshiba
@@ -675,6 +691,10 @@
    * so on older kernels special care is needed to remove the
    * USB mass storage driver that erroneously binds to the device
    * interface.
+   *
+   * More problematic, this manufacturer+device ID seems to be
+   * reused in a USB Mass Storage device named "Zipy Fox 8GB",
+   * which means libmtp may mistreat it.
    */
   { "Dunlop", 0x10d6, "MP3 player 1GB / EGOMAN MD223AFD", 0x2200, DEVICE_FLAG_UNLOAD_DRIVER},
   // Reported by Steven Black <stevenblack1956@users.sourceforge.net>
@@ -761,6 +781,9 @@
   // this flag atleast is needed
   { "Nokia", 0x0421, "5800 XpressMusic v2", 0x0155,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+  // Yet another version... I think
+  { "Nokia", 0x0421, "5800 XpressMusic v3", 0x0159,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
   // From an anonymous SourceForge user
   // Not verified to be MTP
   { "Nokia", 0x0421, "E63", 0x0179, DEVICE_FLAG_NONE },
@@ -792,8 +815,12 @@
   { "Nokia", 0x0421, "N8", 0x02fe, DEVICE_FLAG_NONE },
   // From: Lan Liu at Nokia <lan.liu@nokia.com>
   { "Nokia", 0x0421, "N8 (Ovi mode)", 0x0302, DEVICE_FLAG_NONE },
+  // From: Martijn Hoogendoorn <m.hoogendoorn@gmail.com>
+  { "Nokia", 0x0421, "E7", 0x0334, DEVICE_FLAG_NONE },
   // From: Raul Metsma <raul@innovaatik.ee>
-  { "Nokia", 0x0421, "E7", 0x0335, DEVICE_FLAG_NONE },
+  { "Nokia", 0x0421, "E7 (Ovi mode)", 0x0335, DEVICE_FLAG_NONE },
+  // Reported by Anonymous SourceForge user
+  { "Nokia", 0x0421, "N950", 0x03d2, DEVICE_FLAG_NONE },
   // From: http://nds2.nokia.com/files/support/global/phones/software/Nokia_3250_WMP10_driver.inf
   { "Nokia", 0x0421, "3250 Mobile Phone", 0x0462, DEVICE_FLAG_NONE },
   // From http://nds2.nokia.com/files/support/global/phones/software/Nokia_N93_WMP10_Driver.inf
@@ -1127,6 +1154,14 @@
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
       DEVICE_FLAG_UNIQUE_FILENAMES |
       DEVICE_FLAG_FORCE_RESET_ON_CLOSE },
+  // Reported by anonymous SourceForge user
+  { "Sony", 0x054c, "Walkman NWZ-W252B", 0x04bb,
+      DEVICE_FLAG_UNLOAD_DRIVER |
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+      DEVICE_FLAG_UNIQUE_FILENAMES |
+      DEVICE_FLAG_FORCE_RESET_ON_CLOSE },
+  // Suspect this device has strong DRM features
+  // See https://answers.launchpad.net/ubuntu/+source/libmtp/+question/149587
   { "Sony", 0x054c, "Walkman NWZ-B153F", 0x04be,
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
@@ -1156,49 +1191,79 @@
    * for now.
    */
   // Reported by Thomas Schweitzer <thomas_-_s@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "K550i", 0xe000, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "K550i", 0xe000,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Øyvind Stegard <stegaro@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "K850i", 0x0075, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "K850i", 0x0075,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Michael Eriksson
-  { "SonyEricsson", 0x0fce, "W910", 0x0076, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W910", 0x0076,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Zack <zackdvd@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "W890i", 0x00b3, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W890i", 0x00b3,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by robert dot ahlskog at gmail
-  { "SonyEricsson", 0x0fce, "W760i", 0x00c6, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W760i", 0x00c6,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Linus Åkesson <linusakesson@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "C902", 0x00d4, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "C902", 0x00d4,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by an anonymous SourceForge user
-  { "SonyEricsson", 0x0fce, "C702", 0x00d9, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "C702", 0x00d9,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Christian Zuckschwerdt <christian@zuckschwerdt.org>
-  { "SonyEricsson", 0x0fce, "W980", 0x00da, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W980", 0x00da,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by David Taylor <davidt-libmtp@yadt.co.uk>
-  { "SonyEricsson", 0x0fce, "C905", 0x00ef, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "C905", 0x00ef,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by David House <dmhouse@users.sourceforge.net>
   { "SonyEricsson", 0x0fce, "W595", 0x00f3,
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL | DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
+      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
   // Reported by Mattias Evensson <mevensson@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "W902", 0x00f5, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W902", 0x00f5,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Sarunas <sarunas@users.sourceforge.net>
   // Doesn't need any flags according to reporter
-  { "SonyEricsson", 0x0fce, "T700", 0x00fb, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+  { "SonyEricsson", 0x0fce, "T700", 0x00fb,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
   // Reported by Stéphane Pontier <shadow_walker@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "W705/W715", 0x0105, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W705/W715", 0x0105,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Håkan Kvist
-  { "SonyEricsson", 0x0fce, "W995", 0x0112, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W995", 0x0112,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by anonymous SourceForge user
-  { "SonyEricsson", 0x0fce, "U5", 0x0133, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "U5", 0x0133,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Flo <lhugsereg@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "U8i", 0x013a, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "U8i", 0x013a,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by xirotyu <xirotyu@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce,  "j10i2 (Elm)", 0x0144, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce,  "j10i2 (Elm)", 0x0144,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  // Reported by Serge Chirik <schirik@users.sourceforge.net>
+  { "SonyEricsson", 0x0fce,  "j108i (Cedar)", 0x014e,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Jonas Salling <>
   // Erroneous MTP implementation seems to be from Aricent, returns
   // broken transaction ID.
-  { "SonyEricsson", 0x0fce, "LT15i (Xperia arc)", 0x14f, DEVICE_FLAG_IGNORE_HEADER_ERRORS },
+  { "SonyEricsson", 0x0fce, "LT15i (Xperia arc)", 0x14f,
+      DEVICE_FLAG_IGNORE_HEADER_ERRORS },
+  // Reported by Eamonn Webster <eweb@users.sourceforge.net>
+  // Guessing on the ignore errors flag
+  { "SonyEricsson", 0x0fce, "Xperia Neo", 0x0156,
+      DEVICE_FLAG_IGNORE_HEADER_ERRORS },
+  // Reported by <wealas@users.sourceforge.net>
+  { "SonyEricsson", 0x0fce, "ST18a", 0x161,
+      DEVICE_FLAG_IGNORE_HEADER_ERRORS },
   // Reported by Jonas Nyrén <spectralmks@users.sourceforge.net>
-  { "SonyEricsson", 0x0fce, "W302", 0x10c8, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce, "W302", 0x10c8,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by Anonymous Sourceforge user
-  { "SonyEricsson", 0x0fce,  "j10i (Elm)", 0xd144, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  { "SonyEricsson", 0x0fce,  "j10i (Elm)", 0xd144,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
 
 
 
@@ -1239,15 +1304,22 @@
   // Reported by Google Inc's Yavor Goulishev <yavor@google.com>
   // Android 3.0 MTP stack seems to announce that it supports the
   // list operations, but they do not work?
-  { "Motorola", 0x22b8, "Xoom (ID 1)", 0x70a8,
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
-      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST },
-  { "Motorola", 0x22b8, "Xoom (ID 2)", 0x70a9,
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
-      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST },
+  { "Motorola", 0x22b8, "Xoom (ID 1)", 0x70a8, DEVICE_FLAGS_ANDROID_BUGS },
 
+  /*
+   * Google
+   * These guys lend their Vendor ID to anyone who comes down the
+   * road to produce an Android tablet it seems... The Vendor ID
+   * was originally used for Nexus phones
+   */
+  { "Google Inc (for Sony)", 0x18d1, "S1", 0x05b3,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  // WiFi-only version of Xoom
+  // See: http://bugzilla.gnome.org/show_bug.cgi?id=647506
+  { "Google Inc (for Motorola)", 0x18d1, "Xoom (MZ604)", 0x70a8,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "Google Inc (for Motorola)", 0x22b8, "Xoom (ID 2)", 0x70a9,
+      DEVICE_FLAGS_ANDROID_BUGS },
   /*
    * Media Keg
    */
@@ -1359,6 +1431,15 @@
    */
   { "Asus", 0x0b05, "TF101 Eeepad Transformer", 0x4e0f, DEVICE_FLAG_NONE },
   { "Asus", 0x0b05, "FT101 Eeepad Transformer", 0x4e1f, DEVICE_FLAG_NONE },
+
+
+  /*
+   * Lenovo
+   */
+  // Reported by anonymous sourceforge user
+  // Adding Android default bug flags since it appears to be an Android
+  { "Lenovo", 0x17ef, "Lenovo ThinkPad Tablet", 0x741c,
+      DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Other strange stuff.

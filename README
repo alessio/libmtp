@@ -276,6 +276,67 @@ transaction. The bulk transactions contain all the PTP/MTP layer
 data, which is usually where the problems appear.
 
 
+Notes to assist with debugging new devices:
+-------------------------------------------
+
+In debugging new hardware, we highly recommend that you only 
+use the example mtp-* applications that come with libmtp, as other
+applications may have their own bugs that may interfere with your
+new device working correctly. Using another application instead of
+those that come with libmtp just adds another point of failure.
+
+For debugging, there are 3 main options:
+
+1. Use the env variable: LIBMTP_DEBUG to increase the 
+verboseness of the debugging output for any application using 
+libmtp. Relevant codes are:
+* 0x00 [0000 0000] : no debug (default)
+* 0x01 [0000 0001] : PTP debug
+* 0x02 [0000 0010] : Playlist debug
+* 0x04 [0000 0100] : USB debug
+* 0x08 [0000 1000] : USB data debug
+// Codes are hex and binary respectively. Simple add them togther
+// to get your desired level of output.
+
+(Assuming bash)
+eg: 
+$ export LIBMTP_DEBUG=12
+$ mtp-detect
+  // To get USB debug and USB data debug information.
+
+$ export LIBMTP_DEBUG=2
+$ mtp-detect
+    // To get Playlist debug information.
+  
+Also note, an application may also use the LIBMTP_debug() API
+function to achieve the same options as listed above.
+
+2. Use "strace" on the various mtp-* commands to see where/what 
+is falling over or getting stuck at.
+* On Solaris and FreeBSD, use "truss" or "dtrace" instead on "strace".
+* On Mac OS X, use "ktrace" or "dtrace" instead of "strace".
+* On OpenBSD and NetBSD, use "ktrace" instead of "strace".
+
+This will at least help pinpoint where the application is failing, or
+a device is reporting incorrect information. (This is extremely helpful 
+with devices that have odd disconnection requirements).
+
+The use of these tools may also pinpoint issues with libusb as 
+implemented by each OS vendor or issues with the MTP implementation
+on the new device as well, so please be prepared for either case.
+
+3. Use "gdb" or similar debugger to step through the code as it is
+run. This is time consuming, and not needed just to pinpoint where
+the fault is. 
+
+The use of gdb or another debugger may also miss or actually cause  
+command and data timing issues with some devices, leading to false 
+information. So please consider this a last resort option.
+
+Also please read the "It's Not Our Bug!" section below, as it does
+contain some useful information that may assist with your device.
+
+
 Dual-mode devices does not work - last resort:
 ----------------------------------------------
 
@@ -762,3 +823,82 @@ vendors: libmtp is being deployed in some embedded systems like
 set-top-boxes etc. It will be very irritating for customers if a device
 will not dock properly with some home entertainment equipment just because
 it is based on Linux and libmtp and not the Windows MTP stack.
+
+Autodetect with gudev
+---------------------
+
+Previously you would use HAL to detect devices being plugged in. Nowadays
+we use udev directly, or though the GNOME libgudev library. LIBMTPs
+default udev rules export the proper properties to detect any MTP device
+automatically, here is a verbose example derived from gnomad2:
+
+#define G_UDEV_API_IS_SUBJECT_TO_CHANGE
+#include <gudev/gudev.h>
+const char * const gudev_subsystems[] = { "usb", NULL };
+GUdevClient *gudev_client;
+guint uevent_id;
+guint uevent_bus_hooked = 0;
+guint uevent_device_hooked = 0;
+
+
+static void uevent_cb(GUdevClient *client, const char *action, GUdevDevice *device, void *data)
+{
+  guint64 devicenum;
+  guint vendor;
+  guint model;
+  guint busnum;
+  guint devnum;
+  guint mtpdevice;
+
+  devicenum = (guint64) g_udev_device_get_device_number(device);
+  g_print("%s event for %s (%"G_GINT64_MODIFIER"x)", action,
+          g_udev_device_get_sysfs_path (device), devicenum);
+
+  /* get device info */
+  vendor = get_property_as_int(device, "ID_VENDOR_ID", 16);
+  model = get_property_as_int(device, "ID_MODEL_ID", 16);
+  busnum = get_property_as_int(device, "BUSNUM", 10);
+  devnum = get_property_as_int(device, "DEVNUM", 10);
+  mtpdevice = get_property_as_int(device, "ID_MTP_DEVICE", 10);
+
+  if (vendor == 0 || model == 0) {
+    g_print("couldn't get vendor or model ID for device at (%x:%x)\n",
+            busnum, devnum);
+    return;
+  } else {
+    g_print("vendor = %x, model = %x, bus = %x, device = %x\n",
+            vendor, model, busnum, devnum);
+  }
+
+  if (mtpdevice) {
+    g_print("device is MTP compliant\n");
+
+    if (g_str_equal(action, "add") &&
+       uevent_bus_hooked == 0 &&
+       uevent_device_hooked == 0) {
+      g_print(MTP device plugged in!\n");
+      uevent_bus_hooked = busnum;
+      uevent_device_hooked = devnum;
+      scan_jukebox(NULL);
+    } else if (g_str_equal (action, "remove") &&
+       	   uevent_bus_hooked == busnum &&
+           uevent_device_hooked == devnum) {
+      g_print("MTP device removed!\n");
+      uevent_bus_hooked = 0;
+      uevent_device_hooked = 0;
+    }
+  }
+}
+
+
+
+(...)
+  /*
+   * Monitor udev device events - we're only really interested in events
+   * for USB devices.
+   */
+  gudev_client = g_udev_client_new(gudev_subsystems);
+  uevent_id = g_signal_connect_object(gudev_client,
+                                      "uevent",
+                                      G_CALLBACK(uevent_cb),
+                                      NULL, 0);
