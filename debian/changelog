@@ -1,3 +1,20 @@
+libmtp (1.1.1-1) unstable; urgency=low
+
+  * New upstream bugfix release:
+    - Insert more carefulness into the udev script so
+      we avoid probing any color adjustment devices.
+      These don't even like it when we open them to
+      check their props.
+    - udev rule prio for probe command set to come after
+      most other devices including SANE, so now we use
+      level 69 (Closes: #647234).
+    - A horde of new devices in the database.
+  * Remove debian/patches/0001-new_devices.patch.
+  * Remove debian/patches/2001-new_devices_from_upstream_git.patch
+  * Update debian/patches/1001-kfreebsd_hurd_ftbfs.patch
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 08 Nov 2011 21:47:48 +0100
+
 libmtp (1.1.0-4) unstable; urgency=low
 
   * Upload to unstable.
