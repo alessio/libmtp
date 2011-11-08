@@ -10,7 +10,7 @@ Forwarded: no
 
 --- libmtp.orig/configure
 +++ libmtp/configure
-@@ -12719,7 +12719,7 @@ esac
+@@ -12722,7 +12722,7 @@ esac
  $as_echo_n "checking if the host operating system is Linux... " >&6; }
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -21,7 +21,7 @@ Forwarded: no
  
 --- libmtp.orig/configure.ac
 +++ libmtp/configure.ac
-@@ -78,7 +78,7 @@ esac
+@@ -81,7 +81,7 @@ esac
  AC_SUBST(OSFLAGS)
  
  AC_MSG_CHECKING([if the host operating system is Linux])
