@@ -1,0 +1,39 @@
+From: Linus Walleij <triad@df.lth.se>
+Description: Motorola Xoom devices IDs from Google
+ commits ddd898119f2b, 1b077906eafc, 218640483229, 2e49cf0a550
+ upstream.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650152
+---
+ src/music-players.h |   18 +++++++++++++++++-
+ 1 files changed, 17 insertions(+), 1 deletions(-)
+
+diff --git a/src/music-players.h b/src/music-players.h
+index e7bb5779..df5f357a 100644
+--- a/src/music-players.h
++++ b/src/music-players.h
+@@ -1068,7 +1068,23 @@
+   // Reported by anonymous user
+   { "Motorola", 0x22b8, "RAZR2 V8/U9/Z6", 0x6415,
+       DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
+-  
++  // Reported by Google Inc's Yavor Goulishev <yavor@google.com>
++  // Android 3.0 MTP stack seems to announce that it supports the
++  // list operations, but they do not work?
++  { "Motorola", 0x22b8, "Xoom (ID 1)", 0x70a8,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST },
++  // WiFi-only version of Xoom
++  // See: http://bugzilla.gnome.org/show_bug.cgi?id=647506
++  { "Motorola", 0x18d1, "Xoom (MZ604)", 0x70a8,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST },
++  { "Motorola", 0x22b8, "Xoom (ID 2)", 0x70a9,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST },
+ 
+   /*
+    * Media Keg
