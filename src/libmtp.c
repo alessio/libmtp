@@ -1879,7 +1879,9 @@ LIBMTP_mtpdevice_t *LIBMTP_Open_Raw_Device_Uncached(LIBMTP_raw_device_t *rawdevi
 
   /*
    * Android has a number of bugs, force-assign these bug flags
-   * if Android is encountered.
+   * if Android is encountered. Same thing for devices we detect
+   * as SONY NWZ Walkmen. I have no clue what "sony.net/WMFU" means
+   * I just know only NWZs have it.
    */
   {
     LIBMTP_device_extension_t *tmpext = mtp_device->extensions;
@@ -1892,6 +1894,11 @@ LIBMTP_mtpdevice_t *LIBMTP_Open_Raw_Device_Uncached(LIBMTP_raw_device_t *rawdevi
 	LIBMTP_INFO("Android device detected, assigning default bug flags\n");
 	ptp_usb->rawdevice.device_entry.device_flags |=
 	  DEVICE_FLAGS_ANDROID_BUGS;
+      }
+      if (!strcmp(tmpext->name, "sony.net/WMFU")) {
+	LIBMTP_INFO("SONY NWZ device detected, assigning default bug flags\n");
+	ptp_usb->rawdevice.device_entry.device_flags |=
+	  DEVICE_FLAGS_SONY_NWZ_BUGS;
       }
       tmpext = tmpext->next;
     }
@@ -2060,10 +2067,10 @@ int LIBMTP_Read_Event(LIBMTP_mtpdevice_t *device, LIBMTP_event_t *event)
    */
   PTPParams *params = (PTPParams *) device->params;
   PTPContainer ptp_event;
-  uint16_t ret = ptp_usb_event_wait( params, &ptp_event );
+  uint16_t ret = ptp_usb_event_wait(params, &ptp_event);
   uint16_t code;
   uint32_t session_id;
-  uint32_t transation_id;
+  uint32_t transaction_id;
   uint32_t param1;
   uint32_t param2;
   uint32_t param3;
@@ -2078,7 +2085,7 @@ int LIBMTP_Read_Event(LIBMTP_mtpdevice_t *device, LIBMTP_event_t *event)
   /* Process the event */
   code = ptp_event.Code;
   session_id = ptp_event.SessionID;
-  transation_id = ptp_event.Transaction_ID;
+  transaction_id = ptp_event.Transaction_ID;
   param1 = ptp_event.Param1;
   param2 = ptp_event.Param2;
   param3 = ptp_event.Param3;
@@ -2530,13 +2537,15 @@ static int get_all_metadata_fast(LIBMTP_mtpdevice_t *device,
 
       /* Copy all of the other MTP oprierties into the per-object proplist */
       if (params->objects[i].nrofmtpprops) {
-        newprops = realloc(params->objects[i].mtpprops,(params->objects[i].nrofmtpprops+1)*sizeof(MTPProperties));
+        newprops = realloc(params->objects[i].mtpprops,
+		(params->objects[i].nrofmtpprops+1)*sizeof(MTPProperties));
       } else {
         newprops = calloc(sizeof(MTPProperties),1);
       }
       if (!newprops) return 0; /* FIXME: error handling? */
       params->objects[i].mtpprops = newprops;
-      memcpy(&params->objects[i].mtpprops[params->objects[i].nrofmtpprops],&props[j],sizeof(props[j]));
+      memcpy(&params->objects[i].mtpprops[params->objects[i].nrofmtpprops],
+	     &props[j],sizeof(props[j]));
       params->objects[i].nrofmtpprops++;
       params->objects[i].flags |= PTPOBJECT_MTPPROPLIST_LOADED;
       break;
@@ -2583,10 +2592,12 @@ static void get_handles_recursively(LIBMTP_mtpdevice_t *device,
   // Now descend into any subdirectories found
   for (i = 0; i < currentHandles.n; i++) {
     PTPObject *ob;
-    ret = ptp_object_want(params,currentHandles.Handler[i],PTPOBJECT_OBJECTINFO_LOADED, &ob);
+    ret = ptp_object_want(params,currentHandles.Handler[i],
+			  PTPOBJECT_OBJECTINFO_LOADED, &ob);
     if (ret == PTP_RC_OK) {
       if (ob->oi.ObjectFormat == PTP_OFC_Association)
-        get_handles_recursively(device, params, storageid, currentHandles.Handler[i]);
+        get_handles_recursively(device, params,
+				storageid, currentHandles.Handler[i]);
     } else {
       add_error_to_errorstack(device,
 			      LIBMTP_ERROR_CONNECTING,
@@ -2658,7 +2669,8 @@ static void flush_handles(LIBMTP_mtpdevice_t *device)
     PTPObject *ob, *xob;
 
     ob = &params->objects[i];
-    ret = ptp_object_want(params,params->objects[i].oid,PTPOBJECT_OBJECTINFO_LOADED, &xob);
+    ret = ptp_object_want(params,params->objects[i].oid,
+			  PTPOBJECT_OBJECTINFO_LOADED, &xob);
     if (ret != PTP_RC_OK) {
 	LIBMTP_ERROR("broken! %x not found\n", params->objects[i].oid);
     }
@@ -2672,7 +2684,8 @@ static void flush_handles(LIBMTP_mtpdevice_t *device)
       continue;
     /* Only look in the root folder */
     if (ob->oi.ParentObject == 0xffffffffU) {
-      LIBMTP_ERROR("object %x has parent 0xffffffff (-1) continuing anyway\n", ob->oid);
+      LIBMTP_ERROR("object %x has parent 0xffffffff (-1) continuing anyway\n",
+		   ob->oid);
     } else if (ob->oi.ParentObject != 0x00000000U)
       continue;
     /* Only look in the primary storage */
@@ -2840,7 +2853,8 @@ static uint32_t get_writeable_storageid(LIBMTP_mtpdevice_t *device, uint64_t fit
   } else {
     while(storage != NULL) {
       // These storages cannot be used.
-      if (storage->StorageType == PTP_ST_FixedROM || storage->StorageType == PTP_ST_RemovableROM) {
+      if (storage->StorageType == PTP_ST_FixedROM ||
+	  storage->StorageType == PTP_ST_RemovableROM) {
 	storage = storage->next;
 	continue;
       }
@@ -2851,7 +2865,8 @@ static uint32_t get_writeable_storageid(LIBMTP_mtpdevice_t *device, uint64_t fit
 	continue;
       }
       // Also check the access capability to avoid e.g. deletable only storages
-      if (storage->AccessCapability == PTP_AC_ReadOnly || storage->AccessCapability == PTP_AC_ReadOnly_with_Object_Deletion) {
+      if (storage->AccessCapability == PTP_AC_ReadOnly ||
+	  storage->AccessCapability == PTP_AC_ReadOnly_with_Object_Deletion) {
 	storage = storage->next;
 	continue;
       }
@@ -2865,7 +2880,8 @@ static uint32_t get_writeable_storageid(LIBMTP_mtpdevice_t *device, uint64_t fit
       }
     }
     if (storage == NULL) {
-      add_error_to_errorstack(device, LIBMTP_ERROR_STORAGE_FULL, "get_writeable_storageid(): "
+      add_error_to_errorstack(device, LIBMTP_ERROR_STORAGE_FULL,
+			      "get_writeable_storageid(): "
 			      "all device storage is full or corrupt.");
       return -1;
     }
@@ -2899,7 +2915,8 @@ static int get_storage_freespace(LIBMTP_mtpdevice_t *device,
 
     ret = ptp_getstorageinfo(params, storage->id, &storageInfo);
     if (ret != PTP_RC_OK) {
-      add_ptp_error_to_errorstack(device, ret, "get_storage_freespace(): could not get storage info.");
+      add_ptp_error_to_errorstack(device, ret,
+		"get_storage_freespace(): could not get storage info.");
       return -1;
     }
     if (storage->StorageDescription != NULL) {
@@ -2945,9 +2962,12 @@ void LIBMTP_Dump_Device_Info(LIBMTP_mtpdevice_t *device)
   printf("   Model: %s\n", params->deviceinfo.Model);
   printf("   Device version: %s\n", params->deviceinfo.DeviceVersion);
   printf("   Serial number: %s\n", params->deviceinfo.SerialNumber);
-  printf("   Vendor extension ID: 0x%08x\n", params->deviceinfo.VendorExtensionID);
-  printf("   Vendor extension description: %s\n", params->deviceinfo.VendorExtensionDesc);
-  printf("   Detected object size: %d bits\n", device->object_bitsize);
+  printf("   Vendor extension ID: 0x%08x\n",
+	 params->deviceinfo.VendorExtensionID);
+  printf("   Vendor extension description: %s\n",
+	 params->deviceinfo.VendorExtensionDesc);
+  printf("   Detected object size: %d bits\n",
+	 device->object_bitsize);
   printf("   Extensions:\n");
   while (tmpext != NULL) {
     printf("        %s: %d.%d\n",
@@ -2960,7 +2980,8 @@ void LIBMTP_Dump_Device_Info(LIBMTP_mtpdevice_t *device)
   for (i=0;i<params->deviceinfo.OperationsSupported_len;i++) {
     char txt[256];
 
-    (void) ptp_render_opcode (params, params->deviceinfo.OperationsSupported[i], sizeof(txt), txt);
+    (void) ptp_render_opcode(params, params->deviceinfo.OperationsSupported[i],
+			     sizeof(txt), txt);
     printf("   %04x: %s\n", params->deviceinfo.OperationsSupported[i], txt);
   }
   printf("Events supported:\n");
@@ -2973,10 +2994,12 @@ void LIBMTP_Dump_Device_Info(LIBMTP_mtpdevice_t *device)
   }
   printf("Device Properties Supported:\n");
   for (i=0;i<params->deviceinfo.DevicePropertiesSupported_len;i++) {
-    char const *propdesc = ptp_get_property_description(params, params->deviceinfo.DevicePropertiesSupported[i]);
+    char const *propdesc = ptp_get_property_description(params,
+			params->deviceinfo.DevicePropertiesSupported[i]);
 
     if (propdesc != NULL) {
-      printf("   0x%04x: %s\n", params->deviceinfo.DevicePropertiesSupported[i], propdesc);
+      printf("   0x%04x: %s\n",
+	     params->deviceinfo.DevicePropertiesSupported[i], propdesc);
     } else {
       uint16_t prop = params->deviceinfo.DevicePropertiesSupported[i];
       printf("   0x%04x: Unknown property\n", prop);
@@ -2992,22 +3015,29 @@ void LIBMTP_Dump_Device_Info(LIBMTP_mtpdevice_t *device)
       uint32_t propcnt = 0;
       int j;
 
-      (void) ptp_render_ofc (params, params->deviceinfo.ImageFormats[i], sizeof(txt), txt);
+      (void) ptp_render_ofc (params, params->deviceinfo.ImageFormats[i],
+			     sizeof(txt), txt);
       printf("   %04x: %s\n", params->deviceinfo.ImageFormats[i], txt);
 
-      ret = ptp_mtp_getobjectpropssupported (params, params->deviceinfo.ImageFormats[i], &propcnt, &props);
+      ret = ptp_mtp_getobjectpropssupported (params,
+			params->deviceinfo.ImageFormats[i], &propcnt, &props);
       if (ret != PTP_RC_OK) {
-	add_ptp_error_to_errorstack(device, ret, "LIBMTP_Dump_Device_Info(): error on query for object properties.");
+	add_ptp_error_to_errorstack(device, ret, "LIBMTP_Dump_Device_Info(): "
+				    "error on query for object properties.");
       } else {
 	for (j=0;j<propcnt;j++) {
 	  PTPObjectPropDesc opd;
 	  int k;
 
-	  printf("      %04x: %s", props[j], LIBMTP_Get_Property_Description(map_ptp_property_to_libmtp_property(props[j])));
+	  printf("      %04x: %s", props[j],
+		 LIBMTP_Get_Property_Description(map_ptp_property_to_libmtp_property(props[j])));
 	  // Get a more verbose description
-	  ret = ptp_mtp_getobjectpropdesc(params, props[j], params->deviceinfo.ImageFormats[i], &opd);
+	  ret = ptp_mtp_getobjectpropdesc(params, props[j],
+					  params->deviceinfo.ImageFormats[i],
+					  &opd);
 	  if (ret != PTP_RC_OK) {
-	    add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL, "LIBMTP_Dump_Device_Info(): "
+	    add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
+				    "LIBMTP_Dump_Device_Info(): "
 				    "could not get property description.");
 	    break;
 	  }
@@ -3222,7 +3252,8 @@ void LIBMTP_Dump_Device_Info(LIBMTP_mtpdevice_t *device)
     }
   }
 
-  if(storage != NULL && ptp_operation_issupported(params,PTP_OC_GetStorageInfo)) {
+  if(storage != NULL &&
+     ptp_operation_issupported(params,PTP_OC_GetStorageInfo)) {
     printf("Storage Devices:\n");
     while(storage != NULL) {
       printf("   StorageID: 0x%08x\n",storage->id);
@@ -3280,9 +3311,12 @@ void LIBMTP_Dump_Device_Info(LIBMTP_mtpdevice_t *device)
 	printf("UNKNOWN access capability\n");
 	break;
       }
-      printf("      MaxCapacity: %llu\n", (long long unsigned int) storage->MaxCapacity);
-      printf("      FreeSpaceInBytes: %llu\n", (long long unsigned int) storage->FreeSpaceInBytes);
-      printf("      FreeSpaceInObjects: %llu\n", (long long unsigned int) storage->FreeSpaceInObjects);
+      printf("      MaxCapacity: %llu\n",
+	     (long long unsigned int) storage->MaxCapacity);
+      printf("      FreeSpaceInBytes: %llu\n",
+	     (long long unsigned int) storage->FreeSpaceInBytes);
+      printf("      FreeSpaceInObjects: %llu\n",
+	     (long long unsigned int) storage->FreeSpaceInObjects);
       printf("      StorageDescription: %s\n",storage->StorageDescription);
       printf("      VolumeIdentifier: %s\n",storage->VolumeIdentifier);
       storage = storage->next;
@@ -3290,14 +3324,22 @@ void LIBMTP_Dump_Device_Info(LIBMTP_mtpdevice_t *device)
   }
 
   printf("Special directories:\n");
-  printf("   Default music folder: 0x%08x\n", device->default_music_folder);
-  printf("   Default playlist folder: 0x%08x\n", device->default_playlist_folder);
-  printf("   Default picture folder: 0x%08x\n", device->default_picture_folder);
-  printf("   Default video folder: 0x%08x\n", device->default_video_folder);
-  printf("   Default organizer folder: 0x%08x\n", device->default_organizer_folder);
-  printf("   Default zencast folder: 0x%08x\n", device->default_zencast_folder);
-  printf("   Default album folder: 0x%08x\n", device->default_album_folder);
-  printf("   Default text folder: 0x%08x\n", device->default_text_folder);
+  printf("   Default music folder: 0x%08x\n",
+	 device->default_music_folder);
+  printf("   Default playlist folder: 0x%08x\n",
+	 device->default_playlist_folder);
+  printf("   Default picture folder: 0x%08x\n",
+	 device->default_picture_folder);
+  printf("   Default video folder: 0x%08x\n",
+	 device->default_video_folder);
+  printf("   Default organizer folder: 0x%08x\n",
+	 device->default_organizer_folder);
+  printf("   Default zencast folder: 0x%08x\n",
+	 device->default_zencast_folder);
+  printf("   Default album folder: 0x%08x\n",
+	 device->default_album_folder);
+  printf("   Default text folder: 0x%08x\n",
+	 device->default_text_folder);
 }
 
 /**
@@ -3313,7 +3355,8 @@ int LIBMTP_Reset_Device(LIBMTP_mtpdevice_t *device)
 
   if (!ptp_operation_issupported(params,PTP_OC_ResetDevice)) {
     add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
-			    "LIBMTP_Reset_Device(): device does not support resetting.");
+			    "LIBMTP_Reset_Device(): "
+			    "device does not support resetting.");
     return -1;
   }
   ret = ptp_resetdevice(params);
@@ -3596,9 +3639,12 @@ int LIBMTP_Get_Batterylevel(LIBMTP_mtpdevice_t *device,
     return -1;
   }
 
-  ret = ptp_getdevicepropvalue(params, PTP_DPC_BatteryLevel, &propval, PTP_DTC_UINT8);
+  ret = ptp_getdevicepropvalue(params, PTP_DPC_BatteryLevel,
+			       &propval, PTP_DTC_UINT8);
   if (ret != PTP_RC_OK) {
-    add_ptp_error_to_errorstack(device, ret, "LIBMTP_Get_Batterylevel(): could not get device property value.");
+    add_ptp_error_to_errorstack(device, ret,
+				"LIBMTP_Get_Batterylevel(): "
+				"could not get device property value.");
     return -1;
   }
 
@@ -3618,19 +3664,22 @@ int LIBMTP_Get_Batterylevel(LIBMTP_mtpdevice_t *device,
  * @param storage the actual storage to format.
  * @return 0 on success, any other value means failure.
  */
-int LIBMTP_Format_Storage(LIBMTP_mtpdevice_t *device, LIBMTP_devicestorage_t *storage)
+int LIBMTP_Format_Storage(LIBMTP_mtpdevice_t *device,
+			  LIBMTP_devicestorage_t *storage)
 {
   uint16_t ret;
   PTPParams *params = (PTPParams *) device->params;
 
   if (!ptp_operation_issupported(params,PTP_OC_FormatStore)) {
     add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
-			    "LIBMTP_Format_Storage(): device does not support formatting storage.");
+			    "LIBMTP_Format_Storage(): "
+			    "device does not support formatting storage.");
     return -1;
   }
   ret = ptp_formatstore(params, storage->id);
   if (ret != PTP_RC_OK) {
-    add_ptp_error_to_errorstack(device, ret, "LIBMTP_Format_Storage(): failed to format storage.");
+    add_ptp_error_to_errorstack(device, ret, "LIBMTP_Format_Storage(): "
+				"failed to format storage.");
     return -1;
   }
   return 0;
@@ -3667,7 +3716,9 @@ static int get_device_unicode_property(LIBMTP_mtpdevice_t *device,
   if (ret != PTP_RC_OK) {
     // TODO: add a note on WHICH property that we failed to get.
     *unicstring = NULL;
-    add_ptp_error_to_errorstack(device, ret, "get_device_unicode_property(): failed to get unicode property.");
+    add_ptp_error_to_errorstack(device, ret,
+				"get_device_unicode_property(): "
+				"failed to get unicode property.");
     return -1;
   }
 
@@ -3713,7 +3764,8 @@ int LIBMTP_Get_Secure_Time(LIBMTP_mtpdevice_t *device, char ** const sectime)
  */
 int LIBMTP_Get_Device_Certificate(LIBMTP_mtpdevice_t *device, char ** const devcert)
 {
-  return get_device_unicode_property(device, devcert, PTP_DPC_MTP_DeviceCertificate);
+  return get_device_unicode_property(device, devcert,
+				     PTP_DPC_MTP_DeviceCertificate);
 }
 
 /**
@@ -3753,13 +3805,15 @@ int LIBMTP_Get_Supported_Filetypes(LIBMTP_mtpdevice_t *device, uint16_t ** const
   }
   // The forgotten Ogg support on YP-10 and others...
   if (FLAG_OGG_IS_UNKNOWN(ptp_usb)) {
-    localtypes = (uint16_t *) realloc(localtypes, (params->deviceinfo.ImageFormats_len+1) * sizeof(uint16_t));
+    localtypes = (uint16_t *) realloc(localtypes,
+		(params->deviceinfo.ImageFormats_len+1) * sizeof(uint16_t));
     localtypes[localtypelen] = LIBMTP_FILETYPE_OGG;
     localtypelen++;
   }
   // The forgotten FLAC support on Cowon iAudio S9 and others...
   if (FLAG_FLAC_IS_UNKNOWN(ptp_usb)) {
-    localtypes = (uint16_t *) realloc(localtypes, (params->deviceinfo.ImageFormats_len+1) * sizeof(uint16_t));
+    localtypes = (uint16_t *) realloc(localtypes,
+		(params->deviceinfo.ImageFormats_len+1) * sizeof(uint16_t));
     localtypes[localtypelen] = LIBMTP_FILETYPE_FLAC;
     localtypelen++;
   }
@@ -3817,7 +3871,8 @@ int LIBMTP_Get_Storage(LIBMTP_mtpdevice_t *device, int const sortby)
   if (!ptp_operation_issupported(params,PTP_OC_GetStorageInfo)) {
     for (i = 0; i < storageIDs.n; i++) {
 
-      storage = (LIBMTP_devicestorage_t *) malloc(sizeof(LIBMTP_devicestorage_t));
+      storage = (LIBMTP_devicestorage_t *)
+	malloc(sizeof(LIBMTP_devicestorage_t));
       storage->prev = storageprev;
       if (storageprev != NULL)
         storageprev->next = storage;
@@ -3844,14 +3899,16 @@ int LIBMTP_Get_Storage(LIBMTP_mtpdevice_t *device, int const sortby)
       uint16_t ret;
       ret = ptp_getstorageinfo(params, storageIDs.Storage[i], &storageInfo);
       if (ret != PTP_RC_OK) {
-	add_ptp_error_to_errorstack(device, ret, "LIBMTP_Get_Storage(): Could not get storage info.");
+	add_ptp_error_to_errorstack(device, ret, "LIBMTP_Get_Storage(): "
+				    "Could not get storage info.");
 	if (device->storage != NULL) {
           free_storage_list(device);
 	}
 	return -1;
       }
 
-      storage = (LIBMTP_devicestorage_t *) malloc(sizeof(LIBMTP_devicestorage_t));
+      storage = (LIBMTP_devicestorage_t *)
+	malloc(sizeof(LIBMTP_devicestorage_t));
       storage->prev = storageprev;
       if (storageprev != NULL)
         storageprev->next = storage;
@@ -4196,6 +4253,7 @@ LIBMTP_file_t * LIBMTP_Get_Files_And_Folders(LIBMTP_mtpdevice_t *device,
 			     uint32_t const parent)
 {
   PTPParams *params = (PTPParams *) device->params;
+  PTP_USB *ptp_usb = (PTP_USB*) device->usbinfo;
   LIBMTP_file_t *retfiles = NULL;
   LIBMTP_file_t *curfile = NULL;
   PTPObjectHandles currentHandles;
@@ -4207,6 +4265,17 @@ LIBMTP_file_t * LIBMTP_Get_Files_And_Folders(LIBMTP_mtpdevice_t *device,
     // This function is only supposed to be used by devices
     // opened as uncached!
     LIBMTP_ERROR("tried to use %s on a cached device!\n",
+		 __func__);
+    return NULL;
+  }
+
+  if (FLAG_BROKEN_GET_OBJECT_PROPVAL(ptp_usb)) {
+    // These devices cannot handle the commands needed for
+    // Uncached access!
+    LIBMTP_ERROR("tried to use %s on an unsupported device, "
+		 "this command does not work on all devices "
+		 "due to missing low-level support to read "
+		 "information on individual tracks\n",
 		 __func__);
     return NULL;
   }
