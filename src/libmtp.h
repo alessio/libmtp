@@ -29,8 +29,8 @@
 #ifndef LIBMTP_H_INCLUSION_GUARD
 #define LIBMTP_H_INCLUSION_GUARD
 
-#define LIBMTP_VERSION 1.1.1
-#define LIBMTP_VERSION_STRING "1.1.1"
+#define LIBMTP_VERSION 1.1.2
+#define LIBMTP_VERSION_STRING "1.1.2"
 
 /* This handles MSVC pecularities */
 #ifdef _MSC_VER
@@ -53,7 +53,6 @@ typedef unsigned __int64 uint64_t;
 #endif
 
 #include <stdio.h>
-#include <usb.h>
 #include <stdint.h>
 /* We use time_t */
 #include <time.h>

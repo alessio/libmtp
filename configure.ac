@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.52)
-AC_INIT([libmtp], [1.1.1], [libmtp-discuss@lists.sourceforge.net])
+AC_INIT([libmtp], [1.1.2], [libmtp-discuss@lists.sourceforge.net])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src/libmtp.c])
@@ -40,7 +40,7 @@ AC_SUBST(UDEV_RULES)
 UDEV_GROUP=
 AC_ARG_WITH(udev-group,
     AC_HELP_STRING([--with-udev-group=GROUP],
-    [file group for device nodes [default: none specified]]]),
+    [file group for device nodes [default: none specified]]),
     [UDEV_GROUP="-g\"${withval}\""], [])
 AC_SUBST(UDEV_GROUP)
 
@@ -48,7 +48,7 @@ AC_SUBST(UDEV_GROUP)
 UDEV_MODE=
 AC_ARG_WITH(udev-mode,
     AC_HELP_STRING([--with-udev-mode=GROUP],
-    [file mode for device nodes [default: none specified]]]),
+    [file mode for device nodes [default: none specified]]),
     [UDEV_MODE="-m\"${withval}\""], [])
 AC_SUBST(UDEV_MODE)
 
@@ -110,12 +110,51 @@ if test "$mingw_compiler" = "yes"; then
 fi
 AM_CONDITIONAL(MS_LIB_EXE, test x$ms_lib_exe = xyes)
 
-# Checks for libraries.
-AC_CHECK_LIB([usb], [usb_control_msg],,
-	AC_MSG_ERROR([I can't find the libusb libraries on your system. You
-	may need to set the LDFLAGS environment variable to include the
-	search path where you have libusb installed before running
-	configure (e.g. setenv LDFLAGS=-L/usr/local/lib)]), "$OSFLAGS")
+# Check for libusb-1.0
+PKG_CHECK_MODULES(LIBUSB, libusb-1.0 >= 1.0.0, found_libusb1_pkg=yes, found_libusb1_pkg=no)
+if test x"$found_libusb1_pkg" = "xyes" ; then
+   LIBUSB_VER=`pkg-config --modversion libusb-1.0`
+   AC_DEFINE(HAVE_LIBUSB1, [], [Have libusb 1.0])
+fi
+
+# Check for libopenusb
+AC_CHECK_LIB([openusb], [openusb_init])
+if test x"$found_libusb1_pkg" = "xno" ; then
+   if test x"$ac_cv_lib_openusb_openusb_init" = "xyes" ; then
+      AC_DEFINE(HAVE_OPENUSB, [], [Have libopenusb 1.0])
+      LIBUSB_VER=1.0
+   fi
+fi
+
+# Check for libusb 0.x
+if test x"$found_libusb1_pkg" = "xno" ; then
+   if test x"$ac_cv_lib_openusb_openusb_init" = "xno" ; then
+      PKG_CHECK_MODULES(LIBUSB, libusb >= 0.1.8, found_libusb0_pkg=yes, found_libusb0_pkg=no)
+      if test x"$found_libusb0_pkg" = "xyes" ; then
+         LIBUSB_VER=`pkg-config --modversion libusb`
+         AC_DEFINE(HAVE_LIBUSB0, [], [Have libusb 0.x])
+      else
+         # Some systems don't use pkg-config for libusb, so double check.
+         AC_CHECK_LIB([usb], [usb_open], found_libusb0_pkg=yes, found_libusb0_pkg=no)
+         if test x"$ac_cv_lib_usb_usb_open" = "xyes" ; then
+            LIBUSB_VER=0.1
+            AC_DEFINE(HAVE_LIBUSB0, [], [Have libusb 0.x])
+            found_libusb0_pkg=xyes
+         fi
+         if test x"$found_libusb0_pkg" = "xno" ; then
+            AC_MSG_ERROR([*** libusb not found! (missing -dev/-devel package?) ***\n*** prefer to install libusb-1 if you can! ***])
+         fi
+      fi
+   fi
+fi
+
+
+AC_SUBST(LIBUSB_CFLAGS)
+AC_SUBST(LIBUSB_LIBS)
+AM_CONDITIONAL(LIBUSB1_COMPILE, test x"$found_libusb1_pkg" = "xyes")
+AM_CONDITIONAL(LIBUSB0_COMPILE, test x"$found_libusb0_pkg" = "xyes")
+AM_CONDITIONAL(LIBOPENUSB_COMPILE, test x"$ac_cv_lib_openusb_openusb_init" = "xyes")
+AC_MSG_NOTICE([*** using libusb $LIBUSB_VER ***])
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -124,11 +163,6 @@ AC_HEADER_TIME
 AC_CHECK_HEADERS([ctype.h errno.h fcntl.h getopt.h libgen.h \
 	limits.h stdio.h string.h sys/stat.h sys/time.h unistd.h \
 	langinfo.h locale.h arpa/inet.h byteswap.h sys/uio.h])
-AC_CHECK_HEADER([usb.h],,
-	AC_MSG_ERROR([I can't find the libusb header file on your system.
-	You may need to set the CPPFLAGS environment variable to include
-	the search path where you have libusb installed before running
-	configure (e.g. setenv CPPFLAGS=-I/usr/local/include)]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -148,7 +182,11 @@ AC_CHECK_FUNCS(basename memset select strdup strerror strndup strrchr strtoul us
 AC_SYS_LARGEFILE
 # Stick in "-Werror" if you want to be more aggressive.
 # (No need to use AC_SUBST on this default substituted environment variable.)
-CFLAGS="$CFLAGS -Wall -Wmissing-prototypes"
+# Only add these additional CFLAGS if we are using GCC. Other C compilers may
+# not support them.
+if test x"$GCC" == "xyes" ; then
+	CFLAGS="$CFLAGS -Wall -Wmissing-prototypes"
+fi
 
 # Output files
 

@@ -4,7 +4,7 @@
  *
  * Copyright (C) 2005-2007 Richard A. Low <richard@wentnet.com>
  * Copyright (C) 2005-2011 Linus Walleij <triad@df.lth.se>
- * Copyright (C) 2006-2007 Marcus Meissner
+ * Copyright (C) 2006-2011 Marcus Meissner
  * Copyright (C) 2007 Ted Bullock
  * Copyright (C) 2008 Chris Bagwell <chris@cnpbagwell.com>
  *
@@ -31,7 +31,15 @@
 #define LIBUSB_GLUE_H
 
 #include "ptp.h"
+#ifdef HAVE_LIBUSB1
+#include <libusb-1.0/libusb.h>
+#endif
+#ifdef HAVE_LIBUSB0
 #include <usb.h>
+#endif
+#ifdef HAVE_LIBOPENUSB
+#include <openusb.h>
+#endif
 #include "libmtp.h"
 #include "device-flags.h"
 
@@ -55,9 +63,18 @@ extern "C" {
       data_dump_ascii (stdout, buffer, length, base); \
   } while (0)
 
-
+#ifdef HAVE_LIBUSB1
+#define USB_BULK_READ libusb_bulk_transfer
+#define USB_BULK_WRITE libusb_bulk_transfer
+#endif
+#ifdef HAVE_LIBUSB0
 #define USB_BULK_READ usb_bulk_read
 #define USB_BULK_WRITE usb_bulk_write
+#endif
+#ifdef HAVE_LIBOPENUSB
+#define USB_BULK_READ openusb_bulk_xfer
+#define USB_BULK_WRITE openusb_bulk_xfer
+#endif
 
 /**
  * Internal USB struct.
@@ -65,7 +82,15 @@ extern "C" {
 typedef struct _PTP_USB PTP_USB;
 struct _PTP_USB {
   PTPParams *params;
+#ifdef HAVE_LIBUSB1
+  libusb_device_handle* handle;
+#endif
+#ifdef HAVE_LIBUSB0
   usb_dev_handle* handle;
+#endif
+#ifdef HAVE_LIBOPENUSB
+  openusb_dev_handle_t* handle;
+#endif
   uint8_t interface;
   int inep;
   int inep_maxpacket;
@@ -84,7 +109,6 @@ struct _PTP_USB {
   LIBMTP_raw_device_t rawdevice;
 };
 
-int open_device (int busn, int devn, short force, PTP_USB *ptp_usb, PTPParams *params, struct usb_device **dev);
 void dump_usbinfo(PTP_USB *ptp_usb);
 const char *get_playlist_extension(PTP_USB *ptp_usb);
 void close_device(PTP_USB *ptp_usb, PTPParams *params);
@@ -142,6 +166,8 @@ int guess_usb_speed(PTP_USB *ptp_usb);
   ((a)->rawdevice.device_entry.device_flags & DEVICE_FLAG_LONG_TIMEOUT)
 #define FLAG_FORCE_RESET_ON_CLOSE(a) \
   ((a)->rawdevice.device_entry.device_flags & DEVICE_FLAG_FORCE_RESET_ON_CLOSE)
+#define FLAG_BROKEN_GET_OBJECT_PROPVAL(a) \
+  ((a)->rawdevice.device_entry.device_flags & DEVICE_FLAG_BROKEN_GET_OBJECT_PROPVAL)
 
 /* connect_first_device return codes */
 #define PTP_CD_RC_CONNECTED	0
