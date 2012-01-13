@@ -1,12 +1,16 @@
-libmtp (1.1.2-1) UNRELEASED; urgency=low
+libmtp (1.1.2-1) unstable; urgency=low
 
   * New upstream release:
     - Rewritten to use libusb 1.0 if available.
     - Autodetect "sony.net" NWZ devices and add proper device flags
       automatically.
     - A horde of new devices in the database.
+  * debian/control:
+    - Move to libusb-1.0.
+    - Add pkg-config to Build-Depends.
+  * Refresh debian/patches/1001-kfreebsd_hurd_ftbfs.patch.
 
- -- Alessio Treglia <alessio@debian.org>  Fri, 13 Jan 2012 13:20:23 +0100
+ -- Alessio Treglia <alessio@debian.org>  Fri, 13 Jan 2012 14:14:38 +0100
 
 libmtp (1.1.1-1) unstable; urgency=low
 
