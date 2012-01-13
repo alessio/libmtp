@@ -1,3 +1,9 @@
+libmtp (1.1.2-2) unstable; urgency=low
+
+  * Use libusb-dev instead of libusb-1.0-0-dev on non-linux archs.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 13 Jan 2012 17:41:10 +0100
+
 libmtp (1.1.2-1) unstable; urgency=low
 
   * New upstream release:
