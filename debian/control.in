@@ -76,9 +76,9 @@ Description: Media Transfer Protocol (MTP) runtime tools
 
 Package: libmtp-dev
 Section: libdevel
-Architecture: all
-Depends: libmtp@SOVERSION@ (>= ${source:Version}),
- libmtp@SOVERSION@ (<< ${source:Upstream-Version}+1~),
+Architecture: any
+Depends:
+ libmtp@SOVERSION@ (= ${binary:Version}),
  libusb-dev (>> 0.1.7),
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) development files
