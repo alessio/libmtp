@@ -79,7 +79,8 @@ Section: libdevel
 Architecture: any
 Depends:
  libmtp@SOVERSION@ (= ${binary:Version}),
- libusb-dev (>> 0.1.7),
+ libusb-1.0-0-dev [linux-any],
+ libusb-dev [!linux-any],
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) development files
  libmtp is a library for communicating with MTP aware devices in POSIX
