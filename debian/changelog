@@ -3,7 +3,11 @@ libmtp (1.1.2-3) unstable; urgency=low
   * Port libmtp-dev to Architecture: any.
   * Set libmtp-dev depends on libusb-1.0-0-dev on Linux and on libusb-dev
     on non-linux. Thanks to Aaron for the report! (Closes: #665272)
-  * Several updates to the devices DB, patch taken from upstream SCM:
+  * 0001-broken_object_info.patch (taken from upstream git):
+    - src/device-flags.h: New DEVICE_FLAG_BROKEN_GET_OBJECT_INFO,
+      some devices return bad data on GetObjectInfo.
+    - src/ptp.c: Properly handle bad data returned by GetObjectInfo.
+  * Several updates to the devices DB (taken from upstream git):
     - Attempt to fix issues with SonyEricsson LT15i (LP: #902962)
     - New devices:
       + Transformer Prime (an unknown version)
@@ -18,7 +22,7 @@ libmtp (1.1.2-3) unstable; urgency=low
       + Some Archos devices
     - Consolidate bug flags for many devices.
 
- -- Alessio Treglia <alessio@debian.org>  Sat, 31 Mar 2012 10:55:26 +0200
+ -- Alessio Treglia <alessio@debian.org>  Sat, 31 Mar 2012 11:12:37 +0200
 
 libmtp (1.1.2-2) unstable; urgency=low
 
