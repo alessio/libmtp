@@ -1,3 +1,25 @@
+libmtp (1.1.2-3) unstable; urgency=low
+
+  * Port libmtp-dev to Architecture: any.
+  * Set libmtp-dev depends on libusb-1.0-0-dev on Linux and on libusb-dev
+    on non-linux. Thanks to Aaron for the report! (Closes: #665272)
+  * Several updates to the devices DB, patch taken from upstream SCM:
+    - Attempt to fix issues with SonyEricsson LT15i (LP: #902962)
+    - New devices:
+      + Transformer Prime (an unknown version)
+      + HP Touchpad
+      + Another Acer Iconia Tab
+      + Nook Color
+      + Sony Tablet S1
+      + Sony NWZ-B163F
+      + Sony ST15i Xperia Mini
+      + Toshiba Thrive
+      + NEC FOMA N01A
+      + Some Archos devices
+    - Consolidate bug flags for many devices.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 31 Mar 2012 10:55:26 +0200
+
 libmtp (1.1.2-2) unstable; urgency=low
 
   * Use libusb-dev instead of libusb-1.0-0-dev on non-linux archs.
