@@ -76,10 +76,11 @@ Description: Media Transfer Protocol (MTP) runtime tools
 
 Package: libmtp-dev
 Section: libdevel
-Architecture: all
-Depends: libmtp9 (>= ${source:Version}),
- libmtp9 (<< ${source:Upstream-Version}+1~),
- libusb-dev (>> 0.1.7),
+Architecture: any
+Depends:
+ libmtp9 (= ${binary:Version}),
+ libusb-1.0-0-dev [linux-any],
+ libusb-dev [!linux-any],
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) development files
  libmtp is a library for communicating with MTP aware devices in POSIX
