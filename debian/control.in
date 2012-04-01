@@ -3,6 +3,9 @@ Section: libs
 Priority: optional
 Maintainer: Alessio Treglia <alessio@debian.org>
 Build-Depends: debhelper (>= 5),
+ autoconf,
+ automake,
+ autotools-dev,
  cdbs (>= 0.4.37),
  chrpath,
  docbook-xsl,
