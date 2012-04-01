@@ -3,6 +3,9 @@ Section: libs
 Priority: optional
 Maintainer: Alessio Treglia <alessio@debian.org>
 Build-Depends: debhelper (>= 5),
+ autoconf,
+ automake,
+ autotools-dev,
  cdbs (>= 0.4.37),
  chrpath,
  docbook-xsl,
@@ -13,7 +16,7 @@ Build-Depends: debhelper (>= 5),
  lsb-release,
  pkg-config,
  xsltproc
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Homepage: http://libmtp.sourceforge.net/
 Vcs-Git: git://git.debian.org/git/collab-maint/libmtp.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
