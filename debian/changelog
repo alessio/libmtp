@@ -1,3 +1,9 @@
+libmtp (1.1.2-4) unstable; urgency=low
+
+  * start new upload
+
+ -- Alessio Treglia <alessio@debian.org>  Sun, 01 Apr 2012 11:55:18 +0200
+
 libmtp (1.1.2-3) unstable; urgency=low
 
   * Port libmtp-dev to Architecture: any.
