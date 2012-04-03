@@ -158,6 +158,10 @@ cannot test your solution.
   to/from the device and will never close the session, thus
   Windows simply does not close sessions at all.
 
+  For example this means that a device may work the first time
+  you run some command-line example like "mtp-detect" while
+  subsequent runs fail.
+
   Typical sign of this illness: broken pipes on closing sessions,
   on the main transfer pipes(s) or the interrupt pipe:
 
@@ -175,10 +179,19 @@ cannot test your solution.
   properly tested, and "it works with Windows" is sort of the
   testing criteria at some companies.
 
-  You can get Windows-like behaviour on Linux by running a HAL-aware
+  You can get Windows-like behaviour on Linux by running a udev-aware
   libmtp GUI client like Rhythmbox or Gnomad2, which will "hook"
   the device when you plug it in, and "release" it if you unplug
-  it.
+  it, and you start/end you transfer sessions by plugging/unplugging
+  the USB cable.
+
+  The "Unix way" of running small programs that open the device,
+  do something, then close the device, isn't really working with
+  such devices and you cannot expect to have command line tools
+  like the mtp examples work with them. You could implement new
+  example programs that just call to a mediating daemon like the
+  Windows MTP stack does. (And change all programs using libmtp
+  directly today.)
 
   If this bug in your device annoys you, contact your device
   manufacturer and ask them to test their product with some libmtp
@@ -803,6 +816,37 @@ It doesn't work: either the device crashes or the file simply disappears
 since the device rolls back all failed transactions.
 
 So this is an inherent limitation of the PTP/MTP protocol.
+
+
+I want to remote control my device!
+-----------------------------------
+
+I have both good and bad news for you.
+
+The good news is that the MTP protocol has well-defined commands to play
+back content on a device. Operation 0xD411 (PTP_DPC_MTP_PlaybackObject)
+will start playing back a file on the device (whatever that may mean if
+this is not a music or video file), and operation 0xD403 can set the
+playback volume to save your ears. Then there are operations to
+determine how far into the current file you currently are, so as to
+support say progress bars.
+
+Since these commands have been around since the dawn of the MTP protocol
+and since it was developed in cooperation with Creative Technology, this
+is probably a requested feature from the Creative people who already had
+support for playback on their devices using the PDE protocol back then.
+
+Anyway, here are the bad news:
+[logs]$ grep d411 *
+mtp-detect-trekstor-vibez.txt:   0xd411: Playback Object
+
+Aha there is only one known device in the world which actually supports
+playback on the device. So either you go buy the Trekstor Vibez, or you
+can forget about this. You could always try asking your hardware vendor
+of choice to go implement this.
+
+Since none of the core developers of libmtp has the Trekstor device, this
+is not yet implemented in libmtp.
 
 
 I make MTP devices!
