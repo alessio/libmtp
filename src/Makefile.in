@@ -153,6 +153,7 @@ LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LIBUSB_CFLAGS = @LIBUSB_CFLAGS@
 LIBUSB_LIBS = @LIBUSB_LIBS@
+LIBUSB_REQUIRES = @LIBUSB_REQUIRES@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBICONV = @LTLIBICONV@
@@ -275,7 +276,7 @@ EXTRA_DIST = libmtp.h.in libmtp.sym ptp-pack.c
 # ---------------------------------------------------------------------------
 CURRENT = 9
 AGE = 0
-REVISION = 2
+REVISION = 3
 SOVERSION = $(CURRENT):$(REVISION):$(AGE)
 LT_CURRENT_MINUS_AGE = `expr $(CURRENT) - $(AGE)`
 @COMPILE_MINGW32_TRUE@W32_LIBS = -lws2_32
