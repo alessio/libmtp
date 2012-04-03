@@ -1,9 +1,9 @@
-Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=174
+Format: http://debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: libmtp
 Upstream-Contact:
  Richard A. Low <richard@wentnet.com>
  Linus Walleij <triad@df.lth.se>
-Source: http://libmtp.sourceforge.net/download.php
+Source: http://sf.net/projects/libmtp/files/
 
 Files: *
 Copyright:
@@ -49,12 +49,12 @@ License: LGPL-2+
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  Library General Public License for more details.
-Comment: You should have received a copy of the GNU Library General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
- .
- On Debian systems the full text of the GNU Lesser General Public
+Comment:
+ On Debian systems the complete text of the GNU Lesser General Public
  License can be found in the `/usr/share/common-licenses/LGPL-2' file.
+ .
+ You should have received a copy of the GNU Lesser General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 License: LGPL-2.1+
  This library is free software; you can redistribute it and/or
@@ -66,12 +66,12 @@ License: LGPL-2.1+
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  Lesser General Public License for more details.
-Comment: You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- .
- On Debian systems the full text of the GNU Lesser General Public
+Comment:
+ On Debian systems the complete text of the GNU Lesser General Public
  License can be found in the `/usr/share/common-licenses/LGPL-2.1' file.
+ .
+ You should have received a copy of the GNU Lesser General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 License: GPL-2+
  This program is free software; you can redistribute it and/or modify
@@ -83,8 +83,9 @@ License: GPL-2+
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
-Comment: You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
- .
+Comment:
  On Debian systems the complete text of the GNU General Public
  License can be found in the `/usr/share/common-licenses/GPL-2' file.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
