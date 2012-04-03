@@ -1,3 +1,20 @@
+libmtp (1.1.3-1) unstable; urgency=low
+
+  * New upstream bugfix release:
+    - Soname libmtp.so.9.0.3 - binary compatible.
+    - Probably nailed the bugs in the Samsung Galaxy Tab S2 family
+      of devices. Ignacio Martinez helped us fixing this!
+    - Build fixes by Alessio Treglia and others.
+    - A horde of new devices in the database.
+  * Remove patches applied upstream:
+    - 0001-broken_object_info.patch
+    - 0002-devicedb_updates.patch
+    - 2001-pkgconfig_requires.patch
+  * Refresh 1001-kfreebsd_hurd_ftbfs.patch.
+  * Update debian/copyright.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 03 Apr 2012 08:33:47 +0200
+
 libmtp (1.1.2-4) unstable; urgency=low
 
   * libmtp requires either libusb or libusb-1.0 to build, but libmtp.pc
