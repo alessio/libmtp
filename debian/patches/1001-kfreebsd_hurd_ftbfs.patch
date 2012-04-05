@@ -1,7 +1,8 @@
 Description: Remove restrictive check for GNU/Linux archs since the sources
  compile fine on some non-linux architectures (kfreebsd, for instance).
 Author: Alessio Treglia <alessio@debian.org>
-Forwarded: no
+Forwarded:
+ https://sourceforge.net/tracker/?func=detail&aid=3515310&group_id=158745&atid=809061
 ---
  configure        |    2 +-
  configure.ac     |    2 +-
