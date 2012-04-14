@@ -16,7 +16,6 @@ SUBSTFILES = debian/libmtp$(SOVERSION).docs	\
 	debian/libmtp$(SOVERSION).preinst	\
 	debian/libmtp$(SOVERSION).postinst
 UDEVFILES = 20-libmtp$(SOVERSION).fdi
-DISTRIBUTION = $(shell lsb_release -i | cut -f2 -d':')
 
 debdir = $(CURDIR)/debian
 debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
@@ -41,13 +40,6 @@ install/libmtp-doc::
 	  for i in $$(ls *.3 | grep -v ^mtp_) ; do			\
 		../../../debian/sanitize-manpage.pl < $$i > mtp_$$i ;	\
 	  done )
-
-binary-install/libmtp-common::
-	if [ ${DISTRIBUTION} = 'Ubuntu' ]; then \
-		mkdir -p $(debdir)/libmtp-common/usr/share/apport/package-hooks/ ;\
-		install -m 0644 $(debdir)/apport/* \
-			$(debdir)/libmtp-common/usr/share/apport/package-hooks/ ; \
-	fi
 
 build/libmtp-common::
 	# Fix mode of udev lifting script
