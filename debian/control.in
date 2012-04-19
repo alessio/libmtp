@@ -23,7 +23,7 @@ Vcs-Git: git://git.debian.org/git/collab-maint/libmtp.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
 
 Package: libmtp@SOVERSION@
-Architecture: any
+Architecture: linux-any
 Depends:
  libmtp-common,
  ${misc:Depends},
@@ -89,7 +89,7 @@ Description: Media Transfer Protocol (MTP) runtime tools
 
 Package: libmtp-dev
 Section: libdevel
-Architecture: any
+Architecture: linux-any
 Depends:
  libmtp@SOVERSION@ (= ${binary:Version}),
  libusb-1.0-0-dev [linux-any],
@@ -109,7 +109,7 @@ Description: Media Transfer Protocol (MTP) development files
 Package: libmtp-dbg
 Section: debug
 Priority: extra
-Architecture: any
+Architecture: linux-any
 Depends:
  libmtp-runtime (= ${binary:Version}) [linux-any],
  libmtp@SOVERSION@ (= ${binary:Version}),
@@ -144,7 +144,7 @@ Description: Media Transfer Protocol (MTP) library documentation
 
 Package: mtp-tools
 Section: utils
-Architecture: any
+Architecture: linux-any
 Depends:
  ${misc:Depends},
  ${shlibs:Depends}
