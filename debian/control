@@ -2,12 +2,13 @@ Source: libmtp
 Section: libs
 Priority: optional
 Maintainer: Alessio Treglia <alessio@debian.org>
-Build-Depends: debhelper (>= 5),
+Build-Depends:
  autoconf,
  automake,
  autotools-dev,
  cdbs (>= 0.4.37),
  chrpath,
+ debhelper (>= 5),
  docbook-xsl,
  doxygen,
  dpkg-dev (>= 1.13.19),
@@ -23,11 +24,13 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/libmtp.git
 
 Package: libmtp9
 Architecture: any
-Depends: ${shlibs:Depends},
+Depends:
  libmtp-common,
- ${misc:Depends}
-Recommends: ${udev},
- libmtp-runtime [linux-any]
+ ${misc:Depends},
+ ${shlibs:Depends}
+Recommends:
+ libmtp-runtime [linux-any],
+ ${udev}
 Pre-Depends: dpkg (>= 1.15.7.2)
 Description: Media Transfer Protocol (MTP) library
  libmtp is a library for communicating with MTP aware devices in POSIX
@@ -40,9 +43,12 @@ Description: Media Transfer Protocol (MTP) library
 
 Package: libmtp-common
 Architecture: all
-Depends: ${misc:Depends}
-Breaks: libmtp8 (<= 1.0.6-6)
-Replaces: libmtp8
+Depends:
+ ${misc:Depends}
+Breaks:
+ libmtp8 (<= 1.0.6-6)
+Replaces:
+ libmtp8
 Description: Media Transfer Protocol (MTP) common files
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
@@ -57,13 +63,17 @@ Description: Media Transfer Protocol (MTP) common files
 
 Package: libmtp-runtime
 Architecture: linux-any
-Depends: ${shlibs:Depends},
- libmtp9 (= ${binary:Version}),
+Depends:
  libmtp-common,
- ${misc:Depends}
-Replaces: libmtp8 (= 1.0.6-3)
-Breaks: libmtp8 (= 1.0.6-3)
-Enhances: libmtp9
+ libmtp9 (= ${binary:Version}),
+ ${misc:Depends},
+ ${shlibs:Depends}
+Replaces:
+ libmtp8 (= 1.0.6-3)
+Breaks:
+ libmtp8 (= 1.0.6-3)
+Enhances:
+ libmtp9
 Description: Media Transfer Protocol (MTP) runtime tools
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
@@ -100,9 +110,10 @@ Package: libmtp-dbg
 Section: debug
 Priority: extra
 Architecture: any
-Depends: libmtp9 (= ${binary:Version}),
- mtp-tools (= ${binary:Version}),
+Depends:
  libmtp-runtime (= ${binary:Version}) [linux-any],
+ libmtp9 (= ${binary:Version}),
+ mtp-tools (= ${binary:Version}),
  ${misc:Depends}
 Description: Media Transfer Protocol (MTP) debugging symbols
  libmtp is a library for communicating with MTP aware devices in POSIX
@@ -118,7 +129,8 @@ Description: Media Transfer Protocol (MTP) debugging symbols
 Package: libmtp-doc
 Section: doc
 Architecture: all
-Depends: ${misc:Depends}
+Depends:
+ ${misc:Depends}
 Description: Media Transfer Protocol (MTP) library documentation
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
@@ -133,9 +145,11 @@ Description: Media Transfer Protocol (MTP) library documentation
 Package: mtp-tools
 Section: utils
 Architecture: any
-Depends: ${shlibs:Depends},
- ${misc:Depends}
-Enhances: libmtp9
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends}
+Enhances:
+ libmtp9
 Description: Media Transfer Protocol (MTP) library tools
  libmtp is a library for communicating with MTP aware devices in POSIX
  compliant operating systems.  It implements MTP Basic, the subset
