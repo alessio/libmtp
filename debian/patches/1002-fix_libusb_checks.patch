@@ -2,6 +2,7 @@ Subject: Fix openusb check.
 Bug-Debian: http://bugs.debian.org/667081
 Author: Robert Millan <rmh@debian.org>
 Forwarded:
+ https://sf.net/tracker/?func=detail&aid=3519752&group_id=158745&atid=809061
 ---
  configure.ac |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
