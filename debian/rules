@@ -2,6 +2,7 @@
 
 LDFLAGS+=-Wl,--as-needed
 
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 DEB_CONFIGURE_EXTRA_FLAGS := --enable-static
 ifneq (,$(findstring libmtp-doc, $(shell dh_listpackages)))
 DEB_CONFIGURE_EXTRA_FLAGS += --enable-doxygen
@@ -20,17 +21,21 @@ debdir = $(CURDIR)/debian
 debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
 		debian/changelog)
 
-%:
-	dh $@ --with autotools_dev
-
-override_dh_auto_configure:
-	dh_auto_configure -- $(DEB_CONFIGURE_EXTRA_FLAGS)
-
 # Replace SOVERSION string in debian/ files
 libmtp$(SOVERSION).%: libmtp.%.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
 debian/%: debian/%.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
+
+mtp-tools.1: debian/mtp-tools.dbk
+	# Build and install the man page for mtp-tools
+	$(XP) $(DB2MAN) $<
+
+%:
+	dh $@ --with autotools_dev
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(DEB_CONFIGURE_EXTRA_FLAGS)
 
 override_dh_auto_clean:
 	rm -f mtp-tools.1 $(SUBSTFILES) $(UDEVFILES)
@@ -70,11 +75,12 @@ ifeq (linux,$(DEB_HOST_ARCH_OS))
 	echo "udev=udev" >> debian/libmtp$(SOVERSION).substvars
 endif
 	# Remove rpath from the library
-	chrpath --delete $(debdir)/libmtp$(SOVERSION)/usr/lib/libmtp.so.*.*
+	chrpath --delete \
+		$(debdir)/libmtp$(SOVERSION)/usr/lib/$(DEB_HOST_MULTIARCH)/libmtp.so.*.*
 	# Remove rpath from programs
 	chrpath --delete $(debdir)/mtp-tools/usr/bin/*
 	dh_installdeb
 
-mtp-tools.1: debian/mtp-tools.dbk
-	# Build and install the man page for mtp-tools
-	$(XP) $(DB2MAN) $<
+override_dh_strip:
+	dh_strip -plibmtp$(SOVERSION) --dbg-package=libmtp-dbg
+	dh_strip --remaining-packages
