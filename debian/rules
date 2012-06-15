@@ -1,13 +1,12 @@
 #!/usr/bin/make -f
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/autotools.mk
-
 LDFLAGS+=-Wl,--as-needed
 
-DEB_CONFIGURE_EXTRA_FLAGS := --enable-doxygen \
- --enable-static=no
-DEB_DH_INSTALL_SOURCEDIR = debian/tmp
+DEB_CONFIGURE_EXTRA_FLAGS := --enable-static
+ifneq (,$(findstring libmtp-doc, $(shell dh_listpackages)))
+DEB_CONFIGURE_EXTRA_FLAGS += --enable-doxygen
+endif
+
 DB2MAN = /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
 XP = xsltproc -''-nonet
 SOVERSION = 9
@@ -21,18 +20,41 @@ debdir = $(CURDIR)/debian
 debver = $(shell perl -ne '/([\d.-]+)/;print "$$1"; last' \
 		debian/changelog)
 
+%:
+	dh $@ --with autotools_dev
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(DEB_CONFIGURE_EXTRA_FLAGS)
+
 # Replace SOVERSION string in debian/ files
 libmtp$(SOVERSION).%: libmtp.%.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
-%: %.in
+debian/%: debian/%.in
 	sed "s/@SOVERSION@/$(SOVERSION)/g" < $<	> $@
 
-makebuilddir/libmtp$(SOVERSION):: $(SUBSTFILES) debian/control
+override_dh_auto_clean:
+	rm -f mtp-tools.1 $(SUBSTFILES) $(UDEVFILES)
+	# Restore original file
+	test ! -e src/gphoto2-endian.h-orig \
+		|| mv src/gphoto2-endian.h-orig src/gphoto2-endian.h
+	dh_auto_clean
+
+override_dh_auto_build: $(SUBSTFILES) debian/control mtp-tools.1
 	# Save file modified by configure
 	test -e src/gphoto2-endian.h-orig \
 		|| cp src/gphoto2-endian.h src/gphoto2-endian.h-orig
+	dh_auto_build
+ifneq (,$(findstring libmtp-common, $(shell dh_listpackages)))
+	# Fix mode of udev lifting script
+	chmod +x libmtp.sh
+	# Rename udev files
+	for f in $(UDEVFILES) ; do				\
+		cp libmtp.$${f#*.} $$f ;			\
+	done
+endif
 
-install/libmtp-doc::
+override_dh_install:
+ifneq (,$(findstring libmtp-doc, $(shell dh_listpackages)))
 	# Rename some man files and remove others
 	chmod +x debian/sanitize-manpage.pl
 	( cd doc/man/man3/ ;						\
@@ -40,34 +62,19 @@ install/libmtp-doc::
 	  for i in $$(ls *.3 | grep -v ^mtp_) ; do			\
 		../../../debian/sanitize-manpage.pl < $$i > mtp_$$i ;	\
 	  done )
+endif
+	dh_install
 
-build/libmtp-common::
-	# Fix mode of udev lifting script
-	chmod +x libmtp.sh
-	# Rename udev files
-	for f in $(UDEVFILES) ; do				\
-		cp libmtp.$${f#*.} $$f ;			\
-	done
-
-binary-predeb/libmtp$(SOVERSION)::
+override_dh_installdeb:
 ifeq (linux,$(DEB_HOST_ARCH_OS))
 	echo "udev=udev" >> debian/libmtp$(SOVERSION).substvars
 endif
 	# Remove rpath from the library
 	chrpath --delete $(debdir)/libmtp$(SOVERSION)/usr/lib/libmtp.so.*.*
+	# Remove rpath from programs
+	chrpath --delete $(debdir)/mtp-tools/usr/bin/*
+	dh_installdeb
 
 mtp-tools.1: debian/mtp-tools.dbk
 	# Build and install the man page for mtp-tools
 	$(XP) $(DB2MAN) $<
-
-build/mtp-tools:: mtp-tools.1
-
-binary-predeb/mtp-tools::
-	# Remove rpath from programs
-	chrpath --delete $(debdir)/mtp-tools/usr/bin/*
-
-clean::
-	rm -f mtp-tools.1 $(SUBSTFILES) $(UDEVFILES)
-	# Restore original file
-	test ! -e src/gphoto2-endian.h-orig \
-		|| mv src/gphoto2-endian.h-orig src/gphoto2-endian.h
