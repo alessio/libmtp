@@ -3,7 +3,7 @@
 LDFLAGS+=-Wl,--as-needed
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-DEB_CONFIGURE_EXTRA_FLAGS := --enable-static
+DEB_CONFIGURE_EXTRA_FLAGS := --enable-static=no
 ifneq (,$(findstring libmtp-doc, $(shell dh_listpackages)))
 DEB_CONFIGURE_EXTRA_FLAGS += --enable-doxygen
 endif
