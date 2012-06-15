@@ -343,7 +343,7 @@
   // Added by Greg Fitzgerald <netzdamon@gmail.com>
   { "Samsung", 0x04e8, "SAMSUNG Trance", 0x6763,
       DEVICE_FLAG_UNLOAD_DRIVER |
-      DEVICE_FLAG_NO_ZERO_READS |
+     DEVICE_FLAG_NO_ZERO_READS |
       DEVICE_FLAG_PLAYLIST_SPL_V1 },
   // From anonymous sourceforge user
   // Guessing on .spl flag, maybe needs NO_ZERO_READS, whatdoIknow
@@ -355,19 +355,35 @@
       "Galaxy Nexus/Galaxy S i9000/i9250, Android 4.0 updates", 0x685c,
       DEVICE_FLAGS_ANDROID_BUGS |
       DEVICE_FLAG_PLAYLIST_SPL_V2 },
-  // From: Ignacio Martínez <ignacio.martinezrivera@yahoo.es>
-  // It seems that some PTP commands are broken.
-  // Galaxy S2 has a connection timeout, the session must be
-  // open in about 3 seconds since the device is plugged in, after
-  // that time it will not respond.
-  // Seems also to be used with Galaxy Nexus debug mode and on
-  // US markets for some weird reason.
-  { "Samsung", 0x04e8,
-      "GT-P7310/P7510/N7000/I9100/Galaxy Tab 7.7/10.1/S2/Nexus/Note", 0x6860,
+  // Reported by David Goodenough <dfgdga@users.sourceforge.net>
+  // Guessing on flags.
+  { "Samsung", 0x04e8, "Galaxy Y", 0x685e,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
-      DEVICE_FLAG_BROKEN_GET_OBJECT_INFO },
+      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
+  /*
+   * This entry (device 0x6860) seems to be used on a *lot* of Samsung
+   * Android (gingerbread, 2.3) phones. It is *not* the Android MTP stack
+   * but an internal Samsung stack.
+   *
+   * Popular devices: Galaxy S2 and S3.
+   *
+   * - It seems that some PTP commands are broken.
+   * - Devices seem to have a connection timeout, the session must be
+   *   open in about 3 seconds since the device is plugged in, after
+   *   that time it will not respond. Thus GUI programs work fine.
+   * - Seems also to be used with Galaxy Nexus debug mode and on
+   *   US markets for some weird reason.
+   *
+   * From: Ignacio Martínez <ignacio.martinezrivera@yahoo.es> and others
+   */
+  { "Samsung", 0x04e8,
+      "GT P7310/P7510/N7000/I9070/I9100/I9300 Galaxy Tab 7.7/10.1/S2/S3/Nexus/Note/Y", 0x6860,
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
+      DEVICE_FLAG_UNLOAD_DRIVER |
+      DEVICE_FLAG_LONG_TIMEOUT |
+      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
   // Note: ID 0x6865 is some PTP mode! Don't add it.
   // From: Erik Berglund <erikjber@users.sourceforge.net>
   // Logs indicate this needs DEVICE_FLAG_NO_ZERO_READS
@@ -380,7 +396,7 @@
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
-      DEVICE_FLAG_BROKEN_GET_OBJECT_INFO },
+      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
   // From: John Gorkos <ab0oo@users.sourceforge.net> and
   // Akos Maroy <darkeye@users.sourceforge.net>
   { "Samsung", 0x04e8, "Vibrant SGH-T959/Captivate/Media player mode", 0x68a9,
@@ -840,6 +856,8 @@
       DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous sourceforge user
   { "Archos", 0x0e79, "101 G9 Turbo", 0x1539, DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by anonymous sourceforge user
+  { "Archos", 0x0e79, "70it2", 0x1568, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Dunlop (OEM of EGOMAN ltd?) reported by Nanomad
@@ -982,6 +1000,8 @@
   // Reported by Serg <rd77@users.sourceforge.net>
   // Symbian phone
   { "Nokia", 0x0421, "C7", 0x03c1, DEVICE_FLAG_NONE },
+  // Reported by Anonymous SourceForge user
+  { "Nokia", 0x0421, "C7 (ID2)", 0x03cd, DEVICE_FLAG_NONE },
   // Reported by Anonymous SourceForge user
   { "Nokia", 0x0421, "N950", 0x03d2, DEVICE_FLAG_NONE },
   // From: http://nds2.nokia.com/files/support/global/phones/software/Nokia_3250_WMP10_driver.inf
@@ -1167,6 +1187,10 @@
    DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
   // Reported by anonymous SourceForge user
   { "Cowon", 0x0e21, "iAudio X7 (MTP mode)", 0x0931,
+   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
+  // Reported by anonymous SourceForge user
+  { "Cowon", 0x0e21, "iAudio C2 (MTP mode)", 0x0941,
    DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
    DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
   { "Cowon", 0x0e21, "iAudio 10 (MTP mode)", 0x0952,
@@ -1375,6 +1399,11 @@
       DEVICE_FLAG_IGNORE_HEADER_ERRORS |
       DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  // Reported by Alejandro DC <Alejandro_DC@users.sourceforge.ne>
+  { "SonyEricsson", 0x0fce, "Xperia MK16i", 0x015a,
+      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
+      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by <wealas@users.sourceforge.net>
   // Android with homebrew MTP stack, possibly Aricent
   { "SonyEricsson", 0x0fce, "ST18a Xperia Ray", 0x0161,
@@ -1390,12 +1419,21 @@
   // Reported by Paul Taylor
   { "SONY", 0x0fce, "Xperia S", 0x0169,
       DEVICE_FLAG_NO_ZERO_READS | DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Ondra Lengal (blindly copied from Xperia S)
+  { "SONY", 0x0fce, "Xperia P", 0x0172,
+      DEVICE_FLAG_NO_ZERO_READS | DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Jonas Nyrén <spectralmks@users.sourceforge.net>
   { "SonyEricsson", 0x0fce, "W302", 0x10c8,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // Reported by anonymous sourceforge user
   // Suspect Aricent stack, guessing on these bug flags
   { "SonyEricsson", 0x0fce, "Xperia Arc LT15i", 0x514f,
+      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
+      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  // Reported by Eduard Bloch <blade@debian.org>
+  // Xperia Ray (2012), SE Android 2.3.4, flags from ST18a
+  { "SonyEricsson", 0x0fce, "ST18i Xperia Ray", 0x5161,
       DEVICE_FLAG_IGNORE_HEADER_ERRORS |
       DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
@@ -1415,26 +1453,20 @@
   { "Motorola", 0x22b8, "V3m/V750 verizon", 0x2a65,
       DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+  // Reported by Jader Rodrigues Simoes <jadersimoes@users.sourceforge.net>
+  { "Motorola", 0x22b8, "Xoom 2 Media Edition (ID2)", 0x41cf,
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Steven Roemen <sdroemen@users.sourceforge.net>
   { "Motorola", 0x22b8, "Droid X/MB525 (Defy)", 0x41d6,
       DEVICE_FLAG_NONE },
   // Reported by anonymous user
   { "Motorola", 0x22b8, "Milestone / Verizon Droid", 0x41dc,
-      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous user
   { "Motorola", 0x22b8, "DROID2", 0x42a7,
-      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+      DEVICE_FLAGS_ANDROID_BUGS },
   { "Motorola", 0x22b8, "Xoom 2 Media Edition", 0x4311,
-      DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Marcus Meissner to libptp2
   { "Motorola", 0x22b8, "IdeaPad K1", 0x4811,
       DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
@@ -1482,6 +1514,9 @@
   // Another OEM for Medion
   { "Google Inc (for Medion)", 0x18d1, "MD99000 (P9514)", 0xb00a,
       DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Frederik Himpe <fhimpe@telenet.be>
+  { "Google Inc (for LG Electronics)", 0x18d1, "P990/Optimus (Cyanogen)",
+      0xd109, DEVICE_FLAGS_ANDROID_BUGS },
   { "Google Inc (for LG Electronics)", 0x18d1, "P990/Optimus", 0xd10a,
       DEVICE_FLAGS_ANDROID_BUGS },
 
@@ -1595,6 +1630,9 @@
   /*
    * Asus
    */
+  // Reported by Glen Overby
+  { "Asus", 0x0b05, "TF300 Transformer", 0x4c80,
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous Sourceforge user
   { "Asus", 0x0b05, "TF201 Transformer Prime (keyboard dock)", 0x4d00,
       DEVICE_FLAGS_ANDROID_BUGS },
@@ -1653,6 +1691,12 @@
    */
   // Found on Internet forum
   { "nVidia", 0x0955, "CM9-Adam", 0x70a9, DEVICE_FLAGS_ANDROID_BUGS },
+
+  /*
+   * Vizio
+   */
+  // Reported by Michael Gurski <gurski@users.sourceforge.net>
+  { "Vizio", 0x0489, "VTAB1008", 0xe040, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Other strange stuff.
