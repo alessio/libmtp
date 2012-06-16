@@ -1,0 +1,224 @@
+Subject: Fix flags for some devices, add a bunch of new players.
+Origin: backport, commit:9aca3434f6316b75eed6c8c7f3ea7c7471fbdb1a
+Reviewed-by: Alessio Treglia <quadrispro@ubuntu.com>
+Last-Update: 2012-06-16
+Applied-Upstream: yes
+---
+ src/music-players.h |  120 +++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 115 insertions(+), 5 deletions(-)
+
+--- libmtp.orig/src/music-players.h
++++ libmtp/src/music-players.h
+@@ -691,11 +691,15 @@
+   // this flag atleast is needed
+   { "Nokia", 0x0421, "5800 XpressMusic v2", 0x0155,
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
++  { "Nokia", 0x0421, "5800 XpressMusic v3", 0x0159,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
+   // From an anonymous SourceForge user
+   // Not verified to be MTP
+   { "Nokia", 0x0421, "E63", 0x0179, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "N79", 0x0186, DEVICE_FLAG_NONE },
+   // From an anonymous SourceForge user
+   { "Nokia", 0x0421, "E71x", 0x01a1, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "E52", 0x01cf, DEVICE_FLAG_NONE },
+   // From Marcus Meissner
+   { "Nokia", 0x0421, "3710", 0x01ee, DEVICE_FLAG_NONE },
+   // From: AxeL <axel__17@users.sourceforge.net>
+@@ -713,7 +717,16 @@
+   // From: Alexander Kojevnikov <alex-kay@users.sourceforge.net>
+   { "Nokia", 0x0421, "6600i", 0x0297, DEVICE_FLAG_NONE },
+   // https://sourceforge.net/tracker/index.php?func=detail&aid=2692473&group_id=8874&atid=358874
+-  { "Nokia", 0x0421, "5200", 0x0421, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "5200 Mobile Phone", 0x04be, DEVICE_FLAG_BROKEN_BATTERY_LEVEL },
++  { "Nokia", 0x0421, "2710", 0x02c1, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "5230", 0x02e2, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "N8", 0x02fe, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "N8 (Ovi mode)", 0x0302, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "E7", 0x0334, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "E7 (Ovi mode)", 0x0335, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "C7", 0x03c1, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "C7 (ID2)", 0x03cd, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "N950", 0x03d2, DEVICE_FLAG_NONE },
+   // From: http://nds2.nokia.com/files/support/global/phones/software/Nokia_3250_WMP10_driver.inf
+   { "Nokia", 0x0421, "3250 Mobile Phone", 0x0462, DEVICE_FLAG_NONE },
+   // From http://nds2.nokia.com/files/support/global/phones/software/Nokia_N93_WMP10_Driver.inf
+@@ -736,6 +749,7 @@
+   { "Nokia", 0x0421, "N95 Mobile Phone", 0x04ef, DEVICE_FLAG_NONE },
+   // From: Pat Nicholls <pat@patandannie.co.uk>
+   { "Nokia", 0x0421, "N80 Internet Edition (Media Player)", 0x04f1, DEVICE_FLAG_UNLOAD_DRIVER },
++  { "Nokia", 0x0421, "N9", 0x051a, DEVICE_FLAG_NONE },
+   // Reported by Richard Wall <richard@the-moon.net>
+   { "Nokia", 0x05c6, "5530 Xpressmusic", 0x0229, DEVICE_FLAG_NONE },
+   // Reported by anonymous SourceForge user
+@@ -799,6 +813,8 @@
+   // Reported by anonymous SourceForge user
+   { "Medion", 0x066f, "MD8333", 0x8588,
+     DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "Medion", 0x0408, "MD99000 (P9514)/Olivetti Olipad 110", 0xb009,
++    DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+   // Reported by anonymous SourceForge user
+   { "Maxfield", 0x066f, "G-Flash NG 1GB", 0x846c,
+     DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+@@ -835,16 +851,19 @@
+    */
+   // Reported by Patrik Johansson <Patrik.Johansson@qivalue.com>
+   { "Cowon", 0x0e21, "iAudio U3 (MTP mode)", 0x0701,
+-   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
+   // Reported by Kevin Michael Smith <hai-etlik@users.sourceforge.net>
+   { "Cowon", 0x0e21, "iAudio 6 (MTP mode)", 0x0711,
+    DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+   // Reported by Roberth Karman
+   { "Cowon", 0x0e21, "iAudio 7 (MTP mode)", 0x0751,
+-   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
+   // Reported by an anonymous SourceForge user
+   { "Cowon", 0x0e21, "iAudio U5 (MTP mode)", 0x0761,
+-   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
+   // Reported by TJ Something <tjbk_tjb@users.sourceforge.net>
+   { "Cowon", 0x0e21, "iAudio D2 (MTP mode)", 0x0801,
+    DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+@@ -873,6 +892,18 @@
+   { "Cowon", 0x0e21, "iAudio 9 (MTP mode)", 0x0911,
+    DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+    DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
++  { "Cowon", 0x0e21, "iAudio J3 (MTP mode)", 0x0921,
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
++  { "Cowon", 0x0e21, "iAudio X7 (MTP mode)", 0x0931,
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
++  { "Cowon", 0x0e21, "iAudio C2 (MTP mode)", 0x0941,
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
++  { "Cowon", 0x0e21, "iAudio 10 (MTP mode)", 0x0952,
++   DEVICE_FLAG_UNLOAD_DRIVER | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++   DEVICE_FLAG_OGG_IS_UNKNOWN | DEVICE_FLAG_FLAC_IS_UNKNOWN },
+ 
+   /*
+    * Insignia, dual-mode.
+@@ -903,6 +934,13 @@
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST | DEVICE_FLAG_ALWAYS_PROBE_DESCRIPTOR },
+   // Reported by anonymous sourceforge user
+   { "LG Electronics Inc.", 0x1004, "KM900", 0x6132,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++      DEVICE_FLAG_UNLOAD_DRIVER },
++  { "LG Electronics Inc.", 0x1004, "LG8575", 0x619a,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
++      DEVICE_FLAG_UNLOAD_DRIVER },
++  { "LG Electronics Inc.", 0x1004, "V909 G-Slate", 0x61f9,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+       DEVICE_FLAG_UNLOAD_DRIVER },
+ 
+   /*
+@@ -1039,8 +1077,48 @@
+   { "SonyEricsson", 0x0fce, "W705/W715", 0x0105, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+   // Reported by Håkan Kvist
+   { "SonyEricsson", 0x0fce, "W995", 0x0112, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "U5", 0x0133,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "U8i", 0x013a,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce,  "j10i2 (Elm)", 0x0144,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce,  "j108i (Cedar)", 0x014e,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "LT15i (Xperia arc S)", 0x14f,
++      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "Xperia Neo", 0x0156,
++      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "Xperia MK16i", 0x015a,
++      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "ST18a Xperia Ray", 0x0161,
++      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "ST15i Xperia Mini", 0x0167,
++      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+   // Reported by Jonas Nyrén <spectralmks@users.sourceforge.net>
+   { "SonyEricsson", 0x0fce, "W302", 0x10c8, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "Xperia Arc LT15i", 0x514f,
++      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "ST18i Xperia Ray", 0x5161,
++      DEVICE_FLAG_IGNORE_HEADER_ERRORS |
++      DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST |
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce,  "j10i (Elm)", 0xd144,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "SonyEricsson", 0x0fce, "K550i", 0xe000,
++      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+ 
+ 
+   /*
+@@ -1051,6 +1129,8 @@
+   { "Motorola", 0x22b8, "V3m/V750 verizon", 0x2a65,
+       DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
+       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
++  { "Motorola", 0x22b8, "Droid X/MB525 (Defy)", 0x41d6,
++      DEVICE_FLAG_NONE },
+   // Reported by anonymous user
+   { "Motorola", 0x22b8, "Milestone / Verizon Droid", 0x41dc,
+       DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
+@@ -1140,8 +1220,10 @@
+     DEVICE_FLAG_BROKEN_BATTERY_LEVEL | DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+     DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST | DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST },
+ 
++  { "Conceptronic", 0x1e53, "CMTD2", 0x0005, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+   // Reported by Demadridsur <demadridsur@gmail.com>
+   { "O2 Sistemas", 0x1e53, "ZoltarTV", 0x0006, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
++  { "Wyplay", 0x1e53, "Wyplayer", 0x0007, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+ 
+   // Reported by Sense Hofstede <qense@users.sourceforge.net>
+   { "Perception Digital, Ltd", 0x0aa6, "Gigaware GX400", 0x9702, DEVICE_FLAG_NONE },
+@@ -1156,7 +1238,35 @@
+   /*
+    * Nextar
+    */
+-  { "Nextar", 0x0402, "MA715A-8R", 0x5668 },
++  { "Nextar", 0x0402, "MA715A-8R", 0x5668, DEVICE_FLAG_NONE },
++
++  /*
++   * Coby
++   */
++  { "Coby", 0x1e74, "COBY MP705", 0x6512, DEVICE_FLAG_NONE },
++
++  /*
++   * Apple devices
++   */
++  { "Apple", 0x05ac, "iPhone", 0x1290, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "iPod Touch 1st Gen", 0x1291, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "iPhone 3G", 0x1292, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "iPod Touch 2nd Gen", 0x1293, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "iPhone 3GS", 0x1294, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "0x1296", 0x1296, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "0x1297", 0x1297, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "0x1298", 0x1298, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "iPod Touch 3rd Gen", 0x1299, DEVICE_FLAG_NONE },
++  { "Apple", 0x05ac, "iPad", 0x129a, DEVICE_FLAG_NONE },
++
++  { "Curitel Communications, Inc.", 0x106c,
++      "Verizon Wireless Device", 0x3215, DEVICE_FLAG_NONE },
++  { "Pantech", 0x106c, "Crux", 0xf003, DEVICE_FLAG_NONE },
++
++  /*
++   * NEC
++   */
++  { "NEC", 0x0409, "FOMA N01A", 0x0242, DEVICE_FLAG_NONE },
+ 
+   /*
+    * Other strange stuff.
