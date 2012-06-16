@@ -1,3 +1,34 @@
+libmtp (1.0.3-1+squeeze2) stable; urgency=low
+
+  * Support new devices:
+    - Apple iPhone, iPhone 3G, iPhone 3GS, iPod Touch (1st, 2nd and 3rd
+      generations), iPad.
+    - COBY MP705
+    - Conceptronic CMTD2
+    - Cowon iAudio J3, iAudio X7, iAudio C2, iAudio 10
+    - Curitel Communications Verizon Wireless Device
+    - Medion MD99000 (P9514)/Olivetti Olipad 110
+    - Motorola Droid X/MB525 (Defy)
+    - NEC FOMA N01A
+    - Nextar MA715A-8R
+    - Nokia 5800 XpressMusic (new, previously unknown, ID) N79, E52, 2710,
+      5230, N7 (a couple of IDs), N8 (a couple of IDs), N9, C7 (a couple of
+      IDs), N950
+    - Pantech Crux
+    - SonyEricsson U5, U8i, j10i (Elm), j10i2 (Elm), j108i (Cedar), LT15i
+      (Xperia arc S), Xperia Neo, Xperia MK16i, ST18a Xperia Ray ST18i Xperia
+      Ray, ST15i Xperia Mini, Xperia Arc LT15i
+    - SonyEricsson K550i
+    - Wyplay Wyplayer
+  * Fix device flags:
+    - Set DEVICE_FLAG_BROKEN_BATTERY_LEVEL for Nokia 5200
+    - Set DEVICE_FLAG_{FLAC,OGG}_IS_UNKNOWN for a number of Cowon players to
+      make them properly recognize OGG/FLAC files.
+    - Set DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST for LG Electronics KM900,
+      LG8575, V909 G-Slate.
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Sat, 16 Jun 2012 19:31:34 +0200
+
 libmtp (1.0.3-1+squeeze1) stable; urgency=low
 
   * Add support for Motorola Xoom devices (Closes: #650152).
