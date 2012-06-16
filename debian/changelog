@@ -1,3 +1,14 @@
+libmtp (1.1.3-24-g9aca343-1) unstable; urgency=low
+
+  * New upstream snapshot 1.1.3-24-g9aca343.
+  * Replace dh-autotools_dev with dh-autoreconf.
+    - Build-Depends on dh-autoreconf, gnulib.
+    - Install config.rpath by hand.
+  * Drop {1001-kfreebsd_hurd_ftbfs,1002-fix_libusb_checks}.patch,
+    applied upstream.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 16 Jun 2012 10:38:08 +0200
+
 libmtp (1.1.3-4) unstable; urgency=low
 
   * debian/rules:
