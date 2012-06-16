@@ -34,7 +34,10 @@ mtp-tools.1: debian/mtp-tools.dbk
 %:
 	dh $@ --with autotools_dev
 
-override_dh_auto_configure:
+override_dh_auto_configure: $(SUBSTFILES) debian/control
+	# Save file modified by configure
+	test -e src/gphoto2-endian.h-orig \
+		|| cp src/gphoto2-endian.h src/gphoto2-endian.h-orig
 	dh_auto_configure -- $(DEB_CONFIGURE_EXTRA_FLAGS)
 
 override_dh_auto_clean:
@@ -44,10 +47,7 @@ override_dh_auto_clean:
 		|| mv src/gphoto2-endian.h-orig src/gphoto2-endian.h
 	dh_auto_clean
 
-override_dh_auto_build: $(SUBSTFILES) debian/control mtp-tools.1
-	# Save file modified by configure
-	test -e src/gphoto2-endian.h-orig \
-		|| cp src/gphoto2-endian.h src/gphoto2-endian.h-orig
+override_dh_auto_build: mtp-tools.1
 	dh_auto_build
 ifneq (,$(findstring libmtp-common, $(shell dh_listpackages)))
 	# Fix mode of udev lifting script
