@@ -1631,6 +1631,13 @@ ptp_check_event (PTPParams *params) {
 		}
 		return PTP_RC_OK;
 	}
+	/* should not get here ... EOS has no normal PTP events and another queue handling. */
+	if (	(params->deviceinfo.VendorExtensionID == PTP_VENDOR_CANON) &&
+		ptp_operation_issupported(params, PTP_OC_CANON_EOS_GetEvent)
+	) {
+		return PTP_RC_OK;
+	}
+
 	if (	(params->deviceinfo.VendorExtensionID == PTP_VENDOR_CANON) &&
 		ptp_operation_issupported(params, PTP_OC_CANON_CheckEvent)
 	) {
@@ -1934,6 +1941,15 @@ ptp_canon_eos_setdevicepropvalue (PTPParams* params,
 		if (!data) return PTP_RC_GeneralError;
 		params->canon_props[i].dpd.CurrentValue.u16 = value->u16;
 		ptp_pack_EOS_ImageFormat( params, data + 8, value->u16 );
+		break;
+	case PTP_DPC_CANON_EOS_CustomFuncEx:
+		/* special handling of CustomFuncEx properties */
+		ptp_debug (params, "ptp2/ptp_canon_eos_setdevicepropvalue: setting EOS prop %x to %s",propcode,value->str);
+		size = 8 + ptp_pack_EOS_CustomFuncEx( params, NULL, value->str );
+		data = malloc( size );
+		if (!data) return PTP_RC_GeneralError;
+		params->canon_props[i].dpd.CurrentValue.str = strdup( value->str );
+		ptp_pack_EOS_CustomFuncEx( params, data + 8, value->str );
 		break;
 	default:
 		if (datatype != PTP_DTC_STR) {
@@ -2808,6 +2824,29 @@ ptp_mtp_getobjectproplist (PTPParams* params, uint32_t handle, MTPProperties **p
 	ptp.Param3 = 0xFFFFFFFFU;  /* 0xFFFFFFFFU should be "all properties" */
 	ptp.Param4 = 0x00000000U;
 	ptp.Param5 = 0xFFFFFFFFU;  /* means - return full tree below the Param1 handle */
+	ptp.Nparam = 5;
+	ret = ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, &opldata, &oplsize);  
+	if (ret == PTP_RC_OK) *nrofprops = ptp_unpack_OPL(params, opldata, props, oplsize);
+	if (opldata != NULL)
+		free(opldata);
+	return ret;
+}
+
+uint16_t
+ptp_mtp_getobjectproplist_single (PTPParams* params, uint32_t handle, MTPProperties **props, int *nrofprops)
+{
+	uint16_t ret;
+	PTPContainer ptp;
+	unsigned char* opldata = NULL;
+	unsigned int oplsize;
+
+	PTP_CNT_INIT(ptp);
+	ptp.Code = PTP_OC_MTP_GetObjPropList;
+	ptp.Param1 = handle;
+	ptp.Param2 = 0x00000000U;  /* 0x00000000U should be "all formats" */
+	ptp.Param3 = 0xFFFFFFFFU;  /* 0xFFFFFFFFU should be "all properties" */
+	ptp.Param4 = 0x00000000U;
+	ptp.Param5 = 0x00000000U;  /* means - return single tree below the Param1 handle */
 	ptp.Nparam = 5;
 	ret = ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, &opldata, &oplsize);  
 	if (ret == PTP_RC_OK) *nrofprops = ptp_unpack_OPL(params, opldata, props, oplsize);
@@ -5394,7 +5433,7 @@ ptp_object_want (PTPParams *params, uint32_t handle, int want, PTPObject **retob
 	/*Camera 		*camera = ((PTPData *)params->data)->camera;*/
 
 	/* If GetObjectInfo is broken, force GetPropList */
-	if (params->device_flags & DEVICE_FLAG_BROKEN_GET_OBJECT_INFO)
+	if (params->device_flags & DEVICE_FLAG_PROPLIST_OVERRIDES_OI)
 		want |= PTPOBJECT_MTPPROPLIST_LOADED;
 
 	*retob = NULL;
@@ -5453,18 +5492,22 @@ ptp_object_want (PTPParams *params, uint32_t handle, int want, PTPObject **retob
 		}
 
 		ptp_debug (params, "ptp2/mtpfast: reading mtp proplist of %08x", handle);
-		ret = ptp_mtp_getobjectproplist (params, handle, &props, &nrofprops);
+		/* We just want this one object, not all at once. */
+		ret = ptp_mtp_getobjectproplist_single (params, handle, &props, &nrofprops);
 		if (ret != PTP_RC_OK)
 			goto fallback;
 		ob->mtpprops = props;
 		ob->nrofmtpprops = nrofprops;
 
 		/* Override the ObjectInfo data with data from properties */
-		if (params->device_flags & DEVICE_FLAG_BROKEN_GET_OBJECT_INFO) {
+		if (params->device_flags & DEVICE_FLAG_PROPLIST_OVERRIDES_OI) {
 			int i;
 			MTPProperties *prop = ob->mtpprops;
 
 			for (i=0;i<ob->nrofmtpprops;i++,prop++) {
+				/* in case we got all subtree objects */
+				if (prop->ObjectHandle != handle) continue;
+
 				switch (prop->property) {
 				case PTP_OPC_StorageID:
 					ob->oi.StorageID = prop->propval.u32;
