@@ -1,3 +1,21 @@
+libmtp (1.1.3-35-g0ece104-1) unstable; urgency=low
+
+  * Imported Upstream version 1.1.3-35-g0ece104:
+    - Some new players:
+      + SonyEricsson SK17i Xperia mini pro
+      + SONY Xperia U ST25i
+      + Viewpia DR
+      + Archos 101 G9 (v2)
+      + Asus TF300 Transformer
+      + Asus TF101 Eeepad Slider
+      + HTC Zopo ZP100
+      + HTC EVO 4G LTE
+      + Medion Lifetab P9514
+    - Fix typo in libmtp.h, VCARD v2 and v3 now properly detected.
+    - Blacklist Atmel JTAG programmers.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 29 Jun 2012 08:40:07 +0200
+
 libmtp (1.1.3-24-g9aca343-3) unstable; urgency=low
 
   * Upload to unstable.
