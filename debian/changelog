@@ -1,4 +1,4 @@
-libmtp (1.1.3-35-g0ece104-2) UNRELEASED; urgency=low
+libmtp (1.1.3-35-g0ece104-2) unstable; urgency=low
 
   * Device db updates picked from upstream git:
     - New devices:
@@ -11,7 +11,7 @@ libmtp (1.1.3-35-g0ece104-2) UNRELEASED; urgency=low
       + Toshiba Excite AT300
     - Fix device 2207:0001, it seems multi-branded OEM product.
 
- -- Alessio Treglia <alessio@debian.org>  Wed, 18 Jul 2012 11:00:56 +0200
+ -- Alessio Treglia <alessio@debian.org>  Wed, 18 Jul 2012 11:04:36 +0200
 
 libmtp (1.1.3-35-g0ece104-1) unstable; urgency=low
 
