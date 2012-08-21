@@ -292,6 +292,13 @@
       DEVICE_FLAG_PLAYLIST_SPL_V1 |
       DEVICE_FLAG_UNIQUE_FILENAMES |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
+  // From qnub <qnub@users.sourceforge.net>
+  // Guessing on .spl flag
+  { "Samsung", 0x04e8, "YP-R2", 0x512d,
+      DEVICE_FLAG_UNLOAD_DRIVER |
+      DEVICE_FLAG_PLAYLIST_SPL_V1 |
+      DEVICE_FLAG_UNIQUE_FILENAMES |
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // From Manuel Carro
   // Copied from Q2
  { "Samsung", 0x04e8, "YP-Q3", 0x5130,
@@ -359,6 +366,7 @@
   // Guessing on flags.
   { "Samsung", 0x04e8, "Galaxy Y", 0x685e,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
       DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
@@ -381,6 +389,7 @@
   { "Samsung", 0x04e8,
       "GT P7310/P7510/N7000/I9070/I9100/I9300 Galaxy Tab 7.7/10.1/S2/S3/Nexus/Note/Y", 0x6860,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
+      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
       DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
@@ -393,7 +402,6 @@
   // Guessing this has the same problematic MTP stack as the device
   // above.
   { "Samsung", 0x04e8, "Galaxy S GT-I9000/Galaxy 3 i5800/Kies mode", 0x6877,
-      DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
       DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
@@ -501,17 +509,23 @@
    * Acer
    */
   // Reported by anonymous sourceforge user
-  { "Acer", 0x0502, "Iconia TAB A500 v1", 0x3325, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Acer", 0x0502, "Iconia TAB A500 (ID1)", 0x3325, DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by: Franck VDL <franckv@users.sourceforge.net>
-  { "Acer", 0x0502, "Iconia TAB A500 v2", 0x3341, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Acer", 0x0502, "Iconia TAB A500 (ID2)", 0x3341, DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by: Matthias Arndt <simonsunnyboy@users.sourceforge.net>
   { "Acer", 0x0502, "Iconia TAB A501", 0x3344, DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by: anonymous sourceforge user
-  { "Acer", 0x0502, "Iconia TAB A100", 0x3348, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Acer", 0x0502, "Iconia TAB A100 (ID1)", 0x3348, DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by: Arvin Schnell <arvins@users.sourceforge.net>
-  { "Acer", 0x0502, "Iconia TAB A100 ID2", 0x3349, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Acer", 0x0502, "Iconia TAB A100 (ID2)", 0x3349, DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Philippe Marzouk <philm@users.sourceforge.net>
+  { "Acer", 0x0502, "Iconia TAB A700", 0x3378, DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous sourceforge user
-  { "Acer", 0x0502, "Iconia TAB A200", 0x337c, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Acer", 0x0502, "Iconia TAB A200 (ID1)", 0x337c, DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by anonymous sourceforge user
+  { "Acer", 0x0502, "Iconia TAB A200 (ID2)", 0x337d, DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by nE0sIghT <ne0sight@users.sourceforge.net>
+  { "Acer", 0x0502, "Iconia TAB A510", 0x338a, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * SanDisk
@@ -792,6 +806,9 @@
   { "Toshiba", 0x0930, "Gigabeat MET401", 0x001d,
       DEVICE_FLAG_NO_RELEASE_INTERFACE |
       DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST },
+  // Reported by Andree Jacobson <nmcandree@users.sourceforge.net>
+  { "Toshiba", 0x0930, "Excite AT300", 0x0963,
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Nigel Cunningham <nigel@tuxonice.net>
   // Guessing on Android bugs
   { "Toshiba", 0x0930, "Thrive AT100/AT105", 0x7100,
@@ -859,7 +876,9 @@
   // Reported by anonymous sourceforge user
   { "Archos", 0x0e79, "101 G9 Turbo", 0x1539, DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous sourceforge user
-  { "Archos", 0x0e79, "70it2", 0x1568, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Archos", 0x0e79, "70it2 (mode 1)", 0x1568, DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Sebastien ROHAUT
+  { "Archos", 0x0e79, "70it2 (mode 2)", 0x1569, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Dunlop (OEM of EGOMAN ltd?) reported by Nanomad
@@ -985,6 +1004,8 @@
   { "Nokia", 0x0421, "5530", 0x0229, DEVICE_FLAG_NONE },
   // From: Anonymous SourceForge user
   { "Nokia", 0x0421, "N97 mini", 0x026b, DEVICE_FLAG_NONE },
+  // From: Anonymous SourceForge user
+  { "Nokia", 0x0421, "X6", 0x0274, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
   // From: Alexander Kojevnikov <alex-kay@users.sourceforge.net>
   { "Nokia", 0x0421, "6600i", 0x0297, DEVICE_FLAG_NONE },
   // From: Karthik Paithankar <whyagain2005@users.sourceforge.net>
@@ -1407,71 +1428,116 @@
   { "SonyEricsson", 0x0fce, "LT15i (Xperia arc S)", 0x014f,
       DEVICE_FLAGS_ARICENT_BUGS },
   // Reported by Eamonn Webster <eweb@users.sourceforge.net>
-  // Guessing on the ignore errors flag
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "MT11i Xperia Neo", 0x0156,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by Alejandro DC <Alejandro_DC@users.sourceforge.ne>
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "MK16i Xperia", 0x015a,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by <wealas@users.sourceforge.net>
-  // Android with homebrew MTP stack, possibly Aricent
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "ST18a Xperia Ray", 0x0161,
-      DEVICE_FLAGS_ARICENT_BUGS },
-  // Reported by StehpanKa <stehp@users.sourceforge.net>
-  // Android with homebrew MTP stack, possibly Aricent
+      DEVICE_FLAG_NONE },
+  /*
+   * Reported by StehpanKa <stehp@users.sourceforge.net>
+   * Android with homebrew MTP stack in one firmware, possibly Aricent
+   * Android with Android stack in another one, so let the run-time
+   * detector look up the device bug flags, set to NONE initially.
+   */
   { "SonyEricsson", 0x0fce, "SK17i Xperia mini pro", 0x0166,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by hdhoang <hdhoang@users.sourceforge.net>
-  // Android with homebrew MTP stack, possibly Aricent
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "ST15i Xperia Mini", 0x0167,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by Paul Taylor
   { "SONY", 0x0fce, "Xperia S", 0x0169,
       DEVICE_FLAG_NO_ZERO_READS | DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Bruno Basilio <bbasilio@users.sourceforge.net>
+  { "SONY", 0x0fce, "WT19i Live Walkman", 0x016d,
+      DEVICE_FLAG_NONE },
+  // Reported by Christoffer Holmstedt <christofferh@users.sourceforge.net>
+  { "SONY", 0x0fce, "ST21i Xperia Tipo", 0x0170,
+      DEVICE_FLAG_NONE },
   // Reported by equaeghe <equaeghe@users.sourceforge.net>
   { "SONY", 0x0fce, "ST15i Xperia U", 0x0171,
-      DEVICE_FLAGS_ANDROID_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by Ondra Lengal
   { "SONY", 0x0fce, "Xperia P", 0x0172,
-      DEVICE_FLAGS_ANDROID_BUGS },
+      DEVICE_FLAG_NONE },
+  // Guessing on this one
+  { "SONY", 0x0fce, "LT26w Xperia Acro S", 0x0176,
+      DEVICE_FLAG_NONE },
   // Reported by Jonas Nyrén <spectralmks@users.sourceforge.net>
   { "SonyEricsson", 0x0fce, "W302", 0x10c8,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   /*
    * MTP+MSC personalities of MTP devices (see above)
    */
+  // Guessing on this one
+  { "SONY", 0x0fce, "Xperia S (MTP+ADB mode)", 0x4169,
+      DEVICE_FLAG_NO_ZERO_READS | DEVICE_FLAGS_ANDROID_BUGS },
+  // Guessing on this one
+  { "SONY", 0x0fce, "ST21i Xperia Tipo (MTP+MSC mode)", 0x4170,
+      DEVICE_FLAG_NONE },
   // Reported by equaeghe <equaeghe@users.sourceforge.net>
   { "SONY", 0x0fce, "ST25i Xperia U (MTP+MSC mode)", 0x4171,
-      DEVICE_FLAGS_ANDROID_BUGS },
+      DEVICE_FLAG_NONE },
   // Guessing on this one
   { "SONY", 0x0fce, "Xperia P (MTP+MSC mode)", 0x4172,
-      DEVICE_FLAGS_ANDROID_BUGS },
+      DEVICE_FLAG_NONE },
+  // Guessing on this one
+  { "SONY", 0x0fce, "LT26w Xperia Acro S (MTP+MSC mode)", 0x4176,
+      DEVICE_FLAG_NONE },
+
   /*
    * MTP+ADB personalities of MTP devices (see above)
    */
   // Reported by anonymous sourceforge user
   // Suspect Aricent stack, guessing on these bug flags
   { "SonyEricsson", 0x0fce, "LT15i Xperia Arc (MTP+ADB mode)", 0x514f,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by Michael K. <kmike@users.sourceforge.net>
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "MT11i Xperia Neo (MTP+ADB mode)", 0x5156,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
+  // Reported by Jean-François  B. <changi67@users.sourceforge.net>
+  { "SONY", 0x0fce, "Xperia S (MTP+ADB mode)", 0x5169,
+      DEVICE_FLAG_NO_ZERO_READS | DEVICE_FLAGS_ANDROID_BUGS },
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "MK16i Xperia (MTP+ADB mode)", 0x515a,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by Eduard Bloch <blade@debian.org>
   // Xperia Ray (2012), SE Android 2.3.4, flags from ST18a
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "ST18i Xperia Ray (MTP+ADB mode)", 0x5161,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
   // Reported by StehpanKa <stehp@users.sourceforge.net>
   // Android with homebrew MTP stack, possibly Aricent
-  { "SonyEricsson", 0x0fce, "SK17i Xperia mini pro (MTP+ADB mode)", 0x5166,
-      DEVICE_FLAGS_ARICENT_BUGS },
+  // Runtime detect the Aricent or Android stack
+  { "SonyEricsson", 0x0fce, "SK17i Xperia Mini Pro (MTP+ADB mode)", 0x5166,
+      DEVICE_FLAG_NONE },
   // Android with homebrew MTP stack, possibly Aricent
+  // Runtime detect the Aricent or Android stack
   { "SonyEricsson", 0x0fce, "ST15i Xperia Mini (MTP+ADB mode)", 0x5167,
-      DEVICE_FLAGS_ARICENT_BUGS },
+      DEVICE_FLAG_NONE },
+  { "SonyEricsson", 0x0fce, "SK17i Xperia Mini Pro (MTP+? mode)", 0x516d,
+      DEVICE_FLAG_NONE },
+  // Guessing on this one
+  { "SONY", 0x0fce, "ST21i Xperia Tipo (MTP+ADB mode)", 0x5170,
+      DEVICE_FLAG_NONE },
   // Reported by equaeghe <equaeghe@users.sourceforge.net>
-  { "SONY", 0x0fce, "Xperia U ST25i (MTP+ADB mode)", 0x5171,
-      DEVICE_FLAGS_ANDROID_BUGS },
+  { "SONY", 0x0fce, "ST25i Xperia U (MTP+ADB mode)", 0x5171,
+      DEVICE_FLAG_NONE },
+  // Reported by Ondra Lengál
+  { "SONY", 0x0fce, "Xperia P (MTP+ADB mode)", 0x5172,
+      DEVICE_FLAG_NONE },
+  // Reported by Ah Hong <hongster@users.sourceforge.net>
+  { "SONY", 0x0fce, "LT26w Xperia Acro S (MTP+ADB mode)", 0x5176,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "MT27i Xperia Sola (MTP+MSC+? mode)", 0xa173,
+      DEVICE_FLAG_NONE },
   // Reported by Anonymous Sourceforge user
   { "SonyEricsson", 0x0fce,  "j10i (Elm)", 0xd144,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
@@ -1500,6 +1566,9 @@
   { "Motorola", 0x22b8, "DROID2", 0x42a7,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Motorola", 0x22b8, "Xoom 2 Media Edition", 0x4311,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by  B,H,Kissinger <mrkissinger@users.sourceforge.net>
+  { "Motorola", 0x22b8, "XT912/XT928", 0x4362,
       DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Marcus Meissner to libptp2
   { "Motorola", 0x22b8, "IdeaPad K1", 0x4811,
@@ -1534,6 +1603,15 @@
       DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous Sourceforge user
   { "Google Inc (for Asus)", 0x18d1, "TF101 Transformer", 0x4e0f,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Laurent Artaud <laurenta@users.sourceforge.net>
+  { "Google Inc (for Samsung)", 0x18d1, "Nexus S", 0x4e21,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Chris Smith <tcgsmythe@users.sourceforge.net>
+  { "Google Inc (for Asus)", 0x18d1, "Nexus 7 (mode 1)", 0x4e41,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Michael Hess <mhess126@gmail.com>
+  { "Google Inc (for Asus)", 0x18d1, "Nexus 7 (mode 2)", 0x4e42,
       DEVICE_FLAGS_ANDROID_BUGS },
   // WiFi-only version of Xoom
   // See: http://bugzilla.gnome.org/show_bug.cgi?id=647506
@@ -1702,8 +1780,10 @@
    */
   // Reported by anonymous SourceForge user
   { "Huawei", 0x12d1, "Honor U8860", 0x1051, DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by anonymous SourceForge user
+  { "Huawei", 0x12d1, "Mediapad (mode 0)", 0x360f, DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Bearsh <bearsh@users.sourceforge.net>
-  { "Huawei", 0x12d1, "Mediapad", 0x361f, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Huawei", 0x12d1, "Mediapad (mode 1)", 0x361f, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * ZTE
@@ -1715,10 +1795,13 @@
   /*
    * HTC (High Tech Computer Corp)
    */
-  { "HTC", 0x0bb4, "Zopo ZP100", 0x0c02,
+  { "HTC", 0x0bb4, "Zopo ZP100 (ID1)", 0x0c02,
       DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Steven Eastland <grassmonk@users.sourceforge.net>
-  { "HTC", 0x0bb4, "EVO 4G LTE", 0x0ca8,
+  { "HTC", 0x0bb4, "EVO 4G LTE", 0x0c93,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Steven Eastland <grassmonk@users.sourceforge.net>
+  { "HTC", 0x0bb4, "EVO 4G LTE (second ID)", 0x0ca8,
       DEVICE_FLAGS_ANDROID_BUGS },
   // These identify themselves as "cm_tenderloin", fun...
   // Done by HTC for HP I guess.
@@ -1726,6 +1809,9 @@
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Hewlett-Packard", 0x0bb4, "HP Touchpad (debug mode)",
       0x6860, DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by anonymous SourceForge user
+  { "HTC", 0x0bb4, "Zopo ZP100 (ID2)", 0x2008,
+      DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * NEC
@@ -1745,9 +1831,10 @@
   { "Vizio", 0x0489, "VTAB1008", 0xe040, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
-   * Viewpia
+   * Viewpia, bq...
+   * Seems like some multi-branded OEM product.
    */
-  { "Viewpia", 0x2207, "DR", 0x0001, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Various", 0x2207, "Viewpia DR/bq Kepler", 0x0001, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Other strange stuff.
