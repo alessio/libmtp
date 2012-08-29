@@ -5,10 +5,12 @@ Subject: Various additions and updates to the device db.
   - 68f3cb6bcc0a6f24e66377a6f0ab707ff3457bf9
   - e9082f609faa9fe1301a86a52aca6563a1040e70
   - f9b50b4b6e7721c7d77e0f22779276c3a0981ad0
+ Debian BTS:
+  - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683637
 Origin: upstream
 ---
- src/music-players.h |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ src/music-players.h |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
 --- libmtp.orig/src/music-players.h
 +++ libmtp/src/music-players.h
@@ -22,7 +24,17 @@ Origin: upstream
    // Reported by Nigel Cunningham <nigel@tuxonice.net>
    // Guessing on Android bugs
    { "Toshiba", 0x0930, "Thrive AT100/AT105", 0x7100,
-@@ -1472,6 +1475,10 @@
+@@ -1331,6 +1334,9 @@
+   // Reported by Anonymous SourceForge user
+   { "Sony", 0x054c, "DCR-SR75", 0x1294,
+       DEVICE_FLAGS_SONY_NWZ_BUGS },
++  // Reported by Hideki Yamane <henrich@debian.org>
++  { "Sony", 0x054c, "Sony Tablet P1", 0x04d1,
++      DEVICE_FLAGS_ANDROID_BUGS },
+ 
+   /*
+    * SonyEricsson
+@@ -1472,6 +1478,10 @@
    // Reported by equaeghe <equaeghe@users.sourceforge.net>
    { "SONY", 0x0fce, "Xperia U ST25i (MTP+ADB mode)", 0x5171,
        DEVICE_FLAGS_ANDROID_BUGS },
@@ -33,7 +45,7 @@ Origin: upstream
    // Reported by Anonymous Sourceforge user
    { "SonyEricsson", 0x0fce,  "j10i (Elm)", 0xd144,
        DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
-@@ -1501,6 +1508,8 @@
+@@ -1501,6 +1511,8 @@
        DEVICE_FLAGS_ANDROID_BUGS },
    { "Motorola", 0x22b8, "Xoom 2 Media Edition", 0x4311,
        DEVICE_FLAGS_ANDROID_BUGS },
@@ -42,7 +54,7 @@ Origin: upstream
    // Reported by Marcus Meissner to libptp2
    { "Motorola", 0x22b8, "IdeaPad K1", 0x4811,
        DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
-@@ -1535,6 +1544,8 @@
+@@ -1535,6 +1547,8 @@
    // Reported by anonymous Sourceforge user
    { "Google Inc (for Asus)", 0x18d1, "TF101 Transformer", 0x4e0f,
        DEVICE_FLAGS_ANDROID_BUGS },
@@ -51,7 +63,7 @@ Origin: upstream
    // WiFi-only version of Xoom
    // See: http://bugzilla.gnome.org/show_bug.cgi?id=647506
    { "Google Inc (for Motorola)", 0x18d1, "Xoom (MZ604)", 0x70a8,
-@@ -1702,8 +1713,9 @@
+@@ -1702,8 +1716,9 @@
     */
    // Reported by anonymous SourceForge user
    { "Huawei", 0x12d1, "Honor U8860", 0x1051, DEVICE_FLAGS_ANDROID_BUGS },
@@ -62,7 +74,7 @@ Origin: upstream
  
    /*
     * ZTE
-@@ -1718,7 +1730,9 @@
+@@ -1718,7 +1733,9 @@
    { "HTC", 0x0bb4, "Zopo ZP100", 0x0c02,
        DEVICE_FLAGS_ANDROID_BUGS },
    // Reported by Steven Eastland <grassmonk@users.sourceforge.net>
@@ -73,7 +85,7 @@ Origin: upstream
        DEVICE_FLAGS_ANDROID_BUGS },
    // These identify themselves as "cm_tenderloin", fun...
    // Done by HTC for HP I guess.
-@@ -1745,9 +1759,10 @@
+@@ -1745,9 +1762,10 @@
    { "Vizio", 0x0489, "VTAB1008", 0xe040, DEVICE_FLAGS_ANDROID_BUGS },
  
    /*
