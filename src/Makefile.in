@@ -36,9 +36,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@LIBUSB1_COMPILE_TRUE@am__append_1 = libusb1-glue.c
-@LIBUSB0_COMPILE_TRUE@am__append_2 = libusb-glue.c
-@LIBOPENUSB_COMPILE_TRUE@am__append_3 = libopenusb1-glue.c
+@MTPZ_COMPILE_TRUE@am__append_1 = mtpz.c
+@LIBUSB1_COMPILE_TRUE@am__append_2 = libusb1-glue.c
+@LIBUSB0_COMPILE_TRUE@am__append_3 = libusb-glue.c
+@LIBOPENUSB_COMPILE_TRUE@am__append_4 = libopenusb1-glue.c
 subdir = src
 DIST_COMMON = README $(include_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/libmtp.h.in
@@ -87,14 +88,16 @@ am__DEPENDENCIES_1 =
 am__libmtp_la_SOURCES_DIST = libmtp.c unicode.c unicode.h util.c \
 	util.h playlist-spl.c gphoto2-endian.h _stdint.h ptp.c ptp.h \
 	libusb-glue.h music-players.h device-flags.h playlist-spl.h \
-	libusb1-glue.c libusb-glue.c libopenusb1-glue.c
-@LIBUSB1_COMPILE_TRUE@am__objects_1 = libmtp_la-libusb1-glue.lo
-@LIBUSB0_COMPILE_TRUE@am__objects_2 = libmtp_la-libusb-glue.lo
-@LIBOPENUSB_COMPILE_TRUE@am__objects_3 =  \
+	mtpz.h mtpz.c libusb1-glue.c libusb-glue.c libopenusb1-glue.c
+@MTPZ_COMPILE_TRUE@am__objects_1 = libmtp_la-mtpz.lo
+@LIBUSB1_COMPILE_TRUE@am__objects_2 = libmtp_la-libusb1-glue.lo
+@LIBUSB0_COMPILE_TRUE@am__objects_3 = libmtp_la-libusb-glue.lo
+@LIBOPENUSB_COMPILE_TRUE@am__objects_4 =  \
 @LIBOPENUSB_COMPILE_TRUE@	libmtp_la-libopenusb1-glue.lo
 am_libmtp_la_OBJECTS = libmtp_la-libmtp.lo libmtp_la-unicode.lo \
 	libmtp_la-util.lo libmtp_la-playlist-spl.lo libmtp_la-ptp.lo \
-	$(am__objects_1) $(am__objects_2) $(am__objects_3)
+	$(am__objects_1) $(am__objects_2) $(am__objects_3) \
+	$(am__objects_4)
 libmtp_la_OBJECTS = $(am_libmtp_la_OBJECTS)
 libmtp_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libmtp_la_CFLAGS) \
@@ -254,7 +257,8 @@ libmtp_la_CFLAGS = @LIBUSB_CFLAGS@
 libmtp_la_SOURCES = libmtp.c unicode.c unicode.h util.c util.h \
 	playlist-spl.c gphoto2-endian.h _stdint.h ptp.c ptp.h \
 	libusb-glue.h music-players.h device-flags.h playlist-spl.h \
-	$(am__append_1) $(am__append_2) $(am__append_3)
+	mtpz.h $(am__append_1) $(am__append_2) $(am__append_3) \
+	$(am__append_4)
 include_HEADERS = libmtp.h
 EXTRA_DIST = libmtp.h.in libmtp.sym ptp-pack.c
 
@@ -282,7 +286,7 @@ EXTRA_DIST = libmtp.h.in libmtp.sym ptp-pack.c
 # ---------------------------------------------------------------------------
 CURRENT = 9
 AGE = 0
-REVISION = 4
+REVISION = 5
 SOVERSION = $(CURRENT):$(REVISION):$(AGE)
 LT_CURRENT_MINUS_AGE = `expr $(CURRENT) - $(AGE)`
 @COMPILE_MINGW32_TRUE@W32_LIBS = -lws2_32
@@ -372,6 +376,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmtp_la-libopenusb1-glue.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmtp_la-libusb-glue.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmtp_la-libusb1-glue.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmtp_la-mtpz.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmtp_la-playlist-spl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmtp_la-ptp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmtp_la-unicode.Plo@am__quote@
@@ -432,6 +437,13 @@ libmtp_la-ptp.lo: ptp.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ptp.c' object='libmtp_la-ptp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmtp_la_CFLAGS) $(CFLAGS) -c -o libmtp_la-ptp.lo `test -f 'ptp.c' || echo '$(srcdir)/'`ptp.c
+
+libmtp_la-mtpz.lo: mtpz.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmtp_la_CFLAGS) $(CFLAGS) -MT libmtp_la-mtpz.lo -MD -MP -MF $(DEPDIR)/libmtp_la-mtpz.Tpo -c -o libmtp_la-mtpz.lo `test -f 'mtpz.c' || echo '$(srcdir)/'`mtpz.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmtp_la-mtpz.Tpo $(DEPDIR)/libmtp_la-mtpz.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mtpz.c' object='libmtp_la-mtpz.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmtp_la_CFLAGS) $(CFLAGS) -c -o libmtp_la-mtpz.lo `test -f 'mtpz.c' || echo '$(srcdir)/'`mtpz.c
 
 libmtp_la-libusb1-glue.lo: libusb1-glue.c
 @am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmtp_la_CFLAGS) $(CFLAGS) -MT libmtp_la-libusb1-glue.lo -MD -MP -MF $(DEPDIR)/libmtp_la-libusb1-glue.Tpo -c -o libmtp_la-libusb1-glue.lo `test -f 'libusb1-glue.c' || echo '$(srcdir)/'`libusb1-glue.c
