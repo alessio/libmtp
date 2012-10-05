@@ -1,3 +1,10 @@
+libmtp (1.1.5-1) experimental; urgency=low
+
+  * New upstream release (LP: #1050498)
+  * Update symbols file.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 05 Oct 2012 01:10:33 +0100
+
 libmtp (1.1.4-1) experimental; urgency=low
 
   * New upstream bugfix release.
