@@ -32,11 +32,19 @@ mtp-tools.1: debian/mtp-tools.dbk
 	$(XP) $(DB2MAN) $<
 
 %:
-	dh $@ --with autotools_dev
+	dh $@ --with autoreconf
+
+override_dh_autoreconf:
+	cp /usr/share/gnulib/build-aux/config.rpath .
+	dh_autoreconf
+
+override_dh_autoreconf_clean:
+	rm -rf config.rpath
+	dh_autoreconf_clean
 
 override_dh_auto_configure: $(SUBSTFILES) debian/control
 	# Save file modified by configure
-	test -e src/gphoto2-endian.h-orig \
+	( test -e src/gphoto2-endian.h-orig -o ! \( -e src/gphoto2-endian.h \) ) \
 		|| cp src/gphoto2-endian.h src/gphoto2-endian.h-orig
 	dh_auto_configure -- $(DEB_CONFIGURE_EXTRA_FLAGS)
 
