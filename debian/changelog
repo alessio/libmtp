@@ -1,8 +1,24 @@
-libmtp (1.1.5-42-g6e96316-1) UNRELEASED; urgency=low
+libmtp (1.1.5-42-g6e96316-1) experimental; urgency=low
 
-  * New upstream snapshot.
+  * New upstream snapshot:
+    - New devices:
+      + Philips GoGear Ariaz/97
+      + Some Acer's ICONIA tablets.
+      + Some Archos' stuff.
+      + Nokia Lumia 920
+      + Fujitsu's F903iX HIGH-SPEED and STYLISTIC M532.
+      + Sony Tablet P1 (and some more from Sony).
+      + Motorola XT890
+      + Google stuff of course.
+      + Some Asus' Eeepad variants.
+      + Huawei U8815.
+      + ZTE Blade 3.
+      + HTC EVO models and some else.
+      + Amazon Kindles.
+      + Intel Xolo 900.
+      + Various unbranded stuff.
 
- -- Alessio Treglia <alessio@debian.org>  Sat, 02 Feb 2013 17:50:08 +0000
+ -- Alessio Treglia <alessio@debian.org>  Sat, 02 Feb 2013 18:18:40 +0000
 
 libmtp (1.1.5-1) experimental; urgency=low
 
