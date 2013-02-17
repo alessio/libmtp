@@ -1,4 +1,4 @@
-libmtp (1.1.3-35-g0ece104-5 unstable; urgency=low
+libmtp (1.1.3-35-g0ece104-5) unstable; urgency=low
 
   * Add support for Google/LG Nexus 4 phones.
     Thanks to Arno Töll for testing the device. (Closes: #700822)
