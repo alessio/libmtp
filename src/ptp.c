@@ -134,10 +134,10 @@ ptp_error (PTPParams *params, const char *format, ...)
  * Upon success PTPContainer* ptp contains PTP Response Phase container with
  * all fields filled in.
  **/
-static uint16_t
+uint16_t
 ptp_transaction_new (PTPParams* params, PTPContainer* ptp, 
-		uint16_t flags, unsigned int sendlen,
-		PTPDataHandler *handler
+		     uint16_t flags, uint64_t sendlen,
+		     PTPDataHandler *handler
 ) {
 	int 		tries;
 	uint16_t	cmd;
@@ -378,9 +378,9 @@ ptp_exit_fd_handler (PTPDataHandler *handler) {
 }
 
 /* Old style transaction, based on memory */
-static uint16_t
+uint16_t
 ptp_transaction (PTPParams* params, PTPContainer* ptp, 
-		uint16_t flags, unsigned int sendlen,
+		uint16_t flags, uint64_t sendlen,
 		unsigned char **data, unsigned int *recvlen
 ) {
 	PTPDataHandler	handler;
@@ -388,10 +388,12 @@ ptp_transaction (PTPParams* params, PTPContainer* ptp,
 
 	switch (flags & PTP_DP_DATA_MASK) {
 	case PTP_DP_SENDDATA:
-		ptp_init_send_memory_handler (&handler, *data, sendlen);
+		ret = ptp_init_send_memory_handler (&handler, *data, sendlen);
+		if (ret != PTP_RC_OK) return ret;
 		break;
 	case PTP_DP_GETDATA:
-		ptp_init_recv_memory_handler (&handler);
+		ret = ptp_init_recv_memory_handler (&handler);
+		if (ret != PTP_RC_OK) return ret;
 		break;
 	default:break;
 	}
@@ -1047,7 +1049,7 @@ ptp_sendobjectinfo (PTPParams* params, uint32_t* store,
  * ptp_sendobject:
  * params:	PTPParams*
  *		char*	object		- contains the object that is to be sent
- *		uint32_t size		- object size
+ *		uint64_t size		- object size
  *		
  * Sends object to Responder.
  *
@@ -1055,7 +1057,7 @@ ptp_sendobjectinfo (PTPParams* params, uint32_t* store,
  *
  */
 uint16_t
-ptp_sendobject (PTPParams* params, unsigned char* object, uint32_t size)
+ptp_sendobject (PTPParams* params, unsigned char* object, uint64_t size)
 {
 	PTPContainer ptp;
 
@@ -1070,7 +1072,7 @@ ptp_sendobject (PTPParams* params, unsigned char* object, uint32_t size)
  * ptp_sendobject_from_handler:
  * params:	PTPParams*
  *		PTPDataHandler*         - File descriptor to read() object from
- *              uint32_t size           - File/object size
+ *              uint64_t size           - File/object size
  *
  * Sends object from file descriptor by consecutive reads from this
  * descriptor.
@@ -1078,7 +1080,7 @@ ptp_sendobject (PTPParams* params, unsigned char* object, uint32_t size)
  * Return values: Some PTP_RC_* code.
  **/
 uint16_t
-ptp_sendobject_from_handler (PTPParams* params, PTPDataHandler *handler, uint32_t size)
+ptp_sendobject_from_handler (PTPParams* params, PTPDataHandler *handler, uint64_t size)
 {
 	PTPContainer	ptp;
 
@@ -1093,7 +1095,7 @@ ptp_sendobject_from_handler (PTPParams* params, PTPDataHandler *handler, uint32_
  * ptp_sendobject_fromfd:
  * params:	PTPParams*
  *		fd                      - File descriptor to read() object from
- *              uint32_t size           - File/object size
+ *              uint64_t size           - File/object size
  *
  * Sends object from file descriptor by consecutive reads from this
  * descriptor.
@@ -1101,7 +1103,7 @@ ptp_sendobject_from_handler (PTPParams* params, PTPDataHandler *handler, uint32_
  * Return values: Some PTP_RC_* code.
  **/
 uint16_t
-ptp_sendobject_fromfd (PTPParams* params, int fd, uint32_t size)
+ptp_sendobject_fromfd (PTPParams* params, int fd, uint64_t size)
 {
 	PTPContainer	ptp;
 	PTPDataHandler	handler;
@@ -3276,6 +3278,71 @@ ptp_chdk_get_video_settings(PTPParams* params, ptp_chdk_videosettings* vsettings
 }
 
 
+/**
+ * Android MTP Extensions
+ */
+
+/**
+ * ptp_android_getpartialobject64:
+ * params:	PTPParams*
+ *		handle			- Object handle
+ *		offset			- Offset into object
+ *		maxbytes		- Maximum of bytes to read
+ *		object			- pointer to data area
+ *		len			- pointer to returned length
+ *
+ * Get object 'handle' from device and store the data in newly
+ * allocated 'object'. Start from offset and read at most maxbytes.
+ *
+ * This is a 64bit offset version of the standard GetPartialObject.
+ *
+ * Return values: Some PTP_RC_* code.
+ **/
+uint16_t
+ptp_android_getpartialobject64 (PTPParams* params, uint32_t handle, uint64_t offset,
+				uint32_t maxbytes, unsigned char** object,
+				uint32_t *len)
+{
+	PTPContainer ptp;
+
+	PTP_CNT_INIT(ptp);
+	ptp.Code=PTP_OC_ANDROID_GetPartialObject64;
+	ptp.Param1=handle;
+	ptp.Param2=offset & 0xFFFFFFFF;
+	ptp.Param3=offset >> 32;
+	ptp.Param4=maxbytes;
+	ptp.Nparam=4;
+	*len=0;
+	return ptp_transaction(params, &ptp, PTP_DP_GETDATA, 0, object, len);
+}
+
+uint16_t
+ptp_android_sendpartialobject (PTPParams* params, uint32_t handle, uint64_t offset,
+				unsigned char* object,	uint32_t len)
+{
+	uint32_t err;
+	PTPContainer ptp;
+
+	PTP_CNT_INIT(ptp);
+	ptp.Code=PTP_OC_ANDROID_SendPartialObject;
+	ptp.Param1=handle;
+	ptp.Param2=offset & 0xFFFFFFFF;
+	ptp.Param3=offset >> 32;
+	ptp.Param4=len;
+	ptp.Nparam=4;
+
+	/*
+	 * MtpServer.cpp is buggy: it uses write() without offset
+	 * rather than pwrite to send the data for data coming with
+	 * the header packet
+	 */
+	params->split_header_data = 1;
+	err=ptp_transaction(params, &ptp, PTP_DP_SENDDATA, len, &object, NULL);
+	params->split_header_data = 0;
+
+	return err;
+}
+
 
 /* Non PTP protocol functions */
 /* devinfo testing functions */
@@ -3689,6 +3756,14 @@ ptp_get_property_description(PTPParams* params, uint16_t dpc)
 		 N_("Color Space")},
 		{PTP_DPC_NIKON_AutoDXCrop,			/* 0xD033 */
 		 N_("Auto DX Crop")},
+		{PTP_DPC_NIKON_FlickerReduction,		/* 0xD034 */
+		 N_("Flicker Reduction")},
+		{PTP_DPC_NIKON_RemoteMode,			/* 0xD035 */
+		 N_("Remote Mode")},
+		{PTP_DPC_NIKON_VideoMode,			/* 0xD036 */
+		 N_("Video Mode")},
+		{PTP_DPC_NIKON_EffectMode,			/* 0xD037 */
+		 N_("Effect Mode")},
 		{PTP_DPC_NIKON_CSMMenuBankSelect,		/* 0xD040 */
 		 "PTP_DPC_NIKON_CSMMenuBankSelect"},
 		{PTP_DPC_NIKON_MenuBankNameA,			/* 0xD041 */
@@ -3834,6 +3909,8 @@ ptp_get_property_description(PTPParams* params, uint16_t dpc)
 		 N_("AF Area Point")},
 		{PTP_DPC_NIKON_NormalAFOn,			/* 0xD08E */
 		 N_("Normal AF On")},
+		{PTP_DPC_NIKON_CleanImageSensor,		/* 0xD08F */
+		 N_("Clean Image Sensor")},
 		{PTP_DPC_NIKON_ImageCommentString,		/* 0xD090 */
 		 N_("Image Comment String")},
 		{PTP_DPC_NIKON_ImageCommentEnable,		/* 0xD091 */
@@ -3846,6 +3923,14 @@ ptp_get_property_description(PTPParams* params, uint16_t dpc)
 		 N_("Movie Screen Size")},
 		{PTP_DPC_NIKON_MovVoice,			/* 0xD0A1 */
 		 N_("Movie Voice")},
+		{PTP_DPC_NIKON_MovMicrophone,			/* 0xD0A2 */
+		 N_("Movie Microphone")},
+		{PTP_DPC_NIKON_MovFileSlot,			/* 0xD0A3 */
+		 N_("Movie Card Slot")},
+		{PTP_DPC_NIKON_ManualMovieSetting,		/* 0xD0A6 */
+		 N_("Manual Movie Setting")},
+		{PTP_DPC_NIKON_MonitorOffDelay,			/* 0xD0B3 */
+		 N_("Monitor Off Delay")},
 		{PTP_DPC_NIKON_Bracketing,			/* 0xD0C0 */
 		 N_("Bracketing Enable")},
 		{PTP_DPC_NIKON_AutoExposureBracketStep,		/* 0xD0C1 */
@@ -3884,6 +3969,8 @@ ptp_get_property_description(PTPParams* params, uint16_t dpc)
 		 N_("Vignette Control")},
 		{PTP_DPC_NIKON_AutoDistortionControl,		/* 0xD0F8 */
 		 N_("Auto Distortion Control")},
+		{PTP_DPC_NIKON_SceneMode,			/* 0xD0F9 */
+		 N_("Scene Mode")},
 		{PTP_DPC_NIKON_ExposureTime,			/* 0xD100 */
 		 N_("Nikon Exposure Time")},
 		{PTP_DPC_NIKON_ACPower, N_("AC Power")},	/* 0xD101 */
@@ -3993,7 +4080,7 @@ ptp_get_property_description(PTPParams* params, uint16_t dpc)
 		 N_("Flash Commander Mode")},
 		{PTP_DPC_NIKON_FlashSign,			/* 0xD169 */
 		 N_("Flash Sign")},
-		{PTP_DPC_NIKON_ISOAuto,				/* 0xD16A */
+		{PTP_DPC_NIKON_ISO_Auto,			/* 0xD16A */
 		 N_("ISO Auto")},
 		{PTP_DPC_NIKON_RemoteTimeout,			/* 0xD16B */
 		 N_("Remote Timeout")},
@@ -4045,7 +4132,9 @@ ptp_get_property_description(PTPParams* params, uint16_t dpc)
 		 N_("Exposure Display Status")},
 		{PTP_DPC_NIKON_ExposureIndicateStatus,		/* 0xD1B1 */
 		 N_("Exposure Indicate Status")},
-		{PTP_DPC_NIKON_ExposureIndicateLightup,		/* 0xD1B2 */
+		{PTP_DPC_NIKON_InfoDispErrStatus,		/* 0xD1B2 */
+		 N_("Info Display Error Status")},
+		{PTP_DPC_NIKON_ExposureIndicateLightup,		/* 0xD1B3 */
 		 N_("Exposure Indicate Lightup")},
 		{PTP_DPC_NIKON_FlashOpen,			/* 0xD1C0 */
 		 N_("Flash Open")},
@@ -4232,6 +4321,7 @@ ptp_render_property_value(PTPParams* params, uint16_t dpc,
 		{PTP_DPC_NIKON_MaxApAtMaxFocalLength, PTP_VENDOR_NIKON, 0.01, 0.0, "f/%.2g"}, /* D0E6 */
 		{PTP_DPC_NIKON_ExternalFlashCompensation, PTP_VENDOR_NIKON, 1.0/6.0, 0.0,"%.0f"}, /* D124 */
 		{PTP_DPC_NIKON_ExposureIndicateStatus, PTP_VENDOR_NIKON, 0.08333, 0.0, N_("%.1f stops")},/* D1B1 - FIXME: check if correct. */
+		{PTP_DPC_NIKON_AngleLevel, PTP_VENDOR_NIKON, 1.0/65536, 0.0, "%.1f'"},/* 0xD067 */
 		{0, 0, 0.0, 0.0, NULL}
 	};
 
@@ -4441,6 +4531,9 @@ ptp_render_property_value(PTPParams* params, uint16_t dpc,
 		{PTP_DPC_NIKON_FinderISODisp, PTP_VENDOR_NIKON, 1, "Show ISO/Easy ISO"},
 		{PTP_DPC_NIKON_FinderISODisp, PTP_VENDOR_NIKON, 2, "Show frame count"},
 
+		{PTP_DPC_NIKON_RawCompression, PTP_VENDOR_NIKON, 0, N_("Lossless")},	/* D016 */
+		{PTP_DPC_NIKON_RawCompression, PTP_VENDOR_NIKON, 1, N_("Lossy")},
+
 		PTP_VENDOR_VAL_YN(PTP_DPC_NIKON_ACPower,PTP_VENDOR_NIKON),		/* D101 */
 		PTP_VENDOR_VAL_YN(PTP_DPC_NIKON_AFLockStatus,PTP_VENDOR_NIKON),		/* D104 */
 		PTP_VENDOR_VAL_YN(PTP_DPC_NIKON_AELockStatus,PTP_VENDOR_NIKON),		/* D105 */
@@ -4578,6 +4671,22 @@ ptp_render_property_value(PTPParams* params, uint16_t dpc,
 
 		PTP_VENDOR_VAL_YN(PTP_DPC_NIKON_FlashOpen,PTP_VENDOR_NIKON),		/* D1C0 */
 		PTP_VENDOR_VAL_YN(PTP_DPC_NIKON_FlashCharged,PTP_VENDOR_NIKON),		/* D1C1 */
+
+		PTP_VENDOR_VAL_YN(PTP_DPC_NIKON_ManualMovieSetting,PTP_VENDOR_NIKON),	/* 0xD0A6 */
+
+		{PTP_DPC_NIKON_FlickerReduction, PTP_VENDOR_NIKON, 0, "50Hz"},		/* 0xD034 */
+		{PTP_DPC_NIKON_FlickerReduction, PTP_VENDOR_NIKON, 1, "60Hz"},
+
+		{PTP_DPC_NIKON_RemoteMode, PTP_VENDOR_NIKON, 0, N_("Delayed Remote")},	/* 0xD035 */
+		{PTP_DPC_NIKON_RemoteMode, PTP_VENDOR_NIKON, 1, N_("Quick Response")},	/* 0xD035 */
+		{PTP_DPC_NIKON_RemoteMode, PTP_VENDOR_NIKON, 2, N_("Remote Mirror Up")},/* 0xD035 */
+
+		{PTP_DPC_NIKON_MonitorOffDelay, PTP_VENDOR_NIKON, 0, "5min"},	/* 0xD0b3 */
+		{PTP_DPC_NIKON_MonitorOffDelay, PTP_VENDOR_NIKON, 1, "10min"},	/* 0xD0b3 */
+		{PTP_DPC_NIKON_MonitorOffDelay, PTP_VENDOR_NIKON, 2, "15min"},	/* 0xD0b3 */
+		{PTP_DPC_NIKON_MonitorOffDelay, PTP_VENDOR_NIKON, 3, "20min"},	/* 0xD0b3 */
+		{PTP_DPC_NIKON_MonitorOffDelay, PTP_VENDOR_NIKON, 4, "30min"},	/* 0xD0b3 */
+
 
 		/* Canon stuff */
 		PTP_VENDOR_VAL_BOOL(PTP_DPC_CANON_AssistLight,PTP_VENDOR_CANON),
@@ -5070,7 +5179,14 @@ struct {
 	{PTP_OC_MTP_WMDRMND_GetWMDRMNDLicenseResponse,N_("Get WMDRM-ND License Response")},
 
 	/* WiFi Provisioning MTP Extension Codes (microsoft.com/WPDWCN: 1.0) */
-	{PTP_OC_MTP_WPDWCN_ProcessWFCObject,N_("Process WFC Object")}
+	{PTP_OC_MTP_WPDWCN_ProcessWFCObject,N_("Process WFC Object")},
+
+	/* Android Direct I/O Extensions */
+	{PTP_OC_ANDROID_GetPartialObject64,N_("Get Partial Object (64bit Offset)")},
+	{PTP_OC_ANDROID_SendPartialObject,N_("Send Partial Object")},
+	{PTP_OC_ANDROID_TruncateObject,N_("Truncate Object")},
+	{PTP_OC_ANDROID_BeginEditObject,N_("Begin Edit Object")},
+	{PTP_OC_ANDROID_EndEditObject,N_("End Edit Object")},
 };
 
 int
@@ -5508,9 +5624,23 @@ ptp_object_want (PTPParams *params, uint32_t handle, int want, PTPObject **retob
 		/* Second EOS issue, 0x20000000 has 0x20000000 as parent */
 		if (ob->oi.ParentObject == handle)
 			ob->oi.ParentObject = 0;
-		ob->flags |= X;
 
-		/* EOS bug, DCIM links back to itself. */
+		/* Read out the canon special flags */
+		if ((params->deviceinfo.VendorExtensionID == PTP_VENDOR_CANON) &&
+		    ptp_operation_issupported(params,PTP_OC_CANON_GetObjectInfoEx)) {
+			PTPCANONFolderEntry *ents = NULL;
+			uint32_t            numents = 0;
+
+			ret = ptp_canon_getobjectinfo(params,
+				ob->oi.StorageID,0,
+				ob->oi.ParentObject,handle,
+				&ents,&numents
+			);
+			if ((ret == PTP_RC_OK) && (numents >= 1))
+				ob->canon_flags = ents[0].Flags;
+		}
+
+		ob->flags |= X;
 	}
 #undef X
 	if (	(want & PTPOBJECT_MTPPROPLIST_LOADED) &&

@@ -294,6 +294,13 @@
       DEVICE_FLAG_UNIQUE_FILENAMES |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST },
   // The "YP-R2" (0x04e8/0x512d) is NOT MTP, it is UMS only.
+  // Guessing on device flags for the MTP mode...
+ { "Samsung", 0x04e8, "YP-R2", 0x512e,
+     DEVICE_FLAG_UNLOAD_DRIVER |
+     DEVICE_FLAG_OGG_IS_UNKNOWN |
+     DEVICE_FLAG_UNIQUE_FILENAMES |
+     DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
+     DEVICE_FLAG_PLAYLIST_SPL_V1 },
   // From Manuel Carro
   // Copied from Q2
  { "Samsung", 0x04e8, "YP-Q3", 0x5130,
@@ -394,7 +401,9 @@
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
-      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
+      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	|
+      DEVICE_FLAG_OGG_IS_UNKNOWN |
+      DEVICE_FLAG_FLAC_IS_UNKNOWN },
   // Reported by David Goodenough <dfgdga@users.sourceforge.net>
   // Guessing on flags.
   { "Samsung", 0x04e8, "Galaxy Y", 0x685e,
@@ -402,14 +411,18 @@
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
-      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
+      DEVICE_FLAG_PROPLIST_OVERRIDES_OI |
+      DEVICE_FLAG_OGG_IS_UNKNOWN |
+      DEVICE_FLAG_FLAC_IS_UNKNOWN },
   { "Samsung", 0x04e8,
       "Galaxy models (MTP)", 0x6860,
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
-      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
+      DEVICE_FLAG_PROPLIST_OVERRIDES_OI |
+      DEVICE_FLAG_OGG_IS_UNKNOWN |
+      DEVICE_FLAG_FLAC_IS_UNKNOWN },
   // From: Erik Berglund <erikjber@users.sourceforge.net>
   // Logs indicate this needs DEVICE_FLAG_NO_ZERO_READS
   // No Samsung platlists on this device.
@@ -420,7 +433,9 @@
   { "Samsung", 0x04e8, "Galaxy models Kies mode", 0x6877,
       DEVICE_FLAG_UNLOAD_DRIVER |
       DEVICE_FLAG_LONG_TIMEOUT |
-      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	},
+      DEVICE_FLAG_PROPLIST_OVERRIDES_OI	|
+      DEVICE_FLAG_OGG_IS_UNKNOWN |
+      DEVICE_FLAG_FLAC_IS_UNKNOWN },
   // From: John Gorkos <ab0oo@users.sourceforge.net> and
   // Akos Maroy <darkeye@users.sourceforge.net>
   { "Samsung", 0x04e8, "Vibrant SGH-T959/Captivate/Media player mode", 0x68a9,
@@ -440,7 +455,6 @@
    */
   { "Microsoft/Intel", 0x045e, "Bandon Portable Media Center", 0x00c9,
       DEVICE_FLAG_NONE },
-  // Reported by anonymous sourceforge user
   // HTC Mozart is using the PID, as is Nokia Lumia 800
   // May need MTPZ to work
   { "Microsoft", 0x045e, "Windows Phone", 0x04ec, DEVICE_FLAG_NONE },
@@ -451,12 +465,12 @@
   { "Microsoft", 0x045e, "Windows MTP Simulator", 0x0622, DEVICE_FLAG_NONE },
   // Reported by Edward Hutchins (used for Zune HDs)
   { "Microsoft", 0x045e, "Zune HD", 0x063e, DEVICE_FLAG_NONE },
-  // Reported by anonymous sourceforge user
   { "Microsoft", 0x045e, "Kin 1", 0x0640, DEVICE_FLAG_NONE },
-  // Reported by anonymous sourceforge user
   { "Microsoft/Sharp/nVidia", 0x045e, "Kin TwoM", 0x0641, DEVICE_FLAG_NONE },
   // Reported by Farooq Zaman (used for all Zunes)
   { "Microsoft", 0x045e, "Zune", 0x0710, DEVICE_FLAG_NONE },
+  // Reported by Olegs Jeremejevs
+  { "Microsoft/HTC", 0x045e, "HTC 8S", 0xf0ca, DEVICE_FLAG_NONE },
 
   /*
    * JVC
@@ -1097,9 +1111,10 @@
       DEVICE_FLAG_UNLOAD_DRIVER },
   // From: Maxin B. John <maxin.john@gmail.com>
   { "Nokia", 0x0421, "N9", 0x051a, DEVICE_FLAG_NONE },
+  { "Nokia", 0x0421, "C5-00", 0x0592, DEVICE_FLAG_NONE },
   // Reported by Sampo Savola
-  // MTPZ?
-  { "Nokia", 0x0421, "Nokia Lumia 920", 0x0661, DEVICE_FLAG_NONE },
+  // Covers Lumia 920, 820 and probably any WP8 device.
+  { "Nokia", 0x0421, "Nokia Lumia WP8", 0x0661, DEVICE_FLAG_NONE },
   // Reported by Richard Wall <richard@the-moon.net>
   { "Nokia", 0x05c6, "5530 Xpressmusic", 0x0229, DEVICE_FLAG_NONE },
   // Reported by anonymous SourceForge user
@@ -1312,7 +1327,7 @@
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST |
       DEVICE_FLAG_UNLOAD_DRIVER },
   // Reported by Brian J. Murrell
-  { "LG Electronics Inc.", 0x1004, "LG-E610/E617G/P700", 0x631c,
+  { "LG Electronics Inc.", 0x1004, "LG-E610/E612/E617G/E970/P700", 0x631c,
       DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
@@ -1322,69 +1337,69 @@
    * reported to see a pattern here.
    */
   // Reported by Alessandro Radaelli <alessandro.radaelli@aruba.it>
-  { "Sony", 0x054c, "Walkman NWZ-A815/NWZ-A818", 0x0325,
+  { "Sony", 0x054c, "NWZ-A815/NWZ-A818", 0x0325,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by anonymous Sourceforge user.
-  { "Sony", 0x054c, "Walkman NWZ-S516", 0x0326,
+  { "Sony", 0x054c, "NWZ-S516", 0x0326,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Endre Oma <endre.88.oma@gmail.com>
-  { "Sony", 0x054c, "Walkman NWZ-S615F/NWZ-S616F/NWZ-S618F", 0x0327,
+  { "Sony", 0x054c, "NWZ-S615F/NWZ-S616F/NWZ-S618F", 0x0327,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Jean-Marc Bourguet <jm@bourguet.org>
-  { "Sony", 0x054c, "Walkman NWZ-S716F", 0x035a,
+  { "Sony", 0x054c, "NWZ-S716F", 0x035a,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Anon SF User / Anthon van der Neut <avanderneut@avid.com>
-  { "Sony", 0x054c, "Walkman NWZ-A826/NWZ-A828/NWZ-A829", 0x035b,
+  { "Sony", 0x054c, "NWZ-A826/NWZ-A828/NWZ-A829", 0x035b,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Niek Klaverstijn <niekez@users.sourceforge.net>
-  { "Sony", 0x054c, "Walkman NWZ-A726/NWZ-A728/NWZ-A768", 0x035c,
+  { "Sony", 0x054c, "NWZ-A726/NWZ-A728/NWZ-A768", 0x035c,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Mehdi AMINI <mehdi.amini - at - ulp.u-strasbg.fr>
-  { "Sony", 0x054c, "Walkman NWZ-B135", 0x036e,
+  { "Sony", 0x054c, "NWZ-B135", 0x036e,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by <tiagoboldt@users.sourceforge.net>
-  { "Sony", 0x054c, "Walkman NWZ-E436F", 0x0385,
+  { "Sony", 0x054c, "NWZ-E436F", 0x0385,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Michael Wilkinson
-  { "Sony", 0x054c, "Walkman NWZ-W202", 0x0388,
+  { "Sony", 0x054c, "NWZ-W202", 0x0388,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Ondrej Sury <ondrej@sury.org>
-  { "Sony", 0x054c, "Walkman NWZ-S739F", 0x038c,
+  { "Sony", 0x054c, "NWZ-S739F", 0x038c,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Marco Filipe Nunes Soares Abrantes Pereira <marcopereira@ua.pt>
-  { "Sony", 0x054c, "Walkman NWZ-S638F", 0x038e,
+  { "Sony", 0x054c, "NWZ-S638F", 0x038e,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Elliot <orwells@users.sourceforge.net>
-  { "Sony", 0x054c, "Walkman NWZ-X1050B/NWZ-X1060B",
+  { "Sony", 0x054c, "NWZ-X1050B/NWZ-X1060B",
     0x0397, DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Silvio J. Gutierrez <silviogutierrez@users.sourceforge.net>
-  { "Sony", 0x054c, "Walkman NWZ-X1051/NWZ-X1061", 0x0398,
+  { "Sony", 0x054c, "NWZ-X1051/NWZ-X1061", 0x0398,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Gregory Boddin <gregory@siwhine.net>
-  { "Sony", 0x054c, "Walkman NWZ-B142F", 0x03d8,
+  { "Sony", 0x054c, "NWZ-B142F", 0x03d8,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Rick Warner <rick@reptileroom.net>
-  { "Sony", 0x054c, "Walkman NWZ-E344/E345", 0x03fc,
+  { "Sony", 0x054c, "NWZ-E344/E345", 0x03fc,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Jonathan Stowe <gellyfish@users.sourceforge.net>
-  { "Sony", 0x054c, "Walkman NWZ-E445", 0x03fd,
+  { "Sony", 0x054c, "NWZ-E445", 0x03fd,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Anonymous SourceForge user
-  { "Sony", 0x054c, "Walkman NWZ-S545", 0x03fe,
+  { "Sony", 0x054c, "NWZ-S545", 0x03fe,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
-  { "Sony", 0x054c, "Walkman NWZ-A845", 0x0404,
+  { "Sony", 0x054c, "NWZ-A845", 0x0404,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by anonymous SourceForge user
-  { "Sony", 0x054c, "Walkman NWZ-W252B", 0x04bb,
+  { "Sony", 0x054c, "NWZ-W252B", 0x04bb,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Suspect this device has strong DRM features
   // See https://answers.launchpad.net/ubuntu/+source/libmtp/+question/149587
-  { "Sony", 0x054c, "Walkman NWZ-B153F", 0x04be,
+  { "Sony", 0x054c, "NWZ-B153F", 0x04be,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
-  { "Sony", 0x054c, "Walkman NWZ-E354", 0x04cb,
+  { "Sony", 0x054c, "NWZ-E354", 0x04cb,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Toni Burgarello
-  { "Sony", 0x054c, "Walkman NWZ-S754", 0x04cc,
+  { "Sony", 0x054c, "NWZ-S754", 0x04cc,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Hideki Yamane <henrich@debian.org>
   { "Sony", 0x054c, "Sony Tablet P1", 0x04d1,
@@ -1392,9 +1407,7 @@
   // Reported by dmiceman
   { "Sony", 0x054c, "NWZ-B163F", 0x059a,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
-  // Reported by anonymous Sourceforge user
-  // guessing on device flags...
-  { "Sony", 0x054c, "Walkman NWZ-E464", 0x05a6,
+  { "Sony", 0x054c, "NWZ-E464", 0x05a6,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
   // Reported by Jan Rheinlaender <jrheinlaender@users.sourceforge.net>
   { "Sony", 0x054c, "NWZ-S765", 0x05a8,
@@ -1405,7 +1418,8 @@
   // Reported by ghalambaz <ghalambaz@users.sourceforge.net>
   { "Sony", 0x054c, "Sony Tablet S1", 0x05b4,
       DEVICE_FLAGS_ANDROID_BUGS },
-  // Reported by Anonymous SourceForge user
+  { "Sony", 0x054c, "NWZ-B173F", 0x0689,
+      DEVICE_FLAGS_SONY_NWZ_BUGS },
   { "Sony", 0x054c, "DCR-SR75", 0x1294,
       DEVICE_FLAGS_SONY_NWZ_BUGS },
 
@@ -1572,9 +1586,17 @@
       DEVICE_FLAG_NONE },
   { "SONY", 0x0fce, "LT25i Xperia V MTP", 0x0186,
       DEVICE_FLAG_NONE },
-  { "SONY", 0x0fce, "LT25i Xperia J MTP", 0x0188,
+  { "SONY", 0x0fce, "Xperia J MTP", 0x0188,
       DEVICE_FLAG_NONE },
-  { "SONY", 0x0fce, "LT25i Xperia E MTP", 0x018c,
+  { "SONY", 0x0fce, "Xperia ZL MTP", 0x0189,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia E MTP", 0x018c,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Tablet Z MTP", 0x018D,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Z MTP", 0x0193,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Tablet Z MTP", 0x0194,
       DEVICE_FLAG_NONE },
 
   /*
@@ -1610,9 +1632,17 @@
       DEVICE_FLAG_NONE },
   { "SONY", 0x0fce, "LT25i Xperia V MTP+CDROM", 0x4186,
       DEVICE_FLAG_NONE },
-  { "SONY", 0x0fce, "LT25i Xperia J MTP+CDROM", 0x4188,
+  { "SONY", 0x0fce, "Xperia J MTP+CDROM", 0x4188,
       DEVICE_FLAG_NONE },
-  { "SONY", 0x0fce, "LT25i Xperia E MTP+CDROM", 0x418c,
+  { "SONY", 0x0fce, "Xperia ZL MTP", 0x4189,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia E MTP+CDROM", 0x418c,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Tablet Z MTP", 0x418d,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Z MTP", 0x4193,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Tablet Z MTP", 0x4194,
       DEVICE_FLAG_NONE },
 
   /*
@@ -1662,9 +1692,17 @@
       DEVICE_FLAG_NONE },
   { "SONY", 0x0fce, "LT25i Xperia V MTP+ADB", 0x5186,
       DEVICE_FLAG_NONE },
-  { "SONY", 0x0fce, "LT25i Xperia J MTP+ADB", 0x5188,
+  { "SONY", 0x0fce, "Xperia J MTP+ADB", 0x5188,
       DEVICE_FLAG_NONE },
-  { "SONY", 0x0fce, "LT25i Xperia E MTP+ADB", 0x518c,
+  { "SONY", 0x0fce, "Xperia ZL MTP", 0x5189,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia E MTP+ADB", 0x518c,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Tablet Z MTP", 0x518d,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Z MTP", 0x5193,
+      DEVICE_FLAG_NONE },
+  { "SONY", 0x0fce, "Xperia Tablet Z MTP", 0x5194,
       DEVICE_FLAG_NONE },
 
   /*
@@ -1708,8 +1746,9 @@
   { "Motorola", 0x22b8, "V3m/V750 verizon", 0x2a65,
       DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST |
       DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL },
-  // Reported by anonymous sourceforge user
-  { "Motorola", 0x22b8, "Atrix HD (ADB mode)", 0x2e33,
+  { "Motorola", 0x22b8, "Atrix/Razr HD (MTP)", 0x2e32,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "Motorola", 0x22b8, "Atrix/Razr HD (MTP+ADB)", 0x2e33,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Motorola", 0x22b8, "RAZR M (XT907)", 0x2e51,
       DEVICE_FLAGS_ANDROID_BUGS },
@@ -1745,6 +1784,9 @@
   // Reported by anonymous user
   { "Motorola", 0x22b8, "RAZR2 V8/U9/Z6", 0x6415,
       DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST },
+  // Reported by Brian Dolbec <dol-sen@users.sourceforge.net>
+  { "Motorola", 0x22b8, "Atrix MB860 (MTP)", 0x7088,
+      DEVICE_FLAGS_ANDROID_BUGS },
   /*
    * Motorola Xoom (Wingray) variants
    *
@@ -1771,12 +1813,14 @@
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Motorola", 0x22b8, "Xoom (MTP+ADB)", 0x70a9,
       DEVICE_FLAGS_ANDROID_BUGS },
-  // Reported by anonymous Sourceforge user
   // "carried by C Spire and other CDMA US carriers"
   { "Motorola", 0x22b8, "Milestone X2", 0x70ca,
       DEVICE_FLAGS_ANDROID_BUGS },
-  // Reported by anonymous Sourceforge user
-  { "Motorola", 0x22b8, "XT890 (MTP)", 0x710d,
+  { "Motorola", 0x22b8, "XT890/907 (MTP)", 0x710d,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "Motorola", 0x22b8, "XT890/907 (MTP+ADB)", 0x710e,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "Motorola", 0x22b8, "XT890/907 (MTP+?)", 0x710f,
       DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
@@ -1798,9 +1842,7 @@
   // Reported by anonymous Sourceforge user
   { "Google Inc (for Asus)", 0x18d1, "TF101 Transformer", 0x4e0f,
       DEVICE_FLAGS_ANDROID_BUGS },
-  // Reported by Laurent Artaud <laurenta@users.sourceforge.net>
-  { "Google Inc (for Samsung)", 0x18d1, "Nexus S", 0x4e21,
-      DEVICE_FLAGS_ANDROID_BUGS },
+  // 0x4e21 (Nexus S) is a USB Mass Storage device.
   // Reported by Chris Smith <tcgsmythe@users.sourceforge.net>
   { "Google Inc (for Asus)", 0x18d1, "Nexus 7 (MTP)", 0x4e41,
       DEVICE_FLAGS_ANDROID_BUGS },
@@ -1912,9 +1954,16 @@
    */
   { "Coby", 0x1e74, "COBY MP705", 0x6512, DEVICE_FLAG_NONE },
 
+#if 0
   /*
    * Apple devices, which are not MTP natively but can be made to speak MTP
    * using PwnTunes (http://www.pwntunes.net/)
+   * CURRENTLY COMMENTED OUT:
+   * These will make the UDEV rules flag these as MTP devices even if
+   * PwnTunes is NOT installed. That is unacceptable, so a better solution
+   * that actually inspects if the device has PwnTunes/MTP support needs
+   * to be found, see:
+   * https://sourceforge.net/p/libmtp/bugs/759/
    */
   { "Apple", 0x05ac, "iPhone", 0x1290, DEVICE_FLAG_NONE },
   { "Apple", 0x05ac, "iPod Touch 1st Gen", 0x1291, DEVICE_FLAG_NONE },
@@ -1926,6 +1975,7 @@
   { "Apple", 0x05ac, "0x1298", 0x1298, DEVICE_FLAG_NONE },
   { "Apple", 0x05ac, "iPod Touch 3rd Gen", 0x1299, DEVICE_FLAG_NONE },
   { "Apple", 0x05ac, "iPad", 0x129a, DEVICE_FLAG_NONE },
+#endif
 
   // Reported by anonymous SourceForge user, also reported as
   // Pantech Crux, claming to be:
@@ -1957,6 +2007,8 @@
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Asus", 0x0b05, "TF700 Transformer (MTP+ADB)", 0x4c91,
       DEVICE_FLAGS_ANDROID_BUGS },
+  { "Asus", 0x0b05, "MeMo Pad Smart 10", 0x4cd0,
+      DEVICE_FLAGS_ANDROID_BUGS },
   { "Asus", 0x0b05, "TF201 Transformer Prime (keyboard dock)", 0x4d00,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Asus", 0x0b05, "TF201 Transformer Prime (tablet only)", 0x4d01,
@@ -1973,6 +2025,8 @@
   { "Asus", 0x0b05, "PadFone (MTP)", 0x5200,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Asus", 0x0b05, "PadFone (MTP+ADB)", 0x5201,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "Asus", 0x0b05, "PadFone 2 (MTP+?)", 0x5210,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Asus", 0x0b05, "PadFone 2 (MTP)", 0x5211,
       DEVICE_FLAGS_ANDROID_BUGS },
@@ -1995,19 +2049,26 @@
   // Reported by: anonymous sourceforge user
   { "Lenovo", 0x17ef, "Lifetab S9512", 0x74cc,
       DEVICE_FLAGS_ANDROID_BUGS },
+  // Reported by Brian J. Murrell
+  { "Lenovo", 0x17ef, "IdeaTab A2109A", 0x7542,
+      DEVICE_FLAGS_ANDROID_BUGS },
 
 
   /*
    * Huawei
    */
   // Reported by anonymous SourceForge user
-  { "Huawei", 0x12d1, "Honor U8860", 0x1051, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Huawei", 0x12d1, "Honor U8860", 0x1051,
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous SourceForge user
-  { "Huawei", 0x12d1, "U8815", 0x1052, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Huawei", 0x12d1, "U8815/U9200", 0x1052,
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by anonymous SourceForge user
-  { "Huawei", 0x12d1, "Mediapad (mode 0)", 0x360f, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Huawei", 0x12d1, "Mediapad (mode 0)", 0x360f,
+      DEVICE_FLAGS_ANDROID_BUGS },
   // Reported by Bearsh <bearsh@users.sourceforge.net>
-  { "Huawei", 0x12d1, "Mediapad (mode 1)", 0x361f, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Huawei", 0x12d1, "Mediapad (mode 1)", 0x361f,
+      DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * ZTE
@@ -2015,7 +2076,7 @@
    */
   { "ZTE", 0x19d2, "V55 ID 1", 0x0244, DEVICE_FLAGS_ANDROID_BUGS },
   { "ZTE", 0x19d2, "V55 ID 2", 0x0245, DEVICE_FLAGS_ANDROID_BUGS },
-  { "ZTE", 0x19d2, "Blade 3", 0x0306, DEVICE_FLAGS_ANDROID_BUGS },
+  { "ZTE", 0x19d2, "v790/Blade 3", 0x0306, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * HTC (High Tech Computer Corp)
@@ -2036,11 +2097,23 @@
       DEVICE_FLAGS_ANDROID_BUGS },
   { "HTC", 0x0bb4, "EVO 4G LTE/One V (ID2)", 0x0ca8,
       DEVICE_FLAGS_ANDROID_BUGS },
-  { "HTC", 0x0bb4, "HTC One S", 0x0df9,
+  { "HTC", 0x0bb4, "HTC One S (ID1)", 0x0cec,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "HTC", 0x0bb4, "HTC One S (ID2)", 0x0df9,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "HTC", 0x0bb4, "HTC One X (ID1)", 0x0dfb,
       DEVICE_FLAGS_ANDROID_BUGS },
+  { "HTC", 0x0bb4, "HTC One X (ID2)", 0x0dfc,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "HTC", 0x0bb4, "HTC One X (ID3)", 0x0dfd,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "HTC", 0x0bb4, "HTC Butterfly (ID1)", 0x0dfe,
+      DEVICE_FLAGS_ANDROID_BUGS },
   { "HTC", 0x0bb4, "Droid DNA (MTP+UMS+ADB)", 0x0dff,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "HTC", 0x0bb4, "HTC Droid Incredible 4G LTE (MTP)", 0x0e31,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "HTC", 0x0bb4, "HTC Droid Incredible 4G LTE (MTP+ADB)", 0x0e32,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "HTC", 0x0bb4, "Droid DNA (MTP+UMS)", 0x0ebd,
       DEVICE_FLAGS_ANDROID_BUGS },
@@ -2048,10 +2121,10 @@
       DEVICE_FLAGS_ANDROID_BUGS },
   // These identify themselves as "cm_tenderloin", fun...
   // Done by HTC for HP I guess.
-  { "Hewlett-Packard", 0x0bb4, "HP Touchpad", 0x685c,
+  { "Hewlett-Packard", 0x0bb4, "HP Touchpad (MTP)", 0x685c,
       DEVICE_FLAGS_ANDROID_BUGS },
-  { "Hewlett-Packard", 0x0bb4, "HP Touchpad (debug mode)",
-      0x6860, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Hewlett-Packard", 0x0bb4, "HP Touchpad (MTP+ADB)", 0x6860,
+      DEVICE_FLAGS_ANDROID_BUGS },
 #if 0
   { "HTC", 0x0bb4, "Android Device ID2 (Zopo, HD2...)", 0x2008,
       DEVICE_FLAGS_ANDROID_BUGS },
@@ -2066,7 +2139,12 @@
    * nVidia
    */
   // Found on Internet forum
-  { "nVidia", 0x0955, "CM9-Adam", 0x70a9, DEVICE_FLAGS_ANDROID_BUGS },
+  { "nVidia", 0x0955, "CM9-Adam", 0x70a9,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "nVidia", 0x0955, "Nabi2 Tablet (ID1)", 0x7100,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "nVidia", 0x0955, "Nabi2 Tablet (ID2)", 0x7102,
+      DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Vizio
@@ -2077,11 +2155,19 @@
   /*
    * Amazon
    */
+  { "Amazon", 0x1949, "Kindle Fire 2G (ID1)", 0x0005,
+      DEVICE_FLAGS_ANDROID_BUGS },
   { "Amazon", 0x1949, "Kindle Fire (ID1)", 0x0007,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Amazon", 0x1949, "Kindle Fire (ID2)", 0x0008,
       DEVICE_FLAGS_ANDROID_BUGS },
   { "Amazon", 0x1949, "Kindle Fire (ID3)", 0x000a,
+      DEVICE_FLAGS_ANDROID_BUGS },
+
+  /*
+   * Barnes&Noble
+   */
+  { "Barnes&Noble", 0x2080, "Nook HD+", 0x0005,
       DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
@@ -2097,7 +2183,10 @@
    * Kobo
    */
   // Reported by George Talusan
-  { "Kobo", 0x2237, "Arc", 0xd108, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Kobo", 0x2237, "Arc (ID1)", 0xd108,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "Kobo", 0x2237, "Arc (ID2)", 0xd109,
+      DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Hisense
@@ -2107,13 +2196,17 @@
 
   /*
    * Intel
+   * Also sold rebranded as Orange products
    */
-  { "Intel", 0x8087, "Xolo 900", 0x09fb, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Intel", 0x8087, "Xolo 900/AZ210A", 0x09fb, DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Xiaomi
    */
-  { "Xiaomi", 0x2717, "Mi-2", 0x9039, DEVICE_FLAGS_ANDROID_BUGS },
+  { "Xiaomi", 0x2717, "Mi-2 (MTP+ADB)", 0x9039,
+      DEVICE_FLAGS_ANDROID_BUGS },
+  { "Xiaomi", 0x2717, "Mi-2 (MTP)", 0xf003,
+      DEVICE_FLAGS_ANDROID_BUGS },
 
   /*
    * Other strange stuff.
