@@ -1153,6 +1153,9 @@ int LIBMTP_Is_Property_Supported(LIBMTP_mtpdevice_t *device, LIBMTP_property_t c
   int supported = 0;
   uint16_t ptp_prop = map_libmtp_property_to_ptp_property(property);
 
+  if (!ptp_operation_issupported(device->params, PTP_OC_MTP_GetObjectPropsSupported))
+    return 0;
+
   ret = ptp_mtp_getobjectpropssupported(device->params, map_libmtp_type_to_ptp_type(filetype), &propcnt, &props);
   if (ret != PTP_RC_OK) {
     add_ptp_error_to_errorstack(device, ret, "LIBMTP_Is_Property_Supported(): could not get properties supported.");
@@ -1734,6 +1737,10 @@ static void parse_extension_descriptor(LIBMTP_mtpdevice_t *mtpdevice,
   int start = 0;
   int end = 0;
 
+  /* NULL on Canon A70 */
+  if (!desc)
+    return;
+
   /* descriptors are divided by semicolons */
   while (end < strlen(desc)) {
     /* Skip past initial whitespace */
@@ -1769,6 +1776,8 @@ static void parse_extension_descriptor(LIBMTP_mtpdevice_t *mtpdevice,
             char *minorstr = strndup(element + i + 1, strlen(element) - i - 1);
             major = atoi(majorstr);
             minor = atoi(minorstr);
+	    free(majorstr);
+	    free(minorstr);
             extension = malloc(sizeof(LIBMTP_device_extension_t));
             extension->name = name;
             extension->major = major;
@@ -1983,40 +1992,42 @@ LIBMTP_mtpdevice_t *LIBMTP_Open_Raw_Device_Uncached(LIBMTP_raw_device_t *rawdevi
   }
 
   /* Determine if the object size supported is 32 or 64 bit wide */
-  for (i=0;i<current_params->deviceinfo.ImageFormats_len;i++) {
-    PTPObjectPropDesc opd;
+  if (ptp_operation_issupported(current_params,PTP_OC_MTP_GetObjectPropsSupported)) {
+    for (i=0;i<current_params->deviceinfo.ImageFormats_len;i++) {
+      PTPObjectPropDesc opd;
 
-    if (ptp_mtp_getobjectpropdesc(current_params,
-				  PTP_OPC_ObjectSize,
-				  current_params->deviceinfo.ImageFormats[i],
-				  &opd) != PTP_RC_OK) {
-      LIBMTP_ERROR("LIBMTP PANIC: "
-	     "could not inspect object property descriptions!\n");
-    } else {
-      if (opd.DataType == PTP_DTC_UINT32) {
-	if (bs == 0) {
-	  bs = 32;
-	} else if (bs != 32) {
-	  LIBMTP_ERROR("LIBMTP PANIC: "
-		 "different objects support different object sizes!\n");
-	  bs = 0;
-	  break;
-	}
-      } else if (opd.DataType == PTP_DTC_UINT64) {
-	if (bs == 0) {
-	  bs = 64;
-	} else if (bs != 64) {
-	  LIBMTP_ERROR("LIBMTP PANIC: "
-		 "different objects support different object sizes!\n");
-	  bs = 0;
-	  break;
-	}
+      if (ptp_mtp_getobjectpropdesc(current_params,
+                                    PTP_OPC_ObjectSize,
+                                    current_params->deviceinfo.ImageFormats[i],
+                                    &opd) != PTP_RC_OK) {
+        LIBMTP_ERROR("LIBMTP PANIC: "
+                     "could not inspect object property descriptions!\n");
       } else {
-	// Ignore if other size.
-	LIBMTP_ERROR("LIBMTP PANIC: "
-	       "awkward object size data type: %04x\n", opd.DataType);
-	bs = 0;
-	break;
+        if (opd.DataType == PTP_DTC_UINT32) {
+          if (bs == 0) {
+            bs = 32;
+          } else if (bs != 32) {
+            LIBMTP_ERROR("LIBMTP PANIC: "
+                         "different objects support different object sizes!\n");
+            bs = 0;
+            break;
+          }
+        } else if (opd.DataType == PTP_DTC_UINT64) {
+          if (bs == 0) {
+            bs = 64;
+          } else if (bs != 64) {
+            LIBMTP_ERROR("LIBMTP PANIC: "
+                         "different objects support different object sizes!\n");
+            bs = 0;
+            break;
+          }
+        } else {
+          // Ignore if other size.
+          LIBMTP_ERROR("LIBMTP PANIC: "
+                       "awkward object size data type: %04x\n", opd.DataType);
+          bs = 0;
+          break;
+        }
       }
     }
   }
@@ -2171,9 +2182,13 @@ int LIBMTP_Read_Event(LIBMTP_mtpdevice_t *device, LIBMTP_event_t *event, uint32_
       break;
     case PTP_EC_ObjectAdded:
       LIBMTP_INFO("Received event PTP_EC_ObjectAdded in session %u\n", session_id);
+      *event = LIBMTP_EVENT_OBJECT_ADDED;
+      *out1 = param1;
       break;
     case PTP_EC_ObjectRemoved:
       LIBMTP_INFO("Received event PTP_EC_ObjectRemoved in session %u\n", session_id);
+      *event = LIBMTP_EVENT_OBJECT_REMOVED;
+      *out1 = param1;
       break;
     case PTP_EC_StoreAdded:
       LIBMTP_INFO("Received event PTP_EC_StoreAdded in session %u\n", session_id);
@@ -2184,6 +2199,8 @@ int LIBMTP_Read_Event(LIBMTP_mtpdevice_t *device, LIBMTP_event_t *event, uint32_
     case PTP_EC_StoreRemoved:
       LIBMTP_INFO("Received event PTP_EC_StoreRemoved in session %u\n", session_id);
       /* TODO: rescan storages */
+      *event = LIBMTP_EVENT_STORE_REMOVED;
+      *out1 = param1;
       break;
     case PTP_EC_DevicePropChanged:
       LIBMTP_INFO("Received event PTP_EC_DevicePropChanged in session %u\n", session_id);
@@ -2344,6 +2361,7 @@ void LIBMTP_Release_Device(LIBMTP_mtpdevice_t *device)
   iconv_close(params->cd_ucs2_to_locale);
   free(ptp_usb);
   ptp_free_params(params);
+  free(params);
   free_storage_list(device);
   // Free extension list...
   if (device->extensions != NULL) {
@@ -4137,7 +4155,7 @@ static LIBMTP_file_t *obj2file(LIBMTP_mtpdevice_t *device, PTPObject *ob)
 	break;
       }
     }
-  } else {
+  } else if (ptp_operation_issupported(params,PTP_OC_MTP_GetObjectPropsSupported)) {
     uint16_t *props = NULL;
     uint32_t propcnt = 0;
     int ret;
@@ -8818,6 +8836,114 @@ int LIBMTP_Get_Thumbnail(LIBMTP_mtpdevice_t *device, uint32_t const id,
       return 0;
   return -1;
 }
+
+
+int LIBMTP_GetPartialObject(LIBMTP_mtpdevice_t *device, uint32_t const id,
+                            uint64_t offset, uint32_t maxbytes,
+                            unsigned char **data, unsigned int *size)
+{
+  PTPParams *params = (PTPParams *) device->params;
+  uint16_t ret;
+
+  if (!ptp_operation_issupported(params, PTP_OC_ANDROID_GetPartialObject64)) {
+    if  (!ptp_operation_issupported(params, PTP_OC_GetPartialObject)) {
+      add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
+        "LIBMTP_GetPartialObject: PTP_OC_GetPartialObject not supported");
+      return -1;
+    }
+
+    if (offset >> 32 != 0) {
+      add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
+        "LIBMTP_GetPartialObject: PTP_OC_GetPartialObject only supports 32bit offsets");
+      return -1;
+    }
+
+    ret = ptp_getpartialobject(params, id, (uint32_t)offset, maxbytes, data, size);
+  } else {
+    ret = ptp_android_getpartialobject64(params, id, offset, maxbytes, data, size);
+  }
+  if (ret == PTP_RC_OK)
+      return 0;
+  return -1;
+}
+
+
+int LIBMTP_SendPartialObject(LIBMTP_mtpdevice_t *device, uint32_t const id,
+                             uint64_t offset, unsigned char *data, unsigned int size)
+{
+  PTPParams *params = (PTPParams *) device->params;
+  uint16_t ret;
+
+  if (!ptp_operation_issupported(params, PTP_OC_ANDROID_SendPartialObject)) {
+    add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
+      "LIBMTP_SendPartialObject: PTP_OC_ANDROID_SendPartialObject not supported");
+    return -1;
+  }
+
+  ret = ptp_android_sendpartialobject(params, id, offset, data, size);
+  if (ret == PTP_RC_OK)
+      return 0;
+  return -1;
+}
+
+
+int LIBMTP_BeginEditObject(LIBMTP_mtpdevice_t *device, uint32_t const id)
+{
+  PTPParams *params = (PTPParams *) device->params;
+  uint16_t ret;
+
+  if (!ptp_operation_issupported(params, PTP_OC_ANDROID_BeginEditObject)) {
+    add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
+      "LIBMTP_BeginEditObject: PTP_OC_ANDROID_BeginEditObject not supported");
+    return -1;
+  }
+
+  ret = ptp_android_begineditobject(params, id);
+  if (ret == PTP_RC_OK)
+      return 0;
+  return -1;
+}
+
+
+int LIBMTP_EndEditObject(LIBMTP_mtpdevice_t *device, uint32_t const id)
+{
+  PTPParams *params = (PTPParams *) device->params;
+  uint16_t ret;
+
+  if (!ptp_operation_issupported(params, PTP_OC_ANDROID_EndEditObject)) {
+    add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
+      "LIBMTP_EndEditObject: PTP_OC_ANDROID_EndEditObject not supported");
+    return -1;
+  }
+
+  ret = ptp_android_endeditobject(params, id);
+  if (ret == PTP_RC_OK) {
+      // update cached object properties if metadata cache exists
+      update_metadata_cache(device, id);
+      return 0;
+  }
+  return -1;
+}
+
+
+int LIBMTP_TruncateObject(LIBMTP_mtpdevice_t *device, uint32_t const id,
+                          uint64_t offset)
+{
+  PTPParams *params = (PTPParams *) device->params;
+  uint16_t ret;
+
+  if (!ptp_operation_issupported(params, PTP_OC_ANDROID_TruncateObject)) {
+    add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL,
+      "LIBMTP_TruncateObject: PTP_OC_ANDROID_TruncateObject not supported");
+    return -1;
+  }
+
+  ret = ptp_android_truncate(params, id, offset);
+  if (ret == PTP_RC_OK)
+      return 0;
+  return -1;
+}
+
 
 /**
  * This routine updates an album based on the metadata
