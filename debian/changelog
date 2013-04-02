@@ -1,4 +1,4 @@
-libmtp (1.1.6-1) UNRELEASED; urgency=low
+libmtp (1.1.6-1) experimental; urgency=low
 
   * New upstream release:
     - Soname libmtp.so.9.1.0 - binary compatible.
@@ -15,6 +15,7 @@ libmtp (1.1.6-1) UNRELEASED; urgency=low
     - Did you know that Microsoft silently dropped the MTPZ extension
       from Windows Phone 8? Now you know. Newer Windows Phone
       devices are reported to work out-of-the-box with libmtp.
+  * Refresh symbols.
   * debian/{control,rules}:
     - Switch back from dh-autoreconf to autotools-dev.
   * Use Vcs canonical field.
