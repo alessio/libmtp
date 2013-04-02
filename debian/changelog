@@ -1,3 +1,28 @@
+libmtp (1.1.6-1) UNRELEASED; urgency=low
+
+  * New upstream release:
+    - Soname libmtp.so.9.1.0 - binary compatible.
+    - Devices, devices, devices...
+    - More careful autoprobing code for Linux, running around in
+      sysfs to try to avoid opening non-MTP devices.
+    - Interface extenstions from Philip Langdale to support the
+      Android in-place read/write extensions. This will be used by
+      GVFS for editing files etc, it is actually very useful when
+      treating the MTP device as a "real" filesystem. It only works
+      on Android devices with Google's MTP stack.
+    - Several fixes and memory leaks fixed by Lei Zhang courtesy if
+      the Chromebook project, thanks Google!
+    - Did you know that Microsoft silently dropped the MTPZ extension
+      from Windows Phone 8? Now you know. Newer Windows Phone
+      devices are reported to work out-of-the-box with libmtp.
+  * debian/{control,rules}:
+    - Switch back from dh-autoreconf to autotools-dev.
+  * Use Vcs canonical field.
+  * Bump Standards.
+  * Refresh debian/control.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 02 Apr 2013 13:06:20 +0100
+
 libmtp (1.1.5-42-g6e96316-1) experimental; urgency=low
 
   * New upstream snapshot:
