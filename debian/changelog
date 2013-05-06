@@ -1,3 +1,9 @@
+libmtp (1.1.6-2) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 06 May 2013 10:56:18 +0200
+
 libmtp (1.1.6-1) experimental; urgency=low
 
   * New upstream release:
