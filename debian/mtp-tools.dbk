@@ -93,6 +93,9 @@ and docbook-xsl in your Build-Depends control field.
       <command>mtp-files</command>
     </cmdsynopsis>
     <cmdsynopsis>
+      <command>mtp-filetree</command>
+    </cmdsynopsis>
+    <cmdsynopsis>
       <command>mtp-folders</command>
     </cmdsynopsis>
     <cmdsynopsis>

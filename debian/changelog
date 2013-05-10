@@ -1,39 +1,489 @@
-libmtp (1.0.3-1+squeeze2) stable; urgency=low
+libmtp (1.1.3-35-g0ece104-5) unstable; urgency=low
 
-  * Support new devices:
-    - Apple iPhone, iPhone 3G, iPhone 3GS, iPod Touch (1st, 2nd and 3rd
-      generations), iPad.
-    - COBY MP705
-    - Conceptronic CMTD2
-    - Cowon iAudio J3, iAudio X7, iAudio C2, iAudio 10
-    - Curitel Communications Verizon Wireless Device
-    - Medion MD99000 (P9514)/Olivetti Olipad 110
-    - Motorola Droid X/MB525 (Defy)
-    - NEC FOMA N01A
-    - Nextar MA715A-8R
-    - Nokia 5800 XpressMusic (new, previously unknown, ID) N79, E52, 2710,
-      5230, N7 (a couple of IDs), N8 (a couple of IDs), N9, C7 (a couple of
-      IDs), N950
-    - Pantech Crux
-    - SonyEricsson U5, U8i, j10i (Elm), j10i2 (Elm), j108i (Cedar), LT15i
-      (Xperia arc S), Xperia Neo, Xperia MK16i, ST18a Xperia Ray ST18i Xperia
-      Ray, ST15i Xperia Mini, Xperia Arc LT15i
-    - SonyEricsson K550i
-    - Wyplay Wyplayer
-  * Fix device flags:
-    - Set DEVICE_FLAG_BROKEN_BATTERY_LEVEL for Nokia 5200
-    - Set DEVICE_FLAG_{FLAC,OGG}_IS_UNKNOWN for a number of Cowon players to
-      make them properly recognize OGG/FLAC files.
-    - Set DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST for LG Electronics KM900,
-      LG8575, V909 G-Slate.
+  * Add support for Google/LG Nexus 4 phones.
+    Thanks to Arno Töll for testing the device. (Closes: #700822)
 
- -- Alessio Treglia <quadrispro@ubuntu.com>  Sat, 16 Jun 2012 19:31:34 +0200
+ -- Alessio Treglia <alessio@debian.org>  Sun, 17 Feb 2013 22:37:28 +0000
 
-libmtp (1.0.3-1+squeeze1) stable; urgency=low
+libmtp (1.1.3-35-g0ece104-4) unstable; urgency=low
 
-  * Add support for Motorola Xoom devices (Closes: #650152).
+  * Blacklist Canon EOS 3D for now as it leads to a SIGSEGV in
+    libc. (Closes: #687004)
 
- -- Alessio Treglia <quadrispro@ubuntu.com>  Thu, 12 Jan 2012 22:28:24 +0100
+ -- Alessio Treglia <alessio@debian.org>  Sun, 30 Sep 2012 17:32:59 +0100
+
+libmtp (1.1.3-35-g0ece104-3) unstable; urgency=low
+
+  * Add Sony Tablet P1 support. (Closes: #683637)
+    Thanks to Hideki Yamane for the patch.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 30 Aug 2012 00:32:57 +0200
+
+libmtp (1.1.3-35-g0ece104-2) unstable; urgency=low
+
+  * Device db updates picked from upstream git:
+    - New devices:
+      + Google Inc (for Samsung) Nexus S
+      + Huawei Mediapad (second ID)
+      + HTC EVO 4G LTE (second ID)
+      + Motorola XT912
+      + Sony Xperia P (another ID)
+      + Sony Xperia Sola MT27i
+      + Toshiba Excite AT300
+    - Fix device 2207:0001, it seems multi-branded OEM product.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 18 Jul 2012 11:04:36 +0200
+
+libmtp (1.1.3-35-g0ece104-1) unstable; urgency=low
+
+  * Imported Upstream version 1.1.3-35-g0ece104:
+    - Some new players:
+      + SonyEricsson SK17i Xperia mini pro
+      + SONY Xperia U ST25i
+      + Viewpia DR
+      + Archos 101 G9 (v2)
+      + Asus TF300 Transformer
+      + Asus TF101 Eeepad Slider
+      + HTC Zopo ZP100
+      + HTC EVO 4G LTE
+      + Medion Lifetab P9514
+    - Fix typo in libmtp.h, VCARD v2 and v3 now properly detected.
+    - Blacklist Atmel JTAG programmers.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 29 Jun 2012 08:40:07 +0200
+
+libmtp (1.1.3-24-g9aca343-3) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 21 Jun 2012 10:44:53 +0200
+
+libmtp (1.1.3-24-g9aca343-2) experimental; urgency=low
+
+  * Add MTPz support.
+    - Build-depend on libgcrypt11-dev.
+
+ -- Alessio Treglia <alessio@debian.org>  Sun, 17 Jun 2012 11:41:00 +0200
+
+libmtp (1.1.3-24-g9aca343-1) experimental; urgency=low
+
+  * New upstream snapshot 1.1.3-24-g9aca343.
+  * Replace dh-autotools_dev with dh-autoreconf.
+    - Build-Depends on dh-autoreconf, gnulib.
+    - Install config.rpath by hand.
+  * Drop {1001-kfreebsd_hurd_ftbfs,1002-fix_libusb_checks}.patch,
+    applied upstream.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 16 Jun 2012 10:39:41 +0200
+
+libmtp (1.1.3-5) unstable; urgency=low
+
+  * Add MTPz support to provide support for Zune devices:
+    - Build-depend on libgcrypt11-dev.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 16 Jun 2012 10:54:29 +0200
+
+libmtp (1.1.3-4) unstable; urgency=low
+
+  * debian/rules:
+    - Save origin files _before_ running configure.
+    - Fix target deps, regenerate files before configuring the package.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 16 Jun 2012 09:20:22 +0200
+
+libmtp (1.1.3-3) unstable; urgency=low
+
+  * Switch to debhelper 9, this means:
+    - I won't have to deal with CDBS anymore.
+    - Introduce Multi-Arch support:
+      + Some changes to debian/libmtp{,-dev}.install* were needed.
+    - Hardening is now enabled by default.
+  * Don't build static objects anymore.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 15 Jun 2012 12:57:37 +0200
+
+libmtp (1.1.3-2) unstable; urgency=low
+
+  * Install apport files on Debian systems too.
+  * Add patch to fix FTBFS on kfreebsd.
+    Thanks to Robert Millan for the patch. (Closes: #667081)
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 20 Apr 2012 09:35:36 +0200
+
+libmtp (1.1.3-1) unstable; urgency=low
+
+  * New upstream bugfix release:
+    - Soname libmtp.so.9.0.3 - binary compatible.
+    - Probably nailed the bugs in the Samsung Galaxy Tab S2 family
+      of devices. Ignacio Martinez helped us fixing this!
+    - Build fixes by Alessio Treglia and others.
+    - A horde of new devices in the database.
+  * Remove patches applied upstream:
+    - 0001-broken_object_info.patch
+    - 0002-devicedb_updates.patch
+    - 2001-pkgconfig_requires.patch
+  * Refresh 1001-kfreebsd_hurd_ftbfs.patch.
+  * Refresh symbols file.
+  * Update debian/copyright.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 03 Apr 2012 08:45:30 +0200
+
+libmtp (1.1.2-4) unstable; urgency=low
+
+  * libmtp requires either libusb or libusb-1.0 to build, but libmtp.pc
+    does not update the Requires field accordingly. (Closes: #666713)
+  * Build depend on auto{conf,make,tools-dev}.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Sun, 01 Apr 2012 12:13:02 +0200
+
+libmtp (1.1.2-3) unstable; urgency=low
+
+  * Port libmtp-dev to Architecture: any.
+  * Set libmtp-dev depends on libusb-1.0-0-dev on Linux and on libusb-dev
+    on non-linux. Thanks to Aaron for the report! (Closes: #665272)
+  * 0001-broken_object_info.patch (taken from upstream git):
+    - src/device-flags.h: New DEVICE_FLAG_BROKEN_GET_OBJECT_INFO,
+      some devices return bad data on GetObjectInfo.
+    - src/ptp.c: Properly handle bad data returned by GetObjectInfo.
+  * Several updates to the devices DB (taken from upstream git):
+    - Attempt to fix issues with SonyEricsson LT15i (LP: #902962)
+    - New devices:
+      + Transformer Prime (an unknown version)
+      + HP Touchpad
+      + Another Acer Iconia Tab
+      + Nook Color
+      + Sony Tablet S1
+      + Sony NWZ-B163F
+      + Sony ST15i Xperia Mini
+      + Toshiba Thrive
+      + NEC FOMA N01A
+      + Some Archos devices
+    - Consolidate bug flags for many devices.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 31 Mar 2012 11:12:37 +0200
+
+libmtp (1.1.2-2) unstable; urgency=low
+
+  * Use libusb-dev instead of libusb-1.0-0-dev on non-linux archs.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 13 Jan 2012 17:41:10 +0100
+
+libmtp (1.1.2-1) unstable; urgency=low
+
+  * New upstream release:
+    - Rewritten to use libusb 1.0 if available.
+    - Autodetect "sony.net" NWZ devices and add proper device flags
+      automatically.
+    - A horde of new devices in the database.
+  * debian/control:
+    - Move to libusb-1.0.
+    - Add pkg-config to Build-Depends.
+  * Refresh debian/patches/1001-kfreebsd_hurd_ftbfs.patch.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 13 Jan 2012 14:14:38 +0100
+
+libmtp (1.1.1-1) unstable; urgency=low
+
+  * New upstream bugfix release:
+    - Insert more carefulness into the udev script so
+      we avoid probing any color adjustment devices.
+      These don't even like it when we open them to
+      check their props.
+    - udev rule prio for probe command set to come after
+      most other devices including SANE, so now we use
+      level 69 (Closes: #647234).
+    - A horde of new devices in the database.
+  * Remove debian/patches/0001-new_devices.patch.
+  * Remove debian/patches/2001-new_devices_from_upstream_git.patch
+  * Update debian/patches/1001-kfreebsd_hurd_ftbfs.patch
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 08 Nov 2011 21:47:48 +0100
+
+libmtp (1.1.0-4) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 16 Aug 2011 10:49:41 +0200
+
+libmtp (1.1.0-3) experimental; urgency=low
+
+  * Patches taken from upstream's git:
+    - Add another Xoom variant.
+    - Add new GoGear device.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 09 Aug 2011 14:38:54 +0200
+
+libmtp (1.1.0-2) experimental; urgency=low
+
+  [ Alessio Treglia ]
+  * debian/copyright:
+    - Credits to Sense Hofstede for the apport script.
+    - Fix formatting to comply with DEP-5 svn r174.
+  * debian/patches/0001-new_devices.patch
+    - New device: Google Xoom 18d1:70a8 (LP: #793064)
+
+  [ Loïc Minier ]
+  * Let libmtpN replace libmtp8; LP: #802441
+  * Move apport hook to libmtp-common. Shipping the apport hook in
+    libmtp-common instead of libmtpN avoids the need for Replaces in
+    the future; thanks Michael Vogt.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 28 Jun 2011 09:42:56 +0200
+
+libmtp (1.1.0-1) experimental; urgency=low
+
+  * New upstream release:
+    - Soname libmtp.so.9.0.0 - new ABI:
+      + New state fields are added in an exposed public struct. Programs need
+        to be recompiled and relinked against the new libmtp but then they
+        should work.
+    - New interfaces:
+      + LIBMTP_Open_Raw_Device_Uncached()
+      + LIBMTP_Get_Files_And_Folders()
+    - Tentative event interface: LIBMTP_Read_Event
+      + Support for some basic device event. It should be polled by a separate
+        thread in clients, and we expect to handle most events internally in
+        libmtp (such as updating the data cache when objects are added or
+        removed) but this thread is required to drive it.
+    - Even more careful device probe code in the mtp-probe executable. Some
+      distros reported problems with some rouge devices with custom interfaces
+      going into endless probe loops. This should now be fixed: we're making
+      sure we have exactly the right kind of endpoints before probing.
+    - udev rule prio for probe command set to match what comes with stock udev.
+    - Probing for IAD (Interface Association Descriptors).
+    - A horde of new devices in the database.
+  * Delete 0001-new_devices.patch, applied upstream.
+  * Refresh 1001-kfreebsd_hurd_ftbfs.patch
+  * debian/{control,rules}: Bump SOVERSION to 9.
+  * Move libmtp8.symbols to libmtp9.symbols.
+  * Update symbols file.
+  * udev rules file has been renamed: 45-libmtp.rules -> 39-libmtp.rules.
+  * debian/control:
+    - Drop ancient udev << 0.136-1 from the libmtp9's Breaks field.
+    - libmtp{9,-runtime} depend on libmtp-common.
+    - Relax mtp-tools' dependency on libmtp@SONAME@.
+  * Update mtp-tools' manpage to document the new mtp-filetree utility.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 20 Jun 2011 10:48:47 +0200
+
+libmtp (1.0.6-7) unstable; urgency=low
+
+  * Move udev,hal files into new 'libmtp-common' package.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 18 Jun 2011 12:13:54 +0200
+
+libmtp (1.0.6-6) unstable; urgency=low
+
+  * Demote libmtp-runtime to Recommends (Closes: #625976).
+
+ -- Alessio Treglia <alessio@debian.org>  Sun, 08 May 2011 09:59:09 +0200
+
+libmtp (1.0.6-5) unstable; urgency=low
+
+  [ Alessio Treglia ]
+  * Promote libmtp-runtime as dependency (for linux-any archs).
+  * Drop hardcoded {mv,rm}_conffile in favor of dpkg-maintscript-helper.
+    - Add a Pre-Depends: dpkg (>= 1.15.7.2) to libmtp8;
+      this could be removed once Ubuntu Lucid reached EOL.
+  * debian/libmtp.preinst.in
+    - Remove "PART A" since 0.3.7-3 is obsolete for both Debian and Ubuntu.
+      + Debian Squeeze provides libmtp 1.0.3-1
+      + Ubuntu Lucid provides libmtp higher than 1.0.2-1.
+  * Re-generate debian/control.
+
+  [ Pino Toscano ]
+  * Remove udev files only in libmbtp$(SOVERSION).install files;
+    Closes: #625628
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 06 May 2011 00:46:02 +0200
+
+libmtp (1.0.6-4) unstable; urgency=low
+
+  [ Pino Toscano ]
+  * 1001-kfreebsd_ftbfs.patch: rename to 1001-kfreebsd_hurd_ftbfs.patch,
+    and add Hurd.
+  * More non-Linux fixes, especially for Hurd: (Closes: #624640)
+    - Handle and install the udev .rules file and mtp-probe only on Linux
+      architectures.
+    - Install the HAL .fdi file (part of the UDEVFILES) on any architecture.
+
+  [ Alessio Treglia ]
+  * debian/copyright:
+    - Update to DEP-5 rev.174.
+    - Group copyright information by licensing.
+  * Move mtp-probe into a new libmtp-runtime package to keep the opportunity
+    to co-install libmtp8 with future libmtpN packages:
+    - Add libmtp-runtime [linux-any] to libmtp8's Recommends field.
+    - Add libmtp-runtime [linux-any] to libmtp-dbg's Depends field.
+  * Add Enhances: libmtp8 to mtp-tools package's stanza.
+  * Re-generate debian/control.
+  * Update quilt's series file.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 02 May 2011 20:44:55 +0200
+
+libmtp (1.0.6-3) unstable; urgency=low
+
+  * Install mtp-probe (Closes: #624537).
+  * Attempt to fix FTBFS on hurd.
+  * Bump Standards-Version.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 29 Apr 2011 18:24:05 +0200
+
+libmtp (1.0.6-2) unstable; urgency=low
+
+  * Add support for new devices:
+    - Motorola Xoom (two models).
+    - Samsung YP-Q3.
+    - Nokia E7 (LP: #738185).
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 19 Mar 2011 14:03:16 +0100
+
+libmtp (1.0.6-1) unstable; urgency=low
+
+  * New upstream release:
+    - Fix probe code, hopefully MTP devices are now properly detected.
+    - Fix an older iconv.m4 and other stuff needed for Solaris builds.
+    - Some new devices and minor bug fixes.
+  * Refresh patches.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 15 Feb 2011 20:45:39 +0100
+
+libmtp (1.0.5-2) unstable; urgency=low
+
+  * 1002-udev_rules.patch:
+    - Adapt upstream udev rules file to Debian standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 10 Feb 2011 19:19:27 +0100
+
+libmtp (1.0.5-1) unstable; urgency=low
+
+  * Upload to unstable.
+  * New upstream release:
+    - soname libmtp.so.8.3.5
+    - several fixes from Denis Dupeyron to ease work for maintainers:
+      + ./configure --enable-doxygen: make Doxygen doc generation optional.
+      + ./configure --with-udev=DIR: select a dir for udev.
+      + ./configure --with-udev-rules=NAME: select name of udev rules file.
+    - several mtp-probe fixes for udev use, now we only probe:
+      + Devices that are of known classes to conatin MTP extensions:
+        COMM, PTP, CUSTOM and per-interface.
+      + Unless the device is CUSTOM, it needs to contain atleast one
+        CUSTOM interface.
+      + Clear halt on EP 0 after probe if it fails with error.
+      + Stop accepting *all* PTP devices as MTP, this is confusing.
+    - Minor fixes and new devices.
+  * Don't build,install static libraries.
+  * Pass --enable-doxygen to the configure script.
+  * Refresh patches.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 10 Feb 2011 10:43:52 +0100
+
+libmtp (1.0.4-2) experimental; urgency=low
+
+  * Add patch to prevent FTBFS on kfreebsd architectures.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 15 Jan 2011 14:09:41 +0100
+
+libmtp (1.0.4-1) experimental; urgency=low
+
+  * New upstream release.
+  * Update debian/gbp.conf
+  * Drop all patches, applied upstream.
+  * Update symbols file
+  * Pass -Wl,--as-needed to the linker.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 15 Jan 2011 11:20:54 +0100
+
+libmtp (1.0.3-6) experimental; urgency=low
+
+  * New devices:
+    - Nokia 2710 0421:02c1.
+    - Nokia 5230 0421:02e2.
+    - SanDisk Sansa Fuze+ 0781:74e0
+    - Sony Walkman NWZ-B153F 054c:04be
+    - Sony Walkman NWZ-E354 054c:04cb
+  * Take patch from upstream trunk:
+    - examples/hotplug.c: Set ENV{ID_MEDIA_PLAYER}="1" to allow userspace
+      programs to retrieve information about plugged-in device via udev.
+      Thanks to Martin Pitt for reporting this.
+  * Refresh remaining patches.
+  * Set libmtp-dev Architecture to 'all', regenerate debian/control.
+  * Remove static libraries from the -DEV binary.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 27 Nov 2010 09:50:44 +0100
+
+libmtp (1.0.3-5) experimental; urgency=low
+
+  * New device: iRiver T5 4102:1153
+  * Update symbols.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 05 Nov 2010 11:12:22 +0100
+
+libmtp (1.0.3-4) experimental; urgency=low
+
+  * New device: Wyplay Wyplayer 1e53:0007.
+  * Refresh patches.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 03 Sep 2010 19:18:19 +0200
+
+libmtp (1.0.3-3) experimental; urgency=low
+
+  * Rename, refresh and re-organize patches.
+  * debian/patches/01-devices_small_fixes.patch:
+    - Fix Blackberry's name.
+    - Fix Sony DCR-SR75 device ID.
+    - Add flag to mark Samsung M7600 Beat/GT-S8300T as unable to read
+      the battery status.
+    - Add DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST flag to LG KM900.
+  * New devices now supported:
+    - Apple iPhone 05ac:0x1290
+    - Apple iPod Touch 1st Gen 05ac:1291
+    - Apple iPhone 3G 05ac:0x1292
+    - Apple iPod Touch 2nd Gen 05ac:0x1293
+    - Apple iPhone 3GS 05ac:0x1294
+    - Apple 05ac:1296
+    - Apple 05ac:1297
+    - Apple 05ac:1298
+    - Apple iPod Touch 3rd Gen 05ac:0x1299
+    - Apple iPad 05ac:129a
+    - SonyEricsson U5 0fce:0133
+    - Samsung Galaxy S GT-I9000 04e8:6877
+    - Samsung Vibrant SGH-T959 04e8:68a9
+    - COBY MP705 1e74:6512
+    - Cowon iAudio J3 0e21:0921
+    - Motorola Droid X 22b8:41d6
+  * debian/patches/03-ogg_flags.patch:
+    - Set proper Ogg flags on some Cowon and Samsung devices.
+  * debian/patches/04-autoremove_oggflac_unkn_flags.patch:
+    - If the Ogg or FLAC filetypes have been flagged as being stored as
+      unknown and the device now indicates it supports them then remove
+      the flag.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 02 Sep 2010 21:58:25 +0200
+
+libmtp (1.0.3-2) experimental; urgency=low
+
+  * Install apport package hooks only if system is Ubuntu.
+  * Build-Depends on lsb-release.
+  * Remove unnecessary DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL for
+    device Creative ZEN 041E:4157 (Closes: #520961).
+  * Add device entry for the device ID 041E:4133 Creative ZEN MicroPhoto;
+    Closes: #594560; LP: #537386
+  * mtp-connect should not return exit status 0 regardless if the
+    connect was successful; Closes: #594565, LP: #620814
+  * Update series file.
+  * Purge ancient /etc/udev/rules.d/65-libmtp.rules conffile; LP: #506791.
+  * Remove broken link /etc/udev/rules.d/libmtp7.rules, libmtp7
+    leftover.
+  * debian/control{,.in}:
+    - Change my email address.
+    - Bump Standards.
+    - Remove DM-Upload-Allowed: yes.
+  * Add debian/gbp.conf file.
+  * Add .gitignore file.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 27 Aug 2010 14:21:06 +0200
 
 libmtp (1.0.3-1) unstable; urgency=low
 
