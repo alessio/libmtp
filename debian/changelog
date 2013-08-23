@@ -1,3 +1,13 @@
+libmtp (1.1.6-20-g1b9f164-1) unstable; urgency=low
+
+  * New upstream release.
+    - Tons of new devices.
+  * Make sure things work with sources retrieved from git.
+  * Regenerate debian/control.
+  * Update debian/copyright.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 23 Aug 2013 09:22:07 +0100
+
 libmtp (1.1.6-2) unstable; urgency=low
 
   * Upload to unstable.
