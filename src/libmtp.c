@@ -3919,6 +3919,45 @@ int LIBMTP_Get_Supported_Filetypes(LIBMTP_mtpdevice_t *device, uint16_t ** const
 }
 
 /**
+ * This function checks if the device has some specific capabilities, in
+ * order to avoid calling APIs that may disturb the device.
+ *
+ * @param device a pointer to the device to check the capability on.
+ * @param cap the capability to check.
+ * @return 0 if not supported, any other value means the device has the
+ * requested capability.
+ */
+int LIBMTP_Check_Capability(LIBMTP_mtpdevice_t *device, LIBMTP_devicecap_t cap)
+{
+  switch (cap) {
+  case LIBMTP_DEVICECAP_GetPartialObject:
+    return (ptp_operation_issupported(device->params,
+				      PTP_OC_GetPartialObject) ||
+	    ptp_operation_issupported(device->params,
+				      PTP_OC_ANDROID_GetPartialObject64));
+  case LIBMTP_DEVICECAP_SendPartialObject:
+    return ptp_operation_issupported(device->params,
+				     PTP_OC_ANDROID_SendPartialObject);
+  case LIBMTP_DEVICECAP_EditObjects:
+    return (ptp_operation_issupported(device->params,
+				      PTP_OC_ANDROID_TruncateObject) &&
+	    ptp_operation_issupported(device->params,
+				      PTP_OC_ANDROID_BeginEditObject) &&
+	    ptp_operation_issupported(device->params,
+				      PTP_OC_ANDROID_EndEditObject));
+  /*
+   * Handle other capabilities here, this is also a good place to
+   * blacklist some advanced operations on specific devices if need
+   * be.
+   */
+
+  default:
+    break;
+  }
+  return 0;
+}
+
+/**
  * This function updates all the storage id's of a device and their
  * properties, then creates a linked list and puts the list head into
  * the device struct. It also optionally sorts this list. If you want
@@ -6191,8 +6230,12 @@ static int send_file_object_info(LIBMTP_mtpdevice_t *device, LIBMTP_file_t *file
     if (FLAG_ONLY_7BIT_FILENAMES(ptp_usb)) {
       strip_7bit_from_utf8(new_file.Filename);
     }
-    // We lose precision here.
-    new_file.ObjectCompressedSize = (uint32_t) filedata->filesize;
+    if (filedata->filesize > 0xFFFFFFFFL) {
+      // This is a kludge in the MTP standard for large files.
+      new_file.ObjectCompressedSize = (uint32_t) 0xFFFFFFFF;
+    } else {
+      new_file.ObjectCompressedSize = (uint32_t) filedata->filesize;
+    }
     new_file.ObjectFormat = of;
     new_file.StorageID = store;
     new_file.ParentObject = localph;
