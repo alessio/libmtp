@@ -1205,7 +1205,7 @@ ptp_usb_senddata (PTPParams* params, PTPContainer* ptp,
 	int wlen, datawlen;
 	unsigned long written;
 	PTPUSBBulkContainer usbdata;
-	uint32_t bytes_left_to_transfer;
+	uint64_t bytes_left_to_transfer;
 	PTPDataHandler memhandler;
 
 
@@ -1336,7 +1336,7 @@ ptp_usb_getdata (PTPParams* params, PTPContainer* ptp, PTPDataHandler *handler)
 				break;
 			}
 		}
-		if (usbdata.length == 0xffffffffU) {
+		if (rlen == PTP_USB_BULK_HS_MAX_PACKET_LEN_READ) {
 		  /* Copy first part of data to 'data' */
 		  putfunc_ret =
 		    handler->putfunc(
@@ -1352,7 +1352,7 @@ ptp_usb_getdata (PTPParams* params, PTPContainer* ptp, PTPDataHandler *handler)
 		    uint16_t xret;
 
 		    xret = ptp_read_func(
-					 PTP_USB_BULK_HS_MAX_PACKET_LEN_READ,
+					 0x20000000,
 					 handler,
 					 params->data,
 					 &readdata,
@@ -1360,7 +1360,7 @@ ptp_usb_getdata (PTPParams* params, PTPContainer* ptp, PTPDataHandler *handler)
 					 );
 		    if (xret != PTP_RC_OK)
 		      return xret;
-		    if (readdata < PTP_USB_BULK_HS_MAX_PACKET_LEN_READ)
+		    if (readdata < 0x20000000)
 		      break;
 		  }
 		  return PTP_RC_OK;
@@ -1860,12 +1860,15 @@ static void close_usb(PTP_USB* ptp_usb)
      * STALL is persistant or not).
      */
     clear_stall(ptp_usb);
+#if 0
+    // causes hangs on Linux 3.x at least up to 3.8
     // Clear halts on any endpoints
     clear_halt(ptp_usb);
     // Added to clear some stuff on the OUT endpoint
     // TODO: is this good on the Mac too?
     // HINT: some devices may need that you comment these two out too.
     libusb_clear_halt(ptp_usb->handle, ptp_usb->outep);
+#endif
     libusb_release_interface(ptp_usb->handle, (int) ptp_usb->interface);
   }
   if (FLAG_FORCE_RESET_ON_CLOSE(ptp_usb)) {
