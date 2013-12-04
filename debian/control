@@ -13,8 +13,8 @@ Build-Depends:
  dpkg-dev (>= 1.13.19),
  gnulib,
  libgcrypt11-dev,
- libusb-1.0-0-dev [linux-any],
- libusb-dev [!linux-any],
+ libusb-1.0-0-dev [!hurd-any],
+ libusb-dev [hurd-any],
  lsb-release,
  pkg-config,
  xsltproc
@@ -96,8 +96,8 @@ Section: libdevel
 Architecture: any
 Depends:
  libmtp9 (= ${binary:Version}),
- libusb-1.0-0-dev [linux-any],
- libusb-dev [!linux-any],
+ libusb-1.0-0-dev [!hurd-any],
+ libusb-dev [hurd-any],
  ${misc:Depends}
 Multi-Arch: same
 Description: Media Transfer Protocol (MTP) development files

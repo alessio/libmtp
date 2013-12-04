@@ -1,3 +1,10 @@
+libmtp (1.1.6-20-g1b9f164-2) UNRELEASED; urgency=low
+
+  [ Aurelien Jarno ]
+  * Switch to libusb 1.0 on kfreebsd. Closes: #729249.
+
+ -- Aurelien Jarno <aurel32@debian.org>  Wed, 04 Dec 2013 14:46:22 +0100
+
 libmtp (1.1.6-20-g1b9f164-1) unstable; urgency=low
 
   * New upstream release.
