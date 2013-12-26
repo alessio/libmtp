@@ -2,6 +2,7 @@ Source: libmtp
 Section: libs
 Priority: optional
 Maintainer: Alessio Treglia <alessio@debian.org>
+Uploaders: Michael Tokarev <mjt@tls.msk.ru>
 Build-Depends:
  autoconf,
  automake,
