@@ -58,12 +58,14 @@ override_dh_auto_clean:
 override_dh_auto_build: mtp-tools.1
 	dh_auto_build
 ifneq (,$(findstring libmtp-common, $(shell dh_listpackages)))
+ifeq (linux,$(DEB_HOST_ARCH_OS))
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
 	done
+endif
 endif
 
 override_dh_install:
