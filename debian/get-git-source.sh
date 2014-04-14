@@ -23,6 +23,7 @@ PACKAGE=libmtp
 BASE_REL=$(dpkg-parsechangelog 2>/dev/null | sed -ne 's/Version: \([0-9\.]\+\)-.*/\1/p')
 OLDDIR=${PWD}
 GOS_DIR=${OLDDIR}/get-orig-source
+REPACK_EXT=~ds0
 
 if [ -z ${BASE_REL} ]; then
     echo 'Please run this script from the sources root directory.'
@@ -36,9 +37,9 @@ git clone git://git.code.sf.net/p/libmtp/code ${PACKAGE}
 cd ${PACKAGE}/
 GITIFIED_VERSION=${BASE_REL//./-}
 GIT_DESCRIBE=$(git describe --tags | sed -e "s/${PACKAGE}-${GITIFIED_VERSION}-\(.*\)/\1/")
-NEWVER=${BASE_REL}-${GIT_DESCRIBE}
+NEWVER=${BASE_REL}-${GIT_DESCRIBE}${REPACK_EXT}
 cd .. && mv ${PACKAGE} ${PACKAGE}-${NEWVER} && cd ${PACKAGE}-${NEWVER}
 cd .. && XZ_OPT=-f9 tar cJf \
     ${OLDDIR}/${PACKAGE}_${NEWVER}.orig.tar.xz \
-    ${PACKAGE}-${NEWVER} --exclude-vcs
+    ${PACKAGE}-${NEWVER} --exclude-vcs --exclude='*/logs'
 rm -rf ${GOS_DIR}
