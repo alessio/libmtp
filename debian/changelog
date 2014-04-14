@@ -1,3 +1,12 @@
+libmtp (1.1.6-51-g1a2669c~ds0-1) unstable; urgency=low
+
+  * New git snapshot.
+  * Add script to retrieve upstream's sources from git.
+  * Various updates to debian/copyright.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 14 Apr 2014 10:28:52 +0100
+
 libmtp (1.1.6-20-g1b9f164-2) unstable; urgency=low
 
   [ Aurelien Jarno ]
