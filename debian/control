@@ -18,7 +18,7 @@ Build-Depends:
  lsb-release,
  pkg-config,
  xsltproc
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: http://libmtp.sourceforge.net/
 Vcs-Git: git://anonscm.debian.org/collab-maint/libmtp.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/libmtp.git
