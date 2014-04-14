@@ -1,38 +1,37 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: libmtp
-Upstream-Contact:
- Richard A. Low <richard@wentnet.com>
- Linus Walleij <triad@df.lth.se>
+Upstream-Contact: Linus Walleij <triad@df.lth.se>
 Source: http://sf.net/projects/libmtp/files/
 
 Files: *
 Copyright:
- 2003-2013, Linus Walleij <triad@df.lth.se>
- 2005-2009, Richard A. Low <richard@wentnet.com>
- 2005-2009, Richard A. Low and Linus Walleij
- 2003, Nikolai Kopanygin
- 2001-2004, Mariusz Woloszyn <emsi@ipartners.pl>
- 2007, Ted Bullock <tbullock@canada.com>
- 2003-2008, Marcus Meissner <marcus@jet.franken.de>
- 2008, Chris Bagwell <chris@cnpbagwell.com>
- 2008, Alistair Boyle <alistair.js.boyle@gmail.com>
- 2008, Florent Mertens <flomertens@gmail.com>
- 2007, Tero Saarni <tero.saarni@gmail.com>
- 2006, Chris A. Debenham <chris@adebenham.com>
- 2006, Robert Reardon <rreardon@monkshatch.vispa.com>
- 2006, Andy Kelk <andy@mopoke.co.uk>
- 2003-2005, Shaun Jackman
- 2003-2005, Enrique Jorrete Ledesma
- 2008, Nicolas Pennequin <nicolas.pennequin@free.fr>
- 2008, Joseph Nahmias <joe@nahmias.net>]
- 2006, The libmtp development team
+  2003-2013 Linus Walleij <triad@df.lth.se>
+  2012 Sony Mobile Communications
+  2005-2009 Richard A. Low <richard@wentnet.com>
+  2005-2009 Richard A. Low and Linus Walleij
+  2003 Nikolai Kopanygin
+  2001-2004 Mariusz Woloszyn <emsi@ipartners.pl>
+  2007 Ted Bullock <tbullock@canada.com>
+  2003-2008 Marcus Meissner <marcus@jet.franken.de>
+  2008 Chris Bagwell <chris@cnpbagwell.com>
+  2008 Alistair Boyle <alistair.js.boyle@gmail.com>
+  2008 Florent Mertens <flomertens@gmail.com>
+  2007 Tero Saarni <tero.saarni@gmail.com>
+  2006 Chris A. Debenham <chris@adebenham.com>
+  2006 Robert Reardon <rreardon@monkshatch.vispa.com>
+  2006 Andy Kelk <andy@mopoke.co.uk>
+  2003-2005 Shaun Jackman
+  2003-2005 Enrique Jorrete Ledesma
+  2008 Nicolas Pennequin <nicolas.pennequin@free.fr>
+  2008 Joseph Nahmias <joe@nahmias.net>]
+  2006 The libmtp development team
 License: LGPL-2+
 
 Files: debian/*
 Copyright:
- 2010-2011, Alessio Treglia <alessio@debian.org>
- 2007-2009, Rafael Laboissiere <rafael@debian.org>
- 2006, Jean Parpaillon <artefact@altern.org>
+  2010-2014 Alessio Treglia <alessio@debian.org>
+  2007-2009 Rafael Laboissiere <rafael@debian.org>
+  2006 Jean Parpaillon <artefact@altern.org>
 License: LGPL-2.1+
 
 Files: debian/apport/*
@@ -49,7 +48,7 @@ License: LGPL-2+
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  Library General Public License for more details.
-Comment:
+ .
  On Debian systems the complete text of the GNU Lesser General Public
  License can be found in the `/usr/share/common-licenses/LGPL-2' file.
  .
@@ -66,7 +65,7 @@ License: LGPL-2.1+
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  Lesser General Public License for more details.
-Comment:
+ .
  On Debian systems the complete text of the GNU Lesser General Public
  License can be found in the `/usr/share/common-licenses/LGPL-2.1' file.
  .
@@ -83,7 +82,7 @@ License: GPL-2+
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
-Comment:
+ .
  On Debian systems the complete text of the GNU General Public
  License can be found in the `/usr/share/common-licenses/GPL-2' file.
  .
