@@ -1,6 +1,7 @@
 libmtp (1.1.6-51-g1a2669c~ds0-1) unstable; urgency=low
 
   * New git snapshot.
+  * Drop libusb-1.0-kfreebsd.patch, applied upstream.
   * Add script to retrieve upstream's sources from git.
   * Various updates to debian/copyright.
   * Bump Standards.
