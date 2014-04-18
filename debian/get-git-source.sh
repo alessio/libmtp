@@ -20,7 +20,7 @@
 set -e
 
 PACKAGE=libmtp
-BASE_REL=$(dpkg-parsechangelog 2>/dev/null | sed -ne 's/Version: \([0-9\.]\+\)-.*/\1/p')
+BASE_REL=${BASE_REL:-$(dpkg-parsechangelog 2>/dev/null | sed -ne 's/Version: \([0-9\.]\+\)-.*/\1/p')}
 OLDDIR=${PWD}
 GOS_DIR=${OLDDIR}/get-orig-source
 REPACK_EXT=~ds0
