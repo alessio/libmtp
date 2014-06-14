@@ -1,9 +1,9 @@
-libmtp (1.1.6-51-g1a2669c~ds0-1+nmu1) unstable; urgency=medium
+libmtp (1.1.6-51-g1a2669c~ds0-2) unstable; urgency=medium
 
-  * Non-maintainer upload.
+  [ David Bremner ]
   * Disable async buffering (Closes: #745888).
 
- -- David Bremner <bremner@debian.org>  Fri, 13 Jun 2014 17:53:06 -0300
+ -- Alessio Treglia <alessio@debian.org>  Sat, 14 Jun 2014 11:15:23 +0100
 
 libmtp (1.1.6-51-g1a2669c~ds0-1) unstable; urgency=low
 
