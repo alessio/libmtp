@@ -1,3 +1,10 @@
+libmtp (1.1.6-51-g1a2669c~ds0-3) unstable; urgency=low
+
+  * New device: Qualcomm OnePlus One. (Closes: #754304)
+  * Drop build-dependency on lsb-release. (Closes: #737539)
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 10 Jul 2014 15:08:42 +0100
+
 libmtp (1.1.6-51-g1a2669c~ds0-2) unstable; urgency=medium
 
   [ David Bremner ]
