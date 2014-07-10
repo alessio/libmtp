@@ -1,0 +1,20 @@
+Description: Add new device.
+Author: Alessio Treglia <alessio@debian.org>
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=754304
+Forwarded: http://sourceforge.net/p/libmtp/feature-requests/103/
+---
+ src/music-players.h |    3 +++
+ 1 file changed, 3 insertions(+)
+
+--- libmtp.orig/src/music-players.h
++++ libmtp/src/music-players.h
+@@ -1137,6 +1137,9 @@
+   // Reported by anonymous SourceForge user
+   { "Qualcomm (for Smartfren)", 0x05c6, "Andromax U",
+       0x9025, DEVICE_FLAG_NONE },
++  // Reported by Julian Andres Klode <jak@debian.org>
++  { "Qualcomm", 0x05c6, "OnePlus One",
++      0x6765, DEVICE_FLAG_NONE },
+ 
+ 
+   /*
