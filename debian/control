@@ -15,7 +15,6 @@ Build-Depends:
  libgcrypt11-dev,
  libusb-1.0-0-dev [!hurd-any],
  libusb-dev [hurd-any],
- lsb-release,
  pkg-config,
  xsltproc
 Standards-Version: 3.9.5
