@@ -34,13 +34,13 @@ mtp-tools.1: debian/mtp-tools.dbk
 %:
 	dh $@ --with autoreconf
 
-override_dh_autoreconf:
-	cp /usr/share/gnulib/build-aux/config.rpath .
-	dh_autoreconf
+##override_dh_autoreconf:
+##	cp /usr/share/gnulib/build-aux/config.rpath .
+##	dh_autoreconf
 
-override_dh_autoreconf_clean:
-	rm -rf config.rpath
-	dh_autoreconf_clean
+##override_dh_autoreconf_clean:
+##	rm -rf config.rpath
+##	dh_autoreconf_clean
 
 override_dh_auto_configure: $(SUBSTFILES) debian/control
 	# Save file modified by configure
