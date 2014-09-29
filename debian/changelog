@@ -1,3 +1,9 @@
+libmtp (1.1.8-1~bpo70+1) wheezy-backports; urgency=medium
+
+  * Rebuild for wheezy-backports.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 29 Sep 2014 10:50:24 +0100
+
 libmtp (1.1.8-1) unstable; urgency=medium
 
   * New upstream release.
