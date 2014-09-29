@@ -1,8 +1,47 @@
-libmtp (1.1.6-20-g1b9f164-1~bpo70+1) wheezy-backports; urgency=low
+libmtp (1.1.8-1) unstable; urgency=medium
 
-  * Rebuild for wheezy-backports.
+  * New upstream release.
+  * Disable config.rpath generation mechanism, it is helpful when
+    building git snapshots.
+  * Drop 0001-Revert-Async-buffering-for-high-speed-transfers.patch,
+    applied upstream.
+  * Drop 9001-music_players.patch, fixed upstream.
 
- -- Michael Tokarev <mjt@tls.msk.ru>  Thu, 26 Dec 2013 22:34:29 +0400
+ -- Alessio Treglia <alessio@debian.org>  Thu, 11 Sep 2014 12:57:53 +0100
+
+libmtp (1.1.6-51-g1a2669c~ds0-3) unstable; urgency=low
+
+  * New device: Qualcomm OnePlus One. (Closes: #754304)
+  * Drop build-dependency on lsb-release. (Closes: #737539)
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 10 Jul 2014 15:08:42 +0100
+
+libmtp (1.1.6-51-g1a2669c~ds0-2) unstable; urgency=medium
+
+  [ David Bremner ]
+  * Disable async buffering (Closes: #745888).
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 14 Jun 2014 11:15:23 +0100
+
+libmtp (1.1.6-51-g1a2669c~ds0-1) unstable; urgency=low
+
+  * New git snapshot.
+  * Drop libusb-1.0-kfreebsd.patch, applied upstream.
+  * Add script to retrieve upstream's sources from git.
+  * Various updates to debian/copyright.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 14 Apr 2014 10:28:52 +0100
+
+libmtp (1.1.6-20-g1b9f164-2) unstable; urgency=low
+
+  [ Aurelien Jarno ]
+  * Switch to libusb 1.0 on kfreebsd. Closes: #729249.
+
+  [ Alessio Treglia ]
+  * Allow full builds on non-Linux. (Closes: #729806)
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 24 Feb 2014 14:13:58 +0000
 
 libmtp (1.1.6-20-g1b9f164-1) unstable; urgency=low
 

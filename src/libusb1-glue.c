@@ -81,7 +81,8 @@ static const LIBMTP_device_entry_t mtp_device_table[] = {
 /* We include an .h file which is shared between us and libgphoto2 */
 #include "music-players.h"
 };
-static const int mtp_device_table_size = sizeof(mtp_device_table) / sizeof(LIBMTP_device_entry_t);
+static const int mtp_device_table_size =
+  sizeof(mtp_device_table) / sizeof(LIBMTP_device_entry_t);
 
 // Local functions
 static LIBMTP_error_number_t init_usb();
@@ -96,10 +97,14 @@ static int find_interface_and_endpoints(libusb_device *dev,
 					int* outep_maxpacket,
 					int* intep);
 static void clear_stall(PTP_USB* ptp_usb);
-static int init_ptp_usb (PTPParams* params, PTP_USB* ptp_usb, libusb_device* dev);
-static short ptp_write_func (unsigned long,PTPDataHandler*,void *data,unsigned long*);
-static short ptp_read_func (unsigned long,PTPDataHandler*,void *data,unsigned long*,int);
-static int usb_get_endpoint_status(PTP_USB* ptp_usb, int ep, uint16_t* status);
+static int init_ptp_usb(PTPParams* params,
+		PTP_USB* ptp_usb, libusb_device* dev);
+static short ptp_write_func(unsigned long,
+		PTPDataHandler*, void *data, unsigned long*);
+static short ptp_read_func (unsigned long,
+		PTPDataHandler*, void *data, unsigned long*, int);
+static int usb_get_endpoint_status(PTP_USB* ptp_usb,
+		int ep, uint16_t* status);
 
 /**
  * Get a list of the supported USB devices.
@@ -119,7 +124,8 @@ static int usb_get_endpoint_status(PTP_USB* ptp_usb, int ep, uint16_t* status);
  * @return 0 if the list was successfull retrieved, any other
  *        value means failure.
  */
-int LIBMTP_Get_Supported_Devices_List(LIBMTP_device_entry_t ** const devices, int * const numdevs)
+int LIBMTP_Get_Supported_Devices_List(LIBMTP_device_entry_t ** const devices,
+				      int * const numdevs)
 {
   *devices = (LIBMTP_device_entry_t *) &mtp_device_table;
   *numdevs = mtp_device_table_size;
@@ -144,17 +150,16 @@ static LIBMTP_error_number_t init_usb()
 }
 
 /**
- * Small recursive function to append a new usb_device to the linked list of
- * USB MTP devices
- * @param devlist dynamic linked list of pointers to usb devices with MTP
- *        properties, to be extended with new device.
+ * Small recursive function to append a new usb_device to the linked
+ * list of USB MTP devices
+ * @param devlist dynamic linked list of pointers to usb devices with
+ *        MTP properties, to be extended with new device.
  * @param newdevice the new device to add.
  * @param bus_location bus for this device.
  * @return an extended array or NULL on failure.
  */
 static mtpdevice_list_t *append_to_mtpdevice_list(mtpdevice_list_t *devlist,
 						  libusb_device *newdevice,
-
 						  uint32_t bus_location)
 {
   mtpdevice_list_t *new_list_entry;
@@ -292,8 +297,8 @@ static int probe_device_descriptor(libusb_device *dev, FILE *dumpfile)
 	  }
 
 	  /*
-	   * Check for Still Image Capture class with PIMA 15740 protocol,
-	   * also known as PTP
+	   * TODO: Check for Still Image Capture class with PIMA 15740
+	   * protocol, also known as PTP
 	   */
 #if 0
 	  if (intf->bInterfaceClass == LIBUSB_CLASS_PTP
@@ -837,7 +842,23 @@ ptp_read_func (
   unsigned long written;
   unsigned char *bytes;
   int expect_terminator_byte = 0;
+  unsigned long usb_inep_maxpacket_size;
+  unsigned long context_block_size_1;
+  unsigned long context_block_size_2;
+  uint16_t ptp_dev_vendor_id = ptp_usb->rawdevice.device_entry.vendor_id;
 
+  //"iRiver" device special handling
+  if (ptp_dev_vendor_id == 0x4102 || ptp_dev_vendor_id == 0x1006) {
+	  usb_inep_maxpacket_size = ptp_usb->inep_maxpacket;
+	  if (usb_inep_maxpacket_size == 0x400) {
+		  context_block_size_1 = CONTEXT_BLOCK_SIZE_1 - 0x200;
+		  context_block_size_2 = CONTEXT_BLOCK_SIZE_2 + 0x200;
+	  }
+	  else {
+		  context_block_size_1 = CONTEXT_BLOCK_SIZE_1;
+		  context_block_size_2 = CONTEXT_BLOCK_SIZE_2;
+	  }
+  }
   // This is the largest block we'll need to read in.
   bytes = malloc(CONTEXT_BLOCK_SIZE);
   while (curread < size) {
@@ -855,16 +876,21 @@ ptp_read_func (
         expect_terminator_byte = 1;
       }
     }
-    else if (curread == 0)
-      // we are first packet, but not last packet
-      toread = CONTEXT_BLOCK_SIZE_1;
-    else if (toread == CONTEXT_BLOCK_SIZE_1)
-      toread = CONTEXT_BLOCK_SIZE_2;
-    else if (toread == CONTEXT_BLOCK_SIZE_2)
-      toread = CONTEXT_BLOCK_SIZE_1;
+    else if (ptp_dev_vendor_id == 0x4102 || ptp_dev_vendor_id == 0x1006) {
+	    //"iRiver" device special handling
+	    if (curread == 0)
+		    // we are first packet, but not last packet
+		    toread = context_block_size_1;
+	    else if (toread == context_block_size_1)
+		    toread = context_block_size_2;
+	    else if (toread == context_block_size_2)
+		    toread = context_block_size_1;
+	    else
+		    LIBMTP_INFO("unexpected toread size 0x%04x, 0x%04x remaining bytes\n",
+				(unsigned int) toread, (unsigned int) (size-curread));
+    }
     else
-      LIBMTP_INFO("unexpected toread size 0x%04x, 0x%04x remaining bytes\n", 
-	     (unsigned int) toread, (unsigned int) (size-curread));
+	    toread = CONTEXT_BLOCK_SIZE;
 
     LIBMTP_USB_DEBUG("Reading in 0x%04lx bytes\n", toread);
 
@@ -1267,6 +1293,10 @@ static uint16_t ptp_usb_getpacket(PTPParams *params,
 	PTPDataHandler	memhandler;
 	uint16_t	ret;
 	unsigned char	*x = NULL;
+	unsigned long packet_size;
+	PTP_USB *ptp_usb = (PTP_USB *) params->data;
+
+	packet_size = ptp_usb->inep_maxpacket;
 
 	/* read the header and potentially the first data */
 	if (params->response_packet_size > 0) {
@@ -1280,7 +1310,7 @@ static uint16_t ptp_usb_getpacket(PTPParams *params,
 		return PTP_RC_OK;
 	}
 	ptp_init_recv_memory_handler (&memhandler);
-	ret = ptp_read_func(PTP_USB_BULK_HS_MAX_PACKET_LEN_READ, &memhandler, params->data, rlen, 0);
+	ret = ptp_read_func(packet_size, &memhandler, params->data, rlen, 0);
 	ptp_exit_recv_memory_handler (&memhandler, &x, rlen);
 	if (x) {
 		memcpy (packet, x, *rlen);
@@ -1819,31 +1849,13 @@ static void clear_stall(PTP_USB* ptp_usb)
     perror("outep: usb_get_endpoint_status()");
   } else if (status) {
     LIBMTP_INFO("Clearing stall on OUT endpoint\n");
-    ret = libusb_clear_halt (ptp_usb->handle, ptp_usb->outep);
+    ret = libusb_clear_halt(ptp_usb->handle, ptp_usb->outep);
     if (ret != LIBUSB_SUCCESS) {
       perror("usb_clear_stall_feature()");
     }
   }
 
   /* TODO: do we need this for INTERRUPT (ptp_usb->intep) too? */
-}
-
-static void clear_halt(PTP_USB* ptp_usb)
-{
-  int ret;
-
-  ret = libusb_clear_halt(ptp_usb->handle,ptp_usb->inep);
-  if (ret<0) {
-    perror("usb_clear_halt() on IN endpoint");
-  }
-  ret = libusb_clear_halt(ptp_usb->handle,ptp_usb->outep);
-  if (ret<0) {
-    perror("usb_clear_halt() on OUT endpoint");
-  }
-  ret = libusb_clear_halt(ptp_usb->handle,ptp_usb->intep);
-  if (ret<0) {
-    perror("usb_clear_halt() on INTERRUPT endpoint");
-  }
 }
 
 static void close_usb(PTP_USB* ptp_usb)
@@ -1860,15 +1872,6 @@ static void close_usb(PTP_USB* ptp_usb)
      * STALL is persistant or not).
      */
     clear_stall(ptp_usb);
-#if 0
-    // causes hangs on Linux 3.x at least up to 3.8
-    // Clear halts on any endpoints
-    clear_halt(ptp_usb);
-    // Added to clear some stuff on the OUT endpoint
-    // TODO: is this good on the Mac too?
-    // HINT: some devices may need that you comment these two out too.
-    libusb_clear_halt(ptp_usb->handle, ptp_usb->outep);
-#endif
     libusb_release_interface(ptp_usb->handle, (int) ptp_usb->interface);
   }
   if (FLAG_FORCE_RESET_ON_CLOSE(ptp_usb)) {

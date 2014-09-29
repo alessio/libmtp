@@ -32,7 +32,7 @@
 
 #include "ptp.h"
 #ifdef HAVE_LIBUSB1
-#include <libusb-1.0/libusb.h>
+#include <libusb.h>
 #endif
 #ifdef HAVE_LIBUSB0
 #include <usb.h>

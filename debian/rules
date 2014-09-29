@@ -34,13 +34,13 @@ mtp-tools.1: debian/mtp-tools.dbk
 %:
 	dh $@ --with autoreconf
 
-override_dh_autoreconf:
-	cp /usr/share/gnulib/build-aux/config.rpath .
-	dh_autoreconf
+##override_dh_autoreconf:
+##	cp /usr/share/gnulib/build-aux/config.rpath .
+##	dh_autoreconf
 
-override_dh_autoreconf_clean:
-	rm -rf config.rpath
-	dh_autoreconf_clean
+##override_dh_autoreconf_clean:
+##	rm -rf config.rpath
+##	dh_autoreconf_clean
 
 override_dh_auto_configure: $(SUBSTFILES) debian/control
 	# Save file modified by configure
@@ -58,12 +58,14 @@ override_dh_auto_clean:
 override_dh_auto_build: mtp-tools.1
 	dh_auto_build
 ifneq (,$(findstring libmtp-common, $(shell dh_listpackages)))
+ifeq (linux,$(DEB_HOST_ARCH_OS))
 	# Fix mode of udev lifting script
 	chmod +x libmtp.sh
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
 	done
+endif
 endif
 
 override_dh_install:
