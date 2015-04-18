@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.52)
-AC_INIT([libmtp], [1.1.8], [libmtp-discuss@lists.sourceforge.net])
+AC_INIT([libmtp], [1.1.9], [libmtp-discuss@lists.sourceforge.net])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src/libmtp.c])
@@ -15,10 +15,10 @@ AC_PROG_LIBTOOL
 AM_ICONV
 
 # Optionally set install location of udev
-UDEV=/lib/udev
+UDEV=/usr/lib/udev
 AC_ARG_WITH(udev,
     AC_HELP_STRING([--with-udev=DIR],
-    [directory where udev is installed [default=/lib/udev]]),
+    [directory where udev is installed [default=/usr/lib/udev]]),
     [UDEV="${withval}"], [])
 AC_SUBST(UDEV)
 
@@ -54,14 +54,16 @@ AC_SUBST(UDEV_MODE)
 
 # Optionally enable and check for doxygen
 AC_ARG_ENABLE([doxygen],
-    AS_HELP_STRING([--enable-doxygen], [Build API documentation using Doxygen [default=no]]),
+    AS_HELP_STRING([--enable-doxygen], [Build API documentation using Doxygen [default=auto]]),
     [ac_enable_doxygen=$enableval], [ac_enable_doxygen=auto])
-if test "x$ac_enable_doxygen" == "xyes"; then
+if test "x$ac_enable_doxygen" != "xno"; then
     AC_CHECK_PROG(HAVE_DOXYGEN, doxygen, true, false)
     if test "x$HAVE_DOXYGEN" = "xfalse" -a "x$ac_enable_doxygen" = "xyes"; then
         AC_MSG_ERROR([*** API documentation explicitly requested but Doxygen not found])
     fi
-    AC_MSG_NOTICE([API documentation will be generated using Doxygen])
+    if test "x$HAVE_DOXYGEN" = "xtrue"; then
+        AC_MSG_NOTICE([API documentation will be generated using Doxygen])
+    fi
 else
     HAVE_DOXYGEN=false
     AC_MSG_NOTICE([API documentation will not be generated])
