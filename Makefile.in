@@ -153,9 +153,9 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(pkgconfigdir)" \
+am__installdirs = "$(DESTDIR)$(hwdbdir)" "$(DESTDIR)$(pkgconfigdir)" \
 	"$(DESTDIR)$(udevrulesdir)"
-DATA = $(noinst_DATA) $(pkgconfig_DATA) $(udevrules_DATA)
+DATA = $(hwdb_DATA) $(noinst_DATA) $(pkgconfig_DATA) $(udevrules_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -368,9 +368,11 @@ EXTRA_DIST = libmtp.pc libmtp.sh COPYING README.windows.txt
 # This stuff only makes sense on Linux so only
 # build and ship it on Linux.
 @USE_LINUX_TRUE@udevrulesdir = @UDEV@/rules.d
+@USE_LINUX_TRUE@hwdbdir = @UDEV@/hwdb.d
 @USE_LINUX_TRUE@udevrules_DATA = @UDEV_RULES@
+@USE_LINUX_TRUE@hwdb_DATA = 69-libmtp.hwdb
 @USE_LINUX_TRUE@noinst_DATA = libmtp.usermap libmtp.fdi
-@USE_LINUX_TRUE@CLEANFILES = libmtp.usermap @UDEV_RULES@ libmtp.fdi
+@USE_LINUX_TRUE@CLEANFILES = libmtp.usermap @UDEV_RULES@ libmtp.fdi libmtp.hwdb
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -439,6 +441,27 @@ clean-libtool:
 
 distclean-libtool:
 	-rm -f libtool config.lt
+install-hwdbDATA: $(hwdb_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(hwdb_DATA)'; test -n "$(hwdbdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(hwdbdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(hwdbdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(hwdbdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(hwdbdir)" || exit $$?; \
+	done
+
+uninstall-hwdbDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(hwdb_DATA)'; test -n "$(hwdbdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(hwdbdir)'; $(am__uninstall_files_from_dir)
 install-pkgconfigDATA: $(pkgconfig_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(pkgconfig_DATA)'; test -n "$(pkgconfigdir)" || list=; \
@@ -774,7 +797,7 @@ check: check-recursive
 all-am: Makefile $(DATA) config.h
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(udevrulesdir)"; do \
+	for dir in "$(DESTDIR)$(hwdbdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(udevrulesdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -830,7 +853,8 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-pkgconfigDATA install-udevrulesDATA
+install-data-am: install-hwdbDATA install-pkgconfigDATA \
+	install-udevrulesDATA
 
 install-dvi: install-dvi-recursive
 
@@ -876,7 +900,8 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-pkgconfigDATA uninstall-udevrulesDATA
+uninstall-am: uninstall-hwdbDATA uninstall-pkgconfigDATA \
+	uninstall-udevrulesDATA
 
 .MAKE: $(am__recursive_targets) all install-am install-strip
 
@@ -889,22 +914,28 @@ uninstall-am: uninstall-pkgconfigDATA uninstall-udevrulesDATA
 	distdir distuninstallcheck dvi dvi-am html html-am info \
 	info-am install install-am install-data install-data-am \
 	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-pkgconfigDATA \
-	install-ps install-ps-am install-strip install-udevrulesDATA \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am uninstall-pkgconfigDATA \
+	install-html install-html-am install-hwdbDATA install-info \
+	install-info-am install-man install-pdf install-pdf-am \
+	install-pkgconfigDATA install-ps install-ps-am install-strip \
+	install-udevrulesDATA installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic mostlyclean-libtool pdf pdf-am \
+	ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-hwdbDATA uninstall-pkgconfigDATA \
 	uninstall-udevrulesDATA
 
 
 @USE_LINUX_TRUE@libmtp.usermap: util/mtp-hotplug
 @USE_LINUX_TRUE@	util/mtp-hotplug > libmtp.usermap
+
 @USE_LINUX_TRUE@@UDEV_RULES@: util/mtp-hotplug
 @USE_LINUX_TRUE@	util/mtp-hotplug -u -p"@UDEV@" @UDEV_GROUP@ @UDEV_MODE@ > @UDEV_RULES@
+
 @USE_LINUX_TRUE@libmtp.fdi: util/mtp-hotplug
 @USE_LINUX_TRUE@	util/mtp-hotplug -H > libmtp.fdi
+
+@USE_LINUX_TRUE@$(hwdb_DATA): util/mtp-hotplug
+@USE_LINUX_TRUE@	util/mtp-hotplug -w > $(hwdb_DATA)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

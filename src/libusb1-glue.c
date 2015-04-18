@@ -135,14 +135,21 @@ int LIBMTP_Get_Supported_Devices_List(LIBMTP_device_entry_t ** const devices,
 
 static LIBMTP_error_number_t init_usb()
 {
+  static int libusb1_initialized = 0;
+
   /*
    * Some additional libusb debugging please.
    * We use the same level debug between MTP and USB.
    */
+  if (libusb1_initialized)
+     return LIBMTP_ERROR_NONE;
+
   if (libusb_init(NULL) < 0) {
     LIBMTP_ERROR("Libusb1 init failed\n");
     return LIBMTP_ERROR_USB_LAYER;
   }
+
+  libusb1_initialized = 1;
 
   if ((LIBMTP_debug & LIBMTP_DEBUG_USB) != 0)
     libusb_set_debug(NULL,9);
@@ -994,7 +1001,7 @@ ptp_write_func (
   }
   while (curwrite < size) {
     unsigned long usbwritten = 0;
-    int xwritten;
+    int xwritten = 0;
 
     towrite = size-curwrite;
     if (towrite > CONTEXT_BLOCK_SIZE) {
@@ -1575,12 +1582,14 @@ ptp_usb_event (PTPParams* params, PTPContainer* event, int wait)
 	int result, xread;
 	unsigned long rlen;
 	PTPUSBEventContainer usbevent;
-	PTP_USB *ptp_usb = (PTP_USB *)(params->data);
+	PTP_USB *ptp_usb;
 
 	memset(&usbevent,0,sizeof(usbevent));
 
 	if ((params==NULL) || (event==NULL))
 		return PTP_ERROR_BADPARAM;
+	ptp_usb = (PTP_USB *)(params->data);
+
 	ret = PTP_RC_OK;
 	switch(wait) {
 	case PTP_EVENT_CHECK:
@@ -1913,12 +1922,11 @@ static int find_interface_and_endpoints(libusb_device *dev,
     struct libusb_config_descriptor *config;
 
     ret = libusb_get_config_descriptor(dev, i, &config);
-    if (ret != 0)
+    if (ret != LIBUSB_SUCCESS)
       continue;
 
     *conf = config->bConfigurationValue;
 
-    if (ret != LIBUSB_SUCCESS) continue;
     // Loop over each configurations interfaces
     for (j = 0; j < config->bNumInterfaces; j++) {
       uint8_t k, l;
