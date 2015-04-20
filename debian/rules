@@ -8,6 +8,9 @@ ifneq (,$(findstring libmtp-doc, $(shell dh_listpackages)))
 DEB_CONFIGURE_EXTRA_FLAGS += --enable-doxygen
 endif
 
+# The default changed in libmtp 1.1.9 to /usr/lib/udev
+DEB_CONFIGURE_EXTRA_FLAGS += --with-udev=/lib/udev
+
 DB2MAN = /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
 XP = xsltproc -''-nonet
 SOVERSION = 9
