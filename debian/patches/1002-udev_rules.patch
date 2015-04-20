@@ -7,7 +7,7 @@ Author: Alessio Treglia <alessio@debian.org>
 
 --- libmtp.orig/util/mtp-hotplug.c
 +++ libmtp/util/mtp-hotplug.c
-@@ -66,7 +66,7 @@ int main (int argc, char **argv)
+@@ -68,7 +68,7 @@ int main (int argc, char **argv)
     * with ENV{ID_MEDIA_PLAYER}=1 writable for the console
     * user.
     */
