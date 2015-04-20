@@ -1,3 +1,13 @@
+libmtp (1.1.9-1) UNRELEASED; urgency=medium
+
+  * New upstream release:
+    - No new features, just bugfixes and many new devices.
+  * Revert upstream's change on --with-udev's default value at configure
+    time.
+  * Little update on debian/copyright.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 20 Apr 2015 09:26:22 +0100
+
 libmtp (1.1.8-1) unstable; urgency=medium
 
   * New upstream release.
