@@ -17,7 +17,7 @@ Build-Depends:
  libusb-dev [hurd-any],
  pkg-config,
  xsltproc
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://libmtp.sourceforge.net/
 Vcs-Git: git://anonscm.debian.org/collab-maint/libmtp.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/libmtp.git
