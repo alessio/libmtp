@@ -1,3 +1,13 @@
+libmtp (1.1.9-2) unstable; urgency=medium
+
+  * Add new devices, patches taken from Ubuntu
+    - bq Krillin
+    - Arale
+  * Install hwdb control file
+  * Remove unnecessary gnulib build-dependency
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 05 Jun 2015 15:32:15 +0100
+
 libmtp (1.1.9-1) unstable; urgency=medium
 
   * New upstream release:
