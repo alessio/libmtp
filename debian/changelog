@@ -1,6 +1,8 @@
 libmtp (1.1.9-3) unstable; urgency=medium
 
   * Escape '&' to avoid generate malformed .fdi files. (Closes: #671923)
+  * Be honest in mtp-tools's manpage (Closes: #658367):
+    - Not all commands support -h, update manpage accordingly.
 
  -- Alessio Treglia <alessio@debian.org>  Fri, 12 Jun 2015 13:17:43 +0100
 
