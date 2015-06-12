@@ -67,6 +67,7 @@ ifeq (linux,$(DEB_HOST_ARCH_OS))
 	# Rename udev files
 	for f in $(UDEVFILES) ; do				\
 		cp libmtp.$${f#*.} $$f ;			\
+		sed -i 's/&/&amp;/' $$f ;			\
 	done
 endif
 endif
