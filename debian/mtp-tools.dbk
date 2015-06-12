@@ -144,9 +144,9 @@ and docbook-xsl in your Build-Depends control field.
       <command>&dhpackage;</command>.</para>
 
     <para>This manual page was written for the &debian; distribution
-      because the original programs do not have manual pages.  Concise
-      synopsis can be obtained by giving <option>-h</option> to the
-      commands.</para>
+      because the original programs do not have manual pages. Some of
+      the commands bundled with mtp-tools may provide a concise synopsis
+      if were run with <option>-h</option>.</para>
   </refsect1>
 
   <refsect1>
