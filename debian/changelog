@@ -1,3 +1,15 @@
+libmtp (1.1.10-1) unstable; urgency=medium
+
+  * New upstream bugfix release.
+  * libmtp-common should recommend libmtp-runtime. (Closes: #642552)
+  * Drop 2001-adding-bq-device-id.patch:
+    - 'Been adopted upstream.
+  * Drop 2002-adding-arale-device-id.patch:
+    - Adopted upstream, the device is now recognized as Meizu.
+  * Refresh debian/patches/series
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 20 Oct 2015 18:05:14 +0100
+
 libmtp (1.1.9-3) unstable; urgency=medium
 
   * Escape '&' to avoid generate malformed .fdi files. (Closes: #671923)
