@@ -50,8 +50,6 @@ Breaks:
  libmtp8 (<= 1.0.6-6)
 Replaces:
  libmtp8
-Recommends:
- libmtp-runtime [linux-any]
 Multi-Arch: foreign
 Description: Media Transfer Protocol (MTP) common files
  libmtp is a library for communicating with MTP aware devices in POSIX
