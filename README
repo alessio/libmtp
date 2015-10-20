@@ -14,12 +14,15 @@ controller interface, using libusb to access the host
 controller.
 
 If you're more interested in the MTP responders, gadgets like
-MP3 players, mobile phones etc, look into MeeGo:s Buteo Sync:
-http://wiki.meego.com/Buteo - these guys are creating a fully
-open source MTP responder.
-
-Android has an MTP responder implementation:
-https://android.googlesource.com/platform/frameworks/base/+/master/media/jni/
+MP3 players, mobile phones etc, look into:
+- MeeGo:s Buteo Sync:
+  https://github.com/nemomobile/buteo-mtp
+  https://wiki.merproject.org/wiki/Buteo/MTP
+- Android has an MTP responder implementation:
+  https://android.googlesource.com/platform/frameworks/base/+/master/media/jni/
+- Ubuntu/Ricardo Salveti has mtp-server and libmtp-server going:
+  https://code.launchpad.net/~phablet-team/mtp/trunk
+  http://bazaar.launchpad.net/~phablet-team/mtp/trunk/files
 
 Heritage
 --------
@@ -171,10 +174,12 @@ cannot test your solution.
 
   Then re-attach the device.
 
-  Sometimes the "gvfs-gphoto2-volume-monitor" is running on the
-  system and hogging the device, try something like:
+  Sometimes some gvfs daemons are running on the
+  system and hogging the device, try stopping them
+  with something like these commands:
 
-  pkill gvfs-gphoto2-volume-monitor
+  killall gvfs-mtp-volume-monitor
+  killall gvfs-gphoto2-volume-monitor
 
   Then plug in the device and issue "mtp-detect" to figure out if
   this may be the case.
