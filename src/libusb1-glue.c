@@ -693,18 +693,7 @@ LIBMTP_error_number_t LIBMTP_Detect_Raw_Devices(LIBMTP_raw_device_t ** devices,
       }
     }
     if (!device_known) {
-      // This device is unknown to the developers
-      LIBMTP_ERROR("Device %d (VID=%04x and PID=%04x) is UNKNOWN.\n",
-	      i,
-	      desc.idVendor,
-	      desc.idProduct);
-      LIBMTP_ERROR("Please report this VID/PID and the device model to the "
-	      "libmtp development team\n");
-      /*
-       * Trying to get iManufacturer or iProduct from the device at this
-       * point would require opening a device handle, that we don't want
-       * to do right now. (Takes time for no good enough reason.)
-       */
+      device_unknown(i, desc.idVendor, desc.idProduct);
     }
     // Save the location on the bus
     retdevs[i].bus_location = libusb_get_bus_number (dev->device);
@@ -2066,6 +2055,7 @@ LIBMTP_error_number_t configure_usb_device(LIBMTP_raw_device_t *device,
 
   if (err) {
     libusb_free_device_list (devs, 0);
+    free (ptp_usb);
     LIBMTP_ERROR("LIBMTP PANIC: Unable to find interface & endpoints of device\n");
     return LIBMTP_ERROR_CONNECTING;
   }
@@ -2075,6 +2065,7 @@ LIBMTP_error_number_t configure_usb_device(LIBMTP_raw_device_t *device,
 
   /* Attempt to initialize this device */
   if (init_ptp_usb(params, ptp_usb, ldevice) < 0) {
+    free (ptp_usb);
     LIBMTP_ERROR("LIBMTP PANIC: Unable to initialize device\n");
     libusb_free_device_list (devs, 0);
     return LIBMTP_ERROR_CONNECTING;
@@ -2093,6 +2084,7 @@ LIBMTP_error_number_t configure_usb_device(LIBMTP_raw_device_t *device,
     if(init_ptp_usb(params, ptp_usb, ldevice) <0) {
       LIBMTP_ERROR("LIBMTP PANIC: Could not init USB on second attempt\n");
       libusb_free_device_list (devs, 0);
+      free (ptp_usb);
       return LIBMTP_ERROR_CONNECTING;
     }
 
@@ -2100,6 +2092,7 @@ LIBMTP_error_number_t configure_usb_device(LIBMTP_raw_device_t *device,
     if ((ret = ptp_opensession(params, 1)) == PTP_ERROR_IO) {
       LIBMTP_ERROR("LIBMTP PANIC: failed to open session on second attempt\n");
       libusb_free_device_list (devs, 0);
+      free (ptp_usb);
       return LIBMTP_ERROR_CONNECTING;
     }
   }
@@ -2117,6 +2110,7 @@ LIBMTP_error_number_t configure_usb_device(LIBMTP_raw_device_t *device,
 	    ret);
     libusb_release_interface(ptp_usb->handle, ptp_usb->interface);
     libusb_free_device_list (devs, 0);
+    free (ptp_usb);
     return LIBMTP_ERROR_CONNECTING;
   }
 

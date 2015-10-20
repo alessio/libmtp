@@ -1,5 +1,5 @@
 /* This file is generated automatically by configure */
-/* It is valid only for the system type x86_64-unknown-linux-gnu */
+/* It is valid only for the system type x86_64-suse-linux-gnu */
 
 #ifndef __BYTEORDER_H
 #define __BYTEORDER_H
