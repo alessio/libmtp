@@ -1,8 +1,33 @@
-libmtp (1.1.8-1~bpo70+1) wheezy-backports; urgency=medium
+libmtp (1.1.9-3) unstable; urgency=medium
 
-  * Rebuild for wheezy-backports.
+  * Escape '&' to avoid generate malformed .fdi files. (Closes: #671923)
+  * Be honest in mtp-tools's manpage (Closes: #658367):
+    - Not all commands support -h, update manpage accordingly.
 
- -- Alessio Treglia <alessio@debian.org>  Mon, 29 Sep 2014 10:50:24 +0100
+ -- Alessio Treglia <alessio@debian.org>  Fri, 12 Jun 2015 13:17:43 +0100
+
+libmtp (1.1.9-2) unstable; urgency=medium
+
+  * Add new devices, patches taken from Ubuntu
+    - bq Krillin
+    - Arale
+  * Install hwdb control file
+  * Remove unnecessary gnulib build-dependency
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 05 Jun 2015 15:32:15 +0100
+
+libmtp (1.1.9-1) unstable; urgency=medium
+
+  * New upstream release:
+    - No new features, just bugfixes and many new devices.
+  * Refresh patches.
+  * Update symbols.
+  * Revert upstream's change on --with-udev's default value
+    at configure time.
+  * Little update on debian/copyright.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Mon, 20 Apr 2015 09:26:22 +0100
 
 libmtp (1.1.8-1) unstable; urgency=medium
 
