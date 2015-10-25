@@ -1327,13 +1327,14 @@ static char *get_string_from_object(LIBMTP_mtpdevice_t *device, uint32_t const o
 {
   PTPPropertyValue propval;
   char *retstring = NULL;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
   MTPProperties *prop;
 
-  if ( device == NULL || object_id == 0) {
+  if (!device || !object_id)
     return NULL;
-  }
+
+  params = (PTPParams *) device->params;
 
   prop = ptp_find_object_prop_in_cache(params, object_id, attribute_id);
   if (prop) {
@@ -1370,13 +1371,14 @@ static uint64_t get_u64_from_object(LIBMTP_mtpdevice_t *device,uint32_t const ob
 {
   PTPPropertyValue propval;
   uint64_t retval = value_default;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
   MTPProperties *prop;
 
-  if ( device == NULL ) {
+  if (!device)
     return value_default;
-  }
+
+  params = (PTPParams *) device->params;
 
   prop = ptp_find_object_prop_in_cache(params, object_id, attribute_id);
   if (prop)
@@ -1409,13 +1411,14 @@ static uint32_t get_u32_from_object(LIBMTP_mtpdevice_t *device,uint32_t const ob
 {
   PTPPropertyValue propval;
   uint32_t retval = value_default;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
   MTPProperties *prop;
 
-  if ( device == NULL ) {
+  if (!device)
     return value_default;
-  }
+
+  params = (PTPParams *) device->params;
 
   prop = ptp_find_object_prop_in_cache(params, object_id, attribute_id);
   if (prop)
@@ -1447,13 +1450,14 @@ static uint16_t get_u16_from_object(LIBMTP_mtpdevice_t *device, uint32_t const o
 {
   PTPPropertyValue propval;
   uint16_t retval = value_default;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
   MTPProperties *prop;
 
-  if ( device == NULL ) {
+  if (!device)
     return value_default;
-  }
+
+  params = (PTPParams *) device->params;
 
   // This O(n) search should not be used so often, since code
   // using the cached properties don't usually call this function.
@@ -1488,13 +1492,14 @@ static uint8_t get_u8_from_object(LIBMTP_mtpdevice_t *device, uint32_t const obj
 {
   PTPPropertyValue propval;
   uint8_t retval = value_default;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
   MTPProperties *prop;
 
-  if ( device == NULL ) {
+  if (!device)
     return value_default;
-  }
+
+  params = (PTPParams *) device->params;
 
   // This O(n) search should not be used so often, since code
   // using the cached properties don't usually call this function.
@@ -1528,12 +1533,13 @@ static int set_object_string(LIBMTP_mtpdevice_t *device, uint32_t const object_i
 			     uint16_t const attribute_id, char const * const string)
 {
   PTPPropertyValue propval;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
 
-  if (device == NULL || string == NULL) {
+  if (!device || !string)
     return -1;
-  }
+
+  params = (PTPParams *) device->params;
 
   if (!ptp_operation_issupported(params,PTP_OC_MTP_SetObjectPropValue)) {
     add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL, "set_object_string(): could not set object string: "
@@ -1564,12 +1570,13 @@ static int set_object_u32(LIBMTP_mtpdevice_t *device, uint32_t const object_id,
 			  uint16_t const attribute_id, uint32_t const value)
 {
   PTPPropertyValue propval;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
 
-  if (device == NULL) {
+  if (!device)
     return -1;
-  }
+
+  params = (PTPParams *) device->params;
 
   if (!ptp_operation_issupported(params,PTP_OC_MTP_SetObjectPropValue)) {
     add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL, "set_object_u32(): could not set unsigned 32bit integer property: "
@@ -1600,12 +1607,13 @@ static int set_object_u16(LIBMTP_mtpdevice_t *device, uint32_t const object_id,
 			  uint16_t const attribute_id, uint16_t const value)
 {
   PTPPropertyValue propval;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
 
-  if (device == NULL) {
+  if (!device)
     return 1;
-  }
+
+  params = (PTPParams *) device->params;
 
   if (!ptp_operation_issupported(params,PTP_OC_MTP_SetObjectPropValue)) {
     add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL, "set_object_u16(): could not set unsigned 16bit integer property: "
@@ -1635,12 +1643,13 @@ static int set_object_u8(LIBMTP_mtpdevice_t *device, uint32_t const object_id,
 			 uint16_t const attribute_id, uint8_t const value)
 {
   PTPPropertyValue propval;
-  PTPParams *params = (PTPParams *) device->params;
+  PTPParams *params;
   uint16_t ret;
 
-  if (device == NULL) {
+  if (!device)
     return 1;
-  }
+
+  params = (PTPParams *) device->params;
 
   if (!ptp_operation_issupported(params,PTP_OC_MTP_SetObjectPropValue)) {
     add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL, "set_object_u8(): could not set unsigned 8bit integer property: "
@@ -1745,12 +1754,12 @@ static void parse_extension_descriptor(LIBMTP_mtpdevice_t *mtpdevice,
   /* descriptors are divided by semicolons */
   while (end < strlen(desc)) {
     /* Skip past initial whitespace */
-    while (desc[start] == ' ' && end < strlen(desc)) {
+    while ((end < strlen(desc)) && (desc[start] == ' ' )) {
       start++;
       end++;
     }
     /* Detect extension */
-    while (desc[end] != ';' && end < strlen(desc))
+    while ((end < strlen(desc)) && (desc[end] != ';'))
       end++;
     if (end < strlen(desc)) {
       char *element = strndup(desc + start, end-start);
@@ -1759,7 +1768,7 @@ static void parse_extension_descriptor(LIBMTP_mtpdevice_t *mtpdevice,
         // printf("  Element: \"%s\"\n", element);
 
         /* Parse for an extension */
-        while (element[i] != ':' && i < strlen(element))
+        while ((i < strlen(element)) && (element[i] != ':'))
           i++;
         if (i < strlen(element)) {
           char *name = strndup(element, i);
@@ -1767,7 +1776,7 @@ static void parse_extension_descriptor(LIBMTP_mtpdevice_t *mtpdevice,
           // printf("    Extension: \"%s\"\n", name);
 
           /* Parse for minor/major punctuation mark for this extension */
-          while (element[i] != '.' && i < strlen(element))
+          while ((i < strlen(element)) && (element[i] != '.'))
             i++;
           if (i > majstart && i < strlen(element)) {
             LIBMTP_device_extension_t *extension;
@@ -1777,6 +1786,8 @@ static void parse_extension_descriptor(LIBMTP_mtpdevice_t *mtpdevice,
             char *minorstr = strndup(element + i + 1, strlen(element) - i - 1);
             major = atoi(majorstr);
             minor = atoi(minorstr);
+            // printf("    Major: \"%s\" (parsed %d) Minor: \"%s\" (parsed %d)\n",
+            //      majorstr, major, minorstr, minor);
 	    free(majorstr);
 	    free(minorstr);
             extension = malloc(sizeof(LIBMTP_device_extension_t));
@@ -1792,8 +1803,6 @@ static void parse_extension_descriptor(LIBMTP_mtpdevice_t *mtpdevice,
                 tmp = tmp->next;
               tmp->next = extension;
             }
-            // printf("    Major: \"%s\" (parsed %d) Minor: \"%s\" (parsed %d)\n",
-            //      majorstr, major, minorstr, minor);
           } else {
             LIBMTP_ERROR("LIBMTP ERROR: couldnt parse extension %s\n",
                          element);
@@ -1826,7 +1835,6 @@ LIBMTP_mtpdevice_t *LIBMTP_Open_Raw_Device_Uncached(LIBMTP_raw_device_t *rawdevi
 
   /* Allocate dynamic space for our device */
   mtp_device = (LIBMTP_mtpdevice_t *) malloc(sizeof(LIBMTP_mtpdevice_t));
-  memset(mtp_device, 0, sizeof(LIBMTP_mtpdevice_t));
   /* Check if there was a memory allocation error */
   if(mtp_device == NULL) {
     /* There has been an memory allocation error. We are going to ignore this
@@ -1839,6 +1847,7 @@ LIBMTP_mtpdevice_t *LIBMTP_Open_Raw_Device_Uncached(LIBMTP_raw_device_t *rawdevi
 
     return NULL;
   }
+  memset(mtp_device, 0, sizeof(LIBMTP_mtpdevice_t));
   // Non-cached by default
   mtp_device->cached = 0;
 
@@ -2154,10 +2163,7 @@ int LIBMTP_Read_Event(LIBMTP_mtpdevice_t *device, LIBMTP_event_t *event, uint32_
   uint16_t ret = ptp_usb_event_wait(params, &ptp_event);
   uint16_t code;
   uint32_t session_id;
-  uint32_t transaction_id;
   uint32_t param1;
-  uint32_t param2;
-  uint32_t param3;
 
   if (ret != PTP_RC_OK) {
     /* Device is closing down or other fatal stuff, exit thread */
@@ -2169,10 +2175,7 @@ int LIBMTP_Read_Event(LIBMTP_mtpdevice_t *device, LIBMTP_event_t *event, uint32_
   /* Process the event */
   code = ptp_event.Code;
   session_id = ptp_event.SessionID;
-  transaction_id = ptp_event.Transaction_ID;
   param1 = ptp_event.Param1;
-  param2 = ptp_event.Param2;
-  param3 = ptp_event.Param3;
 
   switch(code) {
     case PTP_EC_Undefined:
@@ -3001,7 +3004,6 @@ static int get_suggested_storage_id(LIBMTP_mtpdevice_t *device,
   PTPParams *params = (PTPParams *) device->params;
   PTPObject *ob;
   uint16_t ret;
-  int subcall_ret;
 
   ret = ptp_object_want(params, parent_id, PTPOBJECT_MTPPROPLIST_LOADED, &ob);
   if ((ret != PTP_RC_OK) || (ob->oi.StorageID == 0)) {
@@ -8033,6 +8035,7 @@ static int update_abstract_list(LIBMTP_mtpdevice_t *device,
 	  add_error_to_errorstack(device, LIBMTP_ERROR_GENERAL, "update_abstract_list(): "
 				  "could not set artist name.");
 	}
+	break;
       case PTP_OPC_Composer:
 	// Update composer
 	ret = set_object_string(device, objecthandle, PTP_OPC_Composer, composer);
@@ -8062,6 +8065,7 @@ static int update_abstract_list(LIBMTP_mtpdevice_t *device,
 	  }
 	  free(tmpdate);
 	}
+	break;
       default:
 	break;
       }
