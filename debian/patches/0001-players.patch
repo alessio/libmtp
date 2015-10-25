@@ -1,0 +1,17 @@
+Description: Add or fix music players.
+ Closes: #728088
+Author: Alessio Treglia <alessio@debian.org>
+---
+ src/music-players.h |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- libmtp.orig/src/music-players.h
++++ libmtp/src/music-players.h
+@@ -1145,6 +1145,7 @@
+   /* https://sourceforge.net/p/libmtp/bugs/1308/ */
+   { "Nokia", 0x0421, "N300", 0x0524, DEVICE_FLAG_NONE },
+   { "Nokia", 0x0421, "C5-00", 0x0592, DEVICE_FLAG_NONE },
++  { "Nokia", 0x0421, "C5-00 (ID2)", 0x0595, DEVICE_FLAG_NONE },
+   { "Nokia", 0x0421, "808 PureView", 0x05d3, DEVICE_FLAG_NONE },
+   // Reported by Sampo Savola
+   // Covers Lumia 920, 820 and probably any WP8 device.
